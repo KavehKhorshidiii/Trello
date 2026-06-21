@@ -33,7 +33,6 @@ export default async function SignUpAction(prevState: prevState, formData: FormD
       return { success: false, errors: {}, message: "Password must be more than 8 characters and less than 20 characters." }
    }
 
-
    // hash password
    const pass = await hashPass(password)
 
