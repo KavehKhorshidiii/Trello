@@ -1,6 +1,5 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { ObjectId } from "mongoose";
 
 // hash password
 export async function hashPass(password: string) {
