@@ -13,7 +13,6 @@ export function JWTFunc(payload: {id:string}) {
 
    const SECRET = process.env.SECRET_JWT
 
-
    if (!SECRET) {
       throw new Error("SECRET_JWT is not defined");
    }
