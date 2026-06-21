@@ -9,7 +9,6 @@ export async function hashPass(password: string) {
 
 
 
-
 // JWT Token
 export function JWTFunc(payload: {id:string}) {
 
