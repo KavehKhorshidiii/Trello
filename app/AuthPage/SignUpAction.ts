@@ -50,7 +50,6 @@ export default async function SignUpAction(prevState: prevState, formData: FormD
       path:"/"
    })
 
-
    // success return
    return { success: true, errors: {}, message: "User SignUp Successfully" }
 
