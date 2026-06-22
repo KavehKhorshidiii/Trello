@@ -1,8 +1,10 @@
 'use client'
 
-import { CircleCheck } from 'lucide-react';
+import { ArrowRightIcon, CircleCheck } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { Button } from './ui/button';
 
 interface IUser {
    _id: string
@@ -44,19 +46,26 @@ export default function Navbar() {
                <span className=' text-xl md:text-2xl font-bold text-gray-900'>Trello Clone </span>
             </div>
 
-            {
-               isLogin ? (
+            <div className=' flex space-x-1 text-xl sm:space-x-1'>
+               {
+                  isLogin ? (
 
-                  <p>{userData?.firstname}</p>
+                     <div className=' flex gap-1 flex-col sm:flex-row items-end sm:items-center'>
+                        <span>welcome {userData?.firstname}</span>
+                        <Link href="/dashboard">
+                           <Button>Go to dashboard<ArrowRightIcon></ArrowRightIcon></Button>
+                        </Link>
+                     </div>
 
-               ) : (
-                  <div className=' flex gap-1 text-xl'>
-                     <button onClick={() => redirect('/AuthPage/signIn')} className=' p-1' >Sign In</button>
-                     <button onClick={() => redirect('/AuthPage/signUp')} className=' p-1 bg-black text-white rounded-lg'>Sign Up</button>
-                  </div>
-               )
+                  ) : (
+                     <>
+                        <button onClick={() => redirect('/AuthPage/signIn')} className=' p-1 text-sm' >Sign In</button>
+                        <button onClick={() => redirect('/AuthPage/signUp')} className=' px-2 py-1 text-sm bg-black text-white rounded-lg'>Sign Up</button>
+                     </>
+                  )
 
-            }
+               }
+            </div>
 
          </div>
       </header >
