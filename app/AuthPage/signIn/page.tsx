@@ -1,13 +1,22 @@
 'use client'
+import { useActionState } from "react"
+import SignInAction from "@/app/AuthPage/signIn/SignInAction"
 
 export default function SignIn() {
 
 
-   return (
-      <div>
-         <div className=" w-80 border-2">
+   const initialValue = { success: null, errors: {}, message: "" }
+   const [state, formAction, pending] = useActionState(SignInAction, initialValue)
 
-            <form className="p-1 gap-1 flex flex-col">
+
+   return (
+      <div className=" border-4 h-screen flex justify-center items-center content-center">
+         <div className=" w-80 border-2">
+   
+            <form action={formAction} className="p-1 gap-1 flex flex-col">
+               {
+                  state.message && <span className=" border rounded-2xl text-center">{state.message}</span>
+               }
                <div className=" flex flex-col border-2 ">
                   <label htmlFor="">Username</label>
                   <input type="text" name="username" className="  rounded-2xl border-2 h-10" />

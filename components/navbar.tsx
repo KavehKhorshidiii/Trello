@@ -6,12 +6,6 @@ import { redirect } from 'next/navigation';
 
 export default function Navbar() {
 
-   const SignUpHandler = () => {
-      redirect('/AuthPage/signuppage')
-   }
-   const SignInHandler = () => {
-      redirect('/AuthPage/signinpage')
-   }
 
    return (
       <header className=" flex justify-center border bg-white/80 backdrop-blur-sm sticky top-0 z-50">
@@ -25,8 +19,8 @@ export default function Navbar() {
 
             {/*  */}
             <div className=' flex gap-1 text-xl'>
-               <button onClick={SignInHandler} className=' p-1' >Sign In</button>
-               <button onClick={SignUpHandler} className=' p-1 bg-black text-white rounded-lg'>Sign Up</button>
+               <button onClick={()=>redirect('/AuthPage/signIn')} className=' p-1' >Sign In</button>
+               <button onClick={()=>redirect('/AuthPage/signUp')} className=' p-1 bg-black text-white rounded-lg'>Sign Up</button>
             </div>
 
          </div>

@@ -45,7 +45,8 @@ export default async function SignUpAction(prevState: prevState, formData: FormD
    // Cookie
    const Cookie = (await cookies()).set("token", JWTToken, {
       httpOnly: true,
-      path: "/"
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7
    })
 
    // success return
