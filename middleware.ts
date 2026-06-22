@@ -1,15 +1,19 @@
-import { NextRequest } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 
+export function middleware(req: NextRequest) {
 
+   const token = req.cookies.get("token")?.value
 
-export function middleware(req:NextRequest){
-   //const theCookies = cookies()
-   console.log("req =>",req)
-   //const token = req.
+   if (!token) {
+      return NextResponse.redirect(new URL("/AuthPage/signIn", req.url))
+   }
+
+   return NextResponse.next()
 
 }
+
 export const config = {
-   matcher:[
-
-   ]
-}
+   matcher: [
+      // "/",
+   ],
+};

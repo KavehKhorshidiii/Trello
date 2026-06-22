@@ -4,6 +4,7 @@ import { hashPass, JWTFunc } from '@/lib/auth'
 import connectDB from '@/lib/connectDB/connectDB'
 import UsersModel from '@/Models/usersmodel/usersmodel'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 type prevState = {
    success: null | boolean,
@@ -49,7 +50,10 @@ export default async function SignUpAction(prevState: prevState, formData: FormD
       maxAge: 60 * 60 * 24 * 7
    })
 
+   
+   redirect('/')
+
    // success return
-   return { success: true, errors: {}, message: "User SignUp Successfully" }
+   //return { success: true, errors: {}, message: "User SignUp Successfully" }
 
 }

@@ -5,6 +5,7 @@ import UsersModel from "@/Models/usersmodel/usersmodel"
 import { compare } from "bcrypt"
 import { cookies } from "next/headers"
 import { JWTFunc } from "@/lib/auth"
+import { redirect } from "next/navigation"
 
 
 type prevState = {
@@ -44,6 +45,8 @@ export default async function SignInAction(prevState: prevState, formData: FormD
       maxAge: 60 * 60 * 24 * 7
    })
 
-   return { success: true, errors: {}, message: "successfully" }
+
+   redirect('/')
+   //return { success: true, errors: {}, message: "successfully" }
 
 }
