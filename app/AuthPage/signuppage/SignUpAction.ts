@@ -29,7 +29,7 @@ export default async function SignUpAction(prevState: prevState, formData: FormD
    }
 
    // password 
-   if(password.length <= 8 && password.length >= 20){
+   if (password.length <= 8 && password.length >= 20) {
       return { success: false, errors: {}, message: "Password must be more than 8 characters and less than 20 characters." }
    }
 
@@ -37,16 +37,15 @@ export default async function SignUpAction(prevState: prevState, formData: FormD
    const pass = await hashPass(password)
 
    // create new user
-   const newUser = await UsersModel.create({ firstname, username, password:pass })
+   const newUser = await UsersModel.create({ firstname, username, password: pass, role: (await UsersModel.find()).length === 0 ? "ADMIN" : "USER" })
 
    // JWT token 
-   const JWTToken = JWTFunc({id:newUser._id.toString()})
-   console.log("JWTToken =>" , JWTToken)
+   const JWTToken = JWTFunc({ id: newUser._id.toString() })
 
    // Cookie
-   const Cookie = (await cookies()).set("token" , JWTToken , {
-      httpOnly:true,
-      path:"/"
+   const Cookie = (await cookies()).set("token", JWTToken, {
+      httpOnly: true,
+      path: "/"
    })
 
    // success return

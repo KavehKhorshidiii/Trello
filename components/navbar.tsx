@@ -1,9 +1,18 @@
 'use client'
 
 import { CircleCheck } from 'lucide-react';
+import { redirect } from 'next/navigation';
 
 
 export default function Navbar() {
+
+   const SignUpHandler = () => {
+      redirect('/AuthPage/signuppage')
+   }
+   const SignInHandler = () => {
+      redirect('/AuthPage/signinpage')
+   }
+
    return (
       <header className=" flex justify-center border bg-white/80 backdrop-blur-sm sticky top-0 z-50">
          <div className=' container mx-auto flex justify-between items-center px-4 py-3 sm:py-4 '>
@@ -16,8 +25,8 @@ export default function Navbar() {
 
             {/*  */}
             <div className=' flex gap-1 text-xl'>
-               <button className=' p-1' >Sign In</button>
-               <button className=' p-1 bg-black text-white rounded-lg'>Sign Up</button>
+               <button onClick={SignInHandler} className=' p-1' >Sign In</button>
+               <button onClick={SignUpHandler} className=' p-1 bg-black text-white rounded-lg'>Sign Up</button>
             </div>
 
          </div>
