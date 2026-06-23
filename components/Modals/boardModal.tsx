@@ -30,7 +30,7 @@ export default function BoardModal({ isModal, setIsModal }: { isModal: boolean, 
                      <input name="color" className=" size-10" type="color" />  
                   </div>
                </div>
-               <button type="submit" className=" border-2 rounded-sm px-3 py-1">add</button>
+               <button type="submit" onClick={() => setIsModal(false)} className=" border-2 rounded-sm px-3 py-1">add</button>
             </form>
 
          </div>

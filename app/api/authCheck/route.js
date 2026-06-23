@@ -6,8 +6,6 @@ import jwt from 'jsonwebtoken'
 import { verifyJwtToken } from '../../../lib/auth'
 
 
-
-
 export async function GET() {
 
    try {
@@ -20,8 +18,9 @@ export async function GET() {
 
       let verifyToken
       try {
-         verifyToken = verifyJwtToken(tokenValue) // { id: '6a3a95f86aaf18c5e8506edc', iat: 1782224751, exp: 1782242751 }
-      } catch (err) {
+         // verify Token
+         verifyToken = verifyJwtToken(tokenValue) 
+      } catch {
          return NextResponse.json({ success: false, data: null }, { status: 401 })
       }
 
@@ -36,9 +35,7 @@ export async function GET() {
       return NextResponse.json({ success: true, data: findUser })
 
    } catch {
-
       return NextResponse.json({ success: false, data: null }, { status: 500 })
-
    }
 
 }

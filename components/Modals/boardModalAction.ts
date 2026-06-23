@@ -2,10 +2,9 @@
 
 import connectDB from "@/lib/connectDB/connectDB"
 import { cookies } from "next/headers"
-import { JwtPayload } from "jsonwebtoken"
 import { verifyJwtToken } from "@/lib/auth"
-import UsersModel from "@/Models/usersmodel/usersmodel"
 import BoardModel from "@/Models/boardModel/boardModel"
+
 
 
 type stateType = {
@@ -24,21 +23,32 @@ export default async function boardModalAction(prevState: stateType, formData: F
 
    console.log(title, des, color)
 
-   const theCookieToken = (await cookies()).get("token")?.value
-   const verifyTokenValue = verifyJwtToken(theCookieToken as string)
 
-   let userID
-   if (typeof verifyTokenValue === "object" && verifyTokenValue !== null) {
-      userID = (verifyTokenValue as JwtPayload).id.id;
+   const cookiesStore = await cookies()
+   const tokenValue = cookiesStore.get("token")?.value
+   if (!tokenValue) { return { success: false, errors: {}, message: "Token does not exist." } }
+   const verifyTokenValue = verifyJwtToken(tokenValue)
+
+   let userID ;
+   if (
+      typeof verifyTokenValue === "object" &&
+      verifyTokenValue !== null &&
+      "id" in verifyTokenValue
+   ) {
+      userID = verifyTokenValue.id
    }
+
+
 
    await connectDB()
    const createBoard = await BoardModel.create({
       title,
       des,
       color,
-      userID: userID 
+      author: userID 
    })
+
+   console.log(createBoard)
 
 
    return { success: true, errors: {}, message: "successfully" }

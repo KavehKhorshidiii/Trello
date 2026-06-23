@@ -13,18 +13,15 @@ const BoardSchema = new Schema({
       type: String,
       default: "white"
    },
-   createdAt: {
-      type: Date,
-      default:Date.now
-   },
-   userID: {
+   author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
+      index: true,
       required: true
    }
 
 }, { timestamps: true })
 
-const BoardModel = models.board || mongoose.model("board" , BoardSchema)
+const BoardModel = models.board || mongoose.model("board", BoardSchema)
 
 export default BoardModel

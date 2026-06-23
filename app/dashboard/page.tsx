@@ -3,11 +3,10 @@ import Navbar from "@/components/navbar"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
-import { useBoards } from "@/lib/hooks/useBoards"
+// import { useBoards } from "@/lib/hooks/useBoards"
 import { Card } from "@/components/ui/card"
 import { CircleCheck } from "lucide-react"
 import { CardContent } from "@/components/ui/card"
-//import { X } from "lucide-react"
 import BoardModal from "@/components/Modals/boardModal"
 
 
@@ -27,6 +26,7 @@ export default function Dashboard() {
    
 
 
+
    function isLoginHandler(response: { success: boolean, data: IUser }) {
       if (response.success) {
          setIsLogin(true)
@@ -40,21 +40,22 @@ export default function Dashboard() {
          .then(response => isLoginHandler(response))
    }, [])
 
+   // useEffect(() => {
+   //    fetch("/api/board")
+   //       .then(res => res.json())
+   //       .then(res => console.log(res))
+   // }, [])
 
-   const { modalFunc, createBoard } = useBoards()
 
-   const HandlerCreateBoard = () => {
+   //const { modalFunc, createBoard } = useBoards()
 
-      // open and close Modal
-      setIsModal(() => !isModal)
+   // const HandlerCreateBoard = () => {
 
-      // fetch("api/board",{
-      //    method:"POST",
-      //    headers:{"Content-Type":"application/json"},
-      //    body:JSON.stringify({
-      // })
+   //    // open and close Modal
+   //    setIsModal(() => !isModal)
 
-   }
+
+   // }
 
 
    return (
@@ -73,11 +74,12 @@ export default function Dashboard() {
                <p className=" text-gray-600">Here`s what`s happening with your board.</p>
             </div>
 
-            <Button onClick={HandlerCreateBoard} className="w-full sm:w-auto"><Plus className=" size-4"></Plus> Create Board </Button>
+            <Button  className="w-full sm:w-auto"><Plus className=" size-4"></Plus> Create Board </Button>
 
             {/* Card */}
             <div className=" grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
-
+               {
+               }
                <Card>
                   <CardContent className=" p-4 sm:p-6">
                      <div className=" flex items-center justify-between">
