@@ -3,6 +3,7 @@ import { useState } from "react"
 
 export function useBoards() {
 
+   const [modal , setModal] = useState(false)
    const [board , setBoard] = useState([])
    const [loading , setLoading] = useState(true)
    const [error , setError] = useState<string | null>(null)
@@ -15,5 +16,10 @@ export function useBoards() {
 
    }
 
-   return { createBoard }
+   function modalFunc () {
+      setModal(()=> !modal)
+      return modal
+   }
+
+   return { modalFunc , createBoard }
 }

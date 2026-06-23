@@ -36,7 +36,8 @@ export default async function SignInAction(prevState: prevState, formData: FormD
    }
 
    // JWT Token
-   const JWTToken = JWTFunc({ id: findUser._id.toString() })
+   const JWTToken = JWTFunc(findUser._id.toString())
+
 
    // Cookie
    const Cookie = (await cookies()).set("token", JWTToken, {

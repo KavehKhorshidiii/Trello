@@ -1,6 +1,6 @@
 'use client'
 import { useActionState } from "react"
-import SignInAction from "@/app/AuthPage/signIn/SignInAction"
+import SignInAction from "@/app/auth/signIn/SignInAction"
 
 export default function SignIn() {
 

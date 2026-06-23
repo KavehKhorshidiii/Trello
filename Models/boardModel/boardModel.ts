@@ -5,7 +5,7 @@ const BoardSchema = new Schema({
       type: String,
       required: true
    },
-   description: {
+   des: {
       type: String,
       required: true
    },

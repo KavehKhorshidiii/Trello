@@ -7,6 +7,8 @@ import { useBoards } from "@/lib/hooks/useBoards"
 import { Card } from "@/components/ui/card"
 import { CircleCheck } from "lucide-react"
 import { CardContent } from "@/components/ui/card"
+//import { X } from "lucide-react"
+import BoardModal from "@/components/Modals/boardModal"
 
 
 interface IUser {
@@ -18,12 +20,11 @@ interface IUser {
 
 export default function Dashboard() {
 
-   const { createBoard } = useBoards()
 
-
+   const [isModal, setIsModal] = useState(false)
    const [isLogin, setIsLogin] = useState<boolean>()
    const [userData, setUserData] = useState<IUser | null>(null)
-
+   
 
 
    function isLoginHandler(response: { success: boolean, data: IUser }) {
@@ -40,24 +41,32 @@ export default function Dashboard() {
    }, [])
 
 
+   const { modalFunc, createBoard } = useBoards()
+
    const HandlerCreateBoard = () => {
+
+      // open and close Modal
+      setIsModal(() => !isModal)
+
       // fetch("api/board",{
       //    method:"POST",
       //    headers:{"Content-Type":"application/json"},
       //    body:JSON.stringify({
-
-      //    })
       // })
 
-      createBoard()
    }
+
 
    return (
       <div className=" min-h-screen bg-gray-50">
-         {/*  */}
+
+         {/* Modal */}
+         {isModal && <BoardModal isModal={isModal} setIsModal={setIsModal}/>}
+
+         {/* Navbar */}
          <Navbar></Navbar>
 
-         {/*  */}
+         {/* main */}
          <main className=" container mx-auto px-4 sm:py-8 py-6 border ">
             <div className=" mb-6 sm:mb-8">
                <h1 className=" text-2xl sm:text-3xl font-bold text-gray-900 mb-2"> welcome back {userData?.firstname}👋</h1>

@@ -41,7 +41,8 @@ export default async function SignUpAction(prevState: prevState, formData: FormD
    const newUser = await UsersModel.create({ firstname, username, password: pass, role: (await UsersModel.find()).length === 0 ? "ADMIN" : "USER" })
 
    // JWT token 
-   const JWTToken = JWTFunc({ id: newUser._id.toString() })
+   const JWTToken = JWTFunc(newUser._id.toString())
+   // console.log(newUser._id.toString())
 
    // Cookie
    const Cookie = (await cookies()).set("token", JWTToken, {

@@ -29,10 +29,10 @@ export default function Navbar() {
    const [isLogin, setIsLogin] = useState<boolean>()
    const [userData, setUserData] = useState<IUser | null>(null)
    
-   //const userName = [...userData?.firstname ?? ""][0]
 
 
    function isLoginHandler(response: { success: boolean, data: IUser }) {
+      //console.log(response)
       if (response.success) {
          setIsLogin(true)
          setUserData(response.data)
@@ -74,8 +74,8 @@ export default function Navbar() {
 
                      ) : (
                         <>
-                           <button onClick={() => redirect('/AuthPage/signIn')} className=' p-1 text-sm' >Sign In</button>
-                           <button onClick={() => redirect('/AuthPage/signUp')} className=' px-2 py-1 text-sm bg-black text-white rounded-lg'>Sign Up</button>
+                           <button onClick={() => redirect('/auth/signIn')} className=' p-1 text-sm' >Sign In</button>
+                           <button onClick={() => redirect('/auth/signUp')} className=' px-2 py-1 text-sm bg-black text-white rounded-lg'>Sign Up</button>
                         </>
                      )
 
