@@ -7,6 +7,7 @@ import BoardModel from "@/Models/boardModel/boardModel"
 
 
 
+
 type stateType = {
    success: boolean | null,
    errors: object,
@@ -21,15 +22,14 @@ export default async function boardModalAction(prevState: stateType, formData: F
       color: formData.get("color")
    }
 
-   console.log(title, des, color)
 
 
    const cookiesStore = await cookies()
    const tokenValue = cookiesStore.get("token")?.value
    if (!tokenValue) { return { success: false, errors: {}, message: "Token does not exist." } }
    const verifyTokenValue = verifyJwtToken(tokenValue)
-
-   let userID ;
+  
+   let userID;
    if (
       typeof verifyTokenValue === "object" &&
       verifyTokenValue !== null &&
@@ -45,10 +45,9 @@ export default async function boardModalAction(prevState: stateType, formData: F
       title,
       des,
       color,
-      author: userID 
+      author: userID
    })
 
-   console.log(createBoard)
 
 
    return { success: true, errors: {}, message: "successfully" }

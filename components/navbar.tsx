@@ -32,7 +32,6 @@ export default function Navbar() {
 
 
    function isLoginHandler(response: { success: boolean, data: IUser }) {
-      //console.log(response)
       if (response.success) {
          setIsLogin(true)
          setUserData(response.data)

@@ -1,13 +1,28 @@
 'use client'
-
 import { X } from "lucide-react"
-import { useActionState } from "react"
+import { useActionState, useEffect } from "react"
 import BoardModalAction from "./boardModalAction"
+import { useQueryClient } from "@tanstack/react-query"
+
+
 
 export default function BoardModal({ isModal, setIsModal }: { isModal: boolean, setIsModal: (value: boolean) => void }) {
 
-   const initialState = {success:null , errors:{} , message:""}
-   const [state , formAction , pendding] = useActionState(BoardModalAction , initialState)
+   const [state, formAction, pendding] = useActionState(BoardModalAction, { success: null, errors: {}, message: "" })
+
+
+   const queryClient = useQueryClient()  
+
+
+   useEffect(() => {
+
+      if (state.success) {
+         setIsModal(false)
+         queryClient.invalidateQueries({ queryKey: ["boards"] })
+      }
+
+   },[state.success])
+
 
 
    return (
@@ -15,7 +30,7 @@ export default function BoardModal({ isModal, setIsModal }: { isModal: boolean, 
          <div className=" flex-col z-60 flex size-96 bg-white">
             <div onClick={() => setIsModal(false)}><X></X></div>
 
-            <form action={ formAction } className=" flex-col">
+            <form action={formAction} className=" flex-col">
                <div className=" flex flex-col">
                   <label htmlFor="">Title</label>
                   <input name="title" className=" border-2" type="text" />
@@ -27,10 +42,10 @@ export default function BoardModal({ isModal, setIsModal }: { isModal: boolean, 
                <div className=" flex justify-start gap-3 items-center">
                   color
                   <div className=" flex gap-1">
-                     <input name="color" className=" size-10" type="color" />  
+                     <input name="color" className=" size-10" type="color" />
                   </div>
                </div>
-               <button type="submit" onClick={() => setIsModal(false)} className=" border-2 rounded-sm px-3 py-1">add</button>
+               <button type="submit" className=" border-2 rounded-sm px-3 py-1">add</button>
             </form>
 
          </div>

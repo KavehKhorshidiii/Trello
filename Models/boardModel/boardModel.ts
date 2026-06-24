@@ -7,7 +7,6 @@ const BoardSchema = new Schema({
    },
    des: {
       type: String,
-      required: true
    },
    color: {
       type: String,

@@ -48,6 +48,5 @@ export default async function SignInAction(prevState: prevState, formData: FormD
 
 
    redirect('/')
-   //return { success: true, errors: {}, message: "successfully" }
 
 }

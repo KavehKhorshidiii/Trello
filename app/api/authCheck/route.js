@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken'
 import { verifyJwtToken } from '../../../lib/auth'
 
 
+
 export async function GET() {
 
    try {
@@ -19,7 +20,10 @@ export async function GET() {
       let verifyToken
       try {
          // verify Token
-         verifyToken = verifyJwtToken(tokenValue) 
+         verifyToken = verifyJwtToken(tokenValue) // { id: '6a3a95f86aaf18c5e8506edc', iat: 1782294556, exp: 1782312556 }
+         if (!verifyToken) {
+            return NextResponse.json({ success: false, data: null }, { status: 404 })
+         }
       } catch {
          return NextResponse.json({ success: false, data: null }, { status: 401 })
       }
@@ -28,7 +32,7 @@ export async function GET() {
 
       const findUser = await userModel.findById(verifyToken.id).select("-password -__v -createdAt -updatedAt")
 
-      if (!findUser) {
+      if (!findUser || findUser === null) {
          return NextResponse.json({ success: false, data: null }, { status: 404 })
       }
 
