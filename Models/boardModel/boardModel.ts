@@ -22,5 +22,4 @@ const BoardSchema = new Schema({
 }, { timestamps: true })
 
 const BoardModel = models.board || mongoose.model("board", BoardSchema)
-
 export default BoardModel

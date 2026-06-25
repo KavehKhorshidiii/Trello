@@ -25,16 +25,19 @@ export default function Navbar() {
    const isDashboardPage = PathName === "/dashboard"
    const isBoardPage = PathName.startsWith("/boards/")
 
-   
+
    const [isLogin, setIsLogin] = useState<boolean>()
    const [userData, setUserData] = useState<IUser | null>(null)
-   
+
 
 
    function isLoginHandler(response: { success: boolean, data: IUser }) {
       if (response.success) {
          setIsLogin(true)
          setUserData(response.data)
+      } else {
+         setIsLogin(false)
+         setUserData(null)
       }
    }
 
@@ -43,6 +46,7 @@ export default function Navbar() {
          .then(res => res.json())
          .then(response => isLoginHandler(response))
    }, [])
+
 
    // if PathName -> Homepage
    if (isHomePage) {

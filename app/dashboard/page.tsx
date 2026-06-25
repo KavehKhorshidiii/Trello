@@ -2,22 +2,19 @@
 import Navbar from "@/components/navbar"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
+import { FilterIcon, List, Plus, Search } from "lucide-react"
 import { Card } from "@/components/ui/card"
-import { CircleCheck } from "lucide-react"
+import { CircleCheck, Rocket } from "lucide-react"
 import { CardContent } from "@/components/ui/card"
-import BoardModal from "@/components/Modals/boardModal"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+import BoardModal from "@/components/Modals/BoardModal/boardModal"
+import { useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
+import { Grid3X3 } from "lucide-react"
+import { Input } from "@/components/ui/input"
 
 
 
-// type IUser = {
-//    _id: string
-//    firstname: string
-//    username: string
-//    role: string
-// }
+
 
 type BoardType = {
    _id: string;
@@ -33,7 +30,7 @@ type BoardType = {
 export default function Dashboard() {
 
    const [isModal, setIsModal] = useState(false)
-
+   const [viewMode, setViewModal] = useState<"grid" | "list">("grid")
 
    const fetchAuth = async () => {
       const res = await fetch("/api/authCheck")
@@ -82,13 +79,14 @@ export default function Dashboard() {
                <p className=" text-gray-600">Here`s what`s happening with your board.</p>
             </div>
 
-            <div className=" border-4 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+            {/* */}
+            <div className=" grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
                <Card onClick={boardHandler} >
                   <CardContent className=" p-4 sm:p-6">
                      <div className=" flex items-center justify-between">
                         <div>
                            <p className=" text-xs sm:text-sm font-medium text-gray-600">test</p>
-                           <p className=" text-xs sm:text-sm font-medium text-gray-600">{ 2 }</p>
+                           <p className=" text-xs sm:text-sm font-medium text-gray-600">{2}</p>
                         </div>
                         <div className=" h-10 w-10 sm:h-12 sm:w-12 bg-blue-100 rounded-lg flex items-center justify-center ">
                            <CircleCheck className=" h-5 w-5 sm:h-6 sm:w-6 text-blue-600"></CircleCheck>
@@ -96,12 +94,38 @@ export default function Dashboard() {
                      </div>
                   </CardContent>
                </Card>
-                   <Card onClick={boardHandler} >
+               <Card onClick={boardHandler} >
+                  <CardContent className=" p-4 sm:p-6">
+                     <div className=" flex items-center justify-between">
+                        <div>
+                           <p className=" text-xs sm:text-sm font-medium text-gray-600">Active Project</p>
+                           <p className=" text-xs sm:text-sm font-medium text-gray-600">{2}</p>
+                        </div>
+                        <div className=" h-10 w-10 sm:h-12 sm:w-12 bg-green-100 rounded-lg flex items-center justify-center ">
+                           <Rocket className=" h-5 w-5 sm:h-6 sm:w-6 text-green-600"></Rocket>
+                        </div>
+                     </div>
+                  </CardContent>
+               </Card>
+               <Card onClick={boardHandler} >
+                  <CardContent className=" p-4 sm:p-6">
+                     <div className=" flex items-center justify-between">
+                        <div>
+                           <p className=" text-xs sm:text-sm font-medium text-gray-600">Recent Activity</p>
+                           <p className=" text-xs sm:text-sm font-medium text-gray-600">{boardsData?.data?.boards.length}</p>
+                        </div>
+                        <div className=" h-10 w-10 sm:h-12 sm:w-12 bg-blue-100 rounded-lg flex items-center justify-center ">
+                           <div className=" h-5 w-5 sm:h-6 sm:w-6 text-blue-600">📊</div>
+                        </div>
+                     </div>
+                  </CardContent>
+               </Card>
+               <Card onClick={boardHandler} >
                   <CardContent className=" p-4 sm:p-6">
                      <div className=" flex items-center justify-between">
                         <div>
                            <p className=" text-xs sm:text-sm font-medium text-gray-600">text</p>
-                           <p className=" text-xs sm:text-sm font-medium text-gray-600">{ 2 }</p>
+                           <p className=" text-xs sm:text-sm font-medium text-gray-600">{2}</p>
                         </div>
                         <div className=" h-10 w-10 sm:h-12 sm:w-12 bg-blue-100 rounded-lg flex items-center justify-center ">
                            <CircleCheck className=" h-5 w-5 sm:h-6 sm:w-6 text-blue-600"></CircleCheck>
@@ -109,59 +133,88 @@ export default function Dashboard() {
                      </div>
                   </CardContent>
                </Card>
-                   <Card onClick={boardHandler} >
-                  <CardContent className=" p-4 sm:p-6">
-                     <div className=" flex items-center justify-between">
-                        <div>
-                           <p className=" text-xs sm:text-sm font-medium text-gray-600">text</p>
-                           <p className=" text-xs sm:text-sm font-medium text-gray-600">{ 2 }</p>
-                        </div>
-                        <div className=" h-10 w-10 sm:h-12 sm:w-12 bg-blue-100 rounded-lg flex items-center justify-center ">
-                           <CircleCheck className=" h-5 w-5 sm:h-6 sm:w-6 text-blue-600"></CircleCheck>
-                        </div>
-                     </div>
-                  </CardContent>
-               </Card>
-                   <Card onClick={boardHandler} >
-                  <CardContent className=" p-4 sm:p-6">
-                     <div className=" flex items-center justify-between">
-                        <div>
-                           <p className=" text-xs sm:text-sm font-medium text-gray-600">text</p>
-                           <p className=" text-xs sm:text-sm font-medium text-gray-600">{ 2 }</p>
-                        </div>
-                        <div className=" h-10 w-10 sm:h-12 sm:w-12 bg-blue-100 rounded-lg flex items-center justify-center ">
-                           <CircleCheck className=" h-5 w-5 sm:h-6 sm:w-6 text-blue-600"></CircleCheck>
-                        </div>
-                     </div>
-                  </CardContent>
-               </Card>
+
             </div>
 
 
 
-            {/* Card */}
-            <Button onClick={() => setIsModal(true)} className="w-full sm:w-auto"><Plus className=" size-4"></Plus> Create Board </Button>
-            
-            <div className=" border-4 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
-               {
-                  boardsData?.data?.boards.map(board =>
 
-                     <Card onClick={boardHandler} key={board._id}>
-                        <CardContent className=" p-4 sm:p-6">
-                           <div className=" flex items-center justify-between">
-                              <div>
-                                 <p className=" text-xs sm:text-sm font-medium text-gray-600">{board.title}</p>
-                                 <p className=" text-xs sm:text-sm font-medium text-gray-600">{board.des}</p>
-                              </div>
-                              <div className=" h-10 w-10 sm:h-12 sm:w-12 bg-blue-100 rounded-lg flex items-center justify-center ">
-                                 <CircleCheck className=" h-5 w-5 sm:h-6 sm:w-6 text-blue-600"></CircleCheck>
-                              </div>
-                           </div>
-                        </CardContent>
-                     </Card>
+            <div className=" mb-6 sm:mb-8">
 
-                  )
-               }
+
+               <div>
+                  <h2 className=" text-xl sm:text-2xl font-bold text-gray-900">Your Boards</h2>
+                  <p className=" text-gray-600">Manage your projects and tasks</p>
+               </div>
+
+               <Button variant="outline" size="sm"><FilterIcon></FilterIcon>Filter</Button>
+               <Button onClick={() => setIsModal(true)} className=" py-5 my-5 w-full sm:w-auto"><Plus className=" size-4"></Plus> Create Board </Button>
+                   <Button variant={viewMode === "grid" ? "default" : "ghost"} size="sm" onClick={() => setViewModal("grid")}>
+                     <Grid3X3 />
+                  </Button>
+                  <Button variant={viewMode === "list" ? "default" : "ghost"} size="sm" onClick={() => setViewModal("list")}>
+                     <List />
+                  </Button>
+               {/* Search bar */}
+               <div className=" relative mb-4 sm:mb-6">
+                  <Search className=" absolute left-3 top-1/2 transform -translate-y-1/2 size-4 text-gray-400" />
+                  <Input id="search" placeholder="Search boards..." className=" pl-10"></Input>
+               </div>
+
+               
+
+               {/* </div> */}
+               <div className=" flex items-center space-x-2 bg-white border p-3">
+              
+                     {
+                        boardsData?.data?.boards.length == 0 ? (<p>No Board yet</p>) :
+                           viewMode === "grid" ? (
+                              <div className="flex flex-col sm:flex-row items-center sm:justify-between space-y-2 sm:space-y-0">
+                                 {
+                                    boardsData?.data?.boards.map(board =>
+                                       <Card onClick={boardHandler} key={board._id}>
+                                          <CardContent className=" p-4 sm:p-6">
+                                             <div className=" flex items-center justify-between">
+                                                <div>
+                                                   <p className=" text-xs sm:text-sm font-medium text-gray-600">{board.title}</p>
+                                                   <p className=" text-xs sm:text-sm font-medium text-gray-600">{board.des}</p>
+                                                </div>
+                                                <div className=" h-10 w-10 sm:h-12 sm:w-12 bg-blue-100 rounded-lg flex items-center justify-center ">
+                                                   <CircleCheck className=" h-5 w-5 sm:h-6 sm:w-6 text-blue-600"></CircleCheck>
+                                                </div>
+                                             </div>
+                                          </CardContent>
+                                       </Card>
+                                    )
+                                 }
+                              </div>
+                           ) : (
+                              <div className="flex w-full flex-col items-center sm:justify-between space-y-2 sm:space-y-0">
+                                 {
+                                    boardsData?.data?.boards.map(board =>
+                                       <Card className=" w-full" onClick={boardHandler} key={board._id}>
+                                          <CardContent className=" p-4 sm:p-6">
+                                             <div className=" flex items-center justify-between">
+                                                <div>
+                                                   <p className=" text-xs sm:text-sm font-medium text-gray-600">{board.title}</p>
+                                                   <p className=" text-xs sm:text-sm font-medium text-gray-600">{board.des}</p>
+                                                </div>
+                                                <div className=" h-10 w-10 sm:h-12 sm:w-12 bg-blue-100 rounded-lg flex items-center justify-center ">
+                                                   <CircleCheck className=" h-5 w-5 sm:h-6 sm:w-6 text-blue-600"></CircleCheck>
+                                                </div>
+                                             </div>
+                                          </CardContent>
+                                       </Card>
+                                    )
+                                 }
+                              </div>
+                           )
+                     }
+
+                  {/* </div> */}
+
+               </div>
+
             </div>
 
 
@@ -171,3 +224,4 @@ export default function Dashboard() {
    )
 
 }
+

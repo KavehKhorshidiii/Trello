@@ -1,29 +1,26 @@
 'use client'
 import { X } from "lucide-react"
 import { useActionState, useEffect } from "react"
-import BoardModalAction from "./boardModalAction"
+import cardModalAction from "./cardModalAction"
 import { useQueryClient } from "@tanstack/react-query"
 
 
 
-export default function BoardModal({ isModal, setIsModal }: { isModal: boolean, setIsModal: (value: boolean) => void }) {
-
-   const [state, formAction, pendding] = useActionState(BoardModalAction, { success: null, errors: {}, message: "" })
+export default function BoardModal({ isModal, setIsModal, params }: { isModal: boolean, setIsModal: (value: boolean) => void, params: string }) {
 
 
-   const queryClient = useQueryClient()  
+   const [state, formAction, pendding] = useActionState(cardModalAction, { success: null, errors: {}, message: "" })
 
+   const queryClient = useQueryClient()
 
    useEffect(() => {
 
       if (state.success) {
          setIsModal(false)
-         queryClient.invalidateQueries({ queryKey: ["boards"] })
+         queryClient.invalidateQueries({ queryKey: ["cards"] })
       }
 
-   },[state.success])
-
-
+   }, [state.success])
 
    return (
       <div className=" fixed border-4 backdrop-blur-sm w-full z-60 bg-black/30  h-screen flex justify-center bg-blur-2xl  items-center">
@@ -31,6 +28,7 @@ export default function BoardModal({ isModal, setIsModal }: { isModal: boolean, 
             <div onClick={() => setIsModal(false)}><X></X></div>
 
             <form action={formAction} className=" flex-col">
+               <input type="hidden" name="boardId" value={params} />
                <div className=" flex flex-col">
                   <label htmlFor="">Title</label>
                   <input name="title" className=" border-2" type="text" />
@@ -42,7 +40,7 @@ export default function BoardModal({ isModal, setIsModal }: { isModal: boolean, 
                <div className=" flex justify-start gap-3 items-center">
                   color
                   <div className=" flex gap-1">
-                     <input name="color" className=" size-10" type="color" />
+                     <input name="color" defaultValue="#000000" className=" size-10" type="color" />
                   </div>
                </div>
                <button type="submit" className=" border-2 rounded-sm px-3 py-1">add</button>

@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 // hash password
 export async function hashPass(password: string) {
@@ -19,14 +19,19 @@ export function JWTFunc(payload: string ) {
 }
 
 // verify JWT Token
-export function verifyJwtToken(TokenValue: string){
-
+export function verifyJwtToken(TokenValue: string) {
+   
+   
    const SECRET = process.env.SECRET_JWT || "random"
-
+   
    try {
+     
       const decoded = jwt.verify(TokenValue, SECRET)
+
       return decoded
+
    } catch(error) {
+
       console.error('Token verification failed:', error);
       return null
    }
