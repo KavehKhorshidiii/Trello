@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { Card } from "@/components/ui/card"
 import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query'
+import Navbar from '@/components/navbar'
 
 
 type CardType = {
@@ -23,7 +24,7 @@ type CardType = {
 export default function Cards() {
 
    const params = useParams();
-   const boardId = params.insideBoard as string ?? ""
+   const boardId = params.id as string ?? ""
    const [isModal, setIsModal] = useState(false)
 
 
@@ -31,16 +32,20 @@ export default function Cards() {
       const res = await fetch(`/api/Cards/${boardId}`)
       return res.json()
    }
-   const { data: cardData , isPending } = useQuery({
+   const { data: cardData, isPending } = useQuery({
       queryKey: ["cards"],
       queryFn: fetchCards
    })
 
-   
+
    return (
       <div>
+
+         <Navbar></Navbar>
+
          {/* Modal */}
          {isModal && <CardModal params={boardId} isModal={isModal} setIsModal={setIsModal} />}
+
 
          <Button onClick={() => setIsModal(true)} className="w-full sm:w-auto"><Plus className=" size-4"></Plus> Create Card </Button>
          {

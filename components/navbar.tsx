@@ -23,7 +23,7 @@ export default function Navbar() {
    const PathName = usePathname()
    const isHomePage = PathName === "/"
    const isDashboardPage = PathName === "/dashboard"
-   const isBoardPage = PathName.startsWith("/boards/")
+   const isBoardPage = PathName.startsWith("/boards")
 
 
    const [isLogin, setIsLogin] = useState<boolean>()
@@ -92,6 +92,29 @@ export default function Navbar() {
 
    // if PathName -> Dashboard
    if (isDashboardPage) {
+      return (
+         <header className=" flex justify-center border bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+            <div className=' container mx-auto flex justify-between items-center px-4 py-3 sm:py-4 '>
+
+
+
+               {/*  */}
+               <div className='flex items-center space-x-2 text-2xl'>
+                  <CircleCheck className='size-6 sm:size-8 text-blue-600' />
+                  <span className=' text-xl md:text-2xl font-bold text-gray-900'>Trello Clone </span>
+               </div>
+
+               <div className=' flex space-x-1 text-xl sm:space-x-1'>
+                  <div className=' bg-blue-600 flex justify-center text-white items-center size-10 rounded-full'>{[...userData?.firstname ?? ""][0]}</div>
+               </div>
+
+            </div>
+         </header >
+      )
+   }
+
+   // if PathName -> Dashboard
+   if (isBoardPage) {
       return (
          <header className=" flex justify-center border bg-white/80 backdrop-blur-sm sticky top-0 z-50">
             <div className=' container mx-auto flex justify-between items-center px-4 py-3 sm:py-4 '>
