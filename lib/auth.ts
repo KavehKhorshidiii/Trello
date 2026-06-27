@@ -8,7 +8,7 @@ export async function hashPass(password: string) {
 }
 
 // Create JWT Token
-export function JWTFunc(payload: string ) {
+export function JWTFunc(payload: string) {
 
    const SECRET = process.env.SECRET_JWT
 
@@ -20,19 +20,14 @@ export function JWTFunc(payload: string ) {
 
 // verify JWT Token
 export function verifyJwtToken(TokenValue: string) {
-   
-   
+
    const SECRET = process.env.SECRET_JWT || "random"
-   
-   try {
-     
-      const decoded = jwt.verify(TokenValue, SECRET)
 
+   const decoded = jwt.verify(TokenValue, SECRET)
+
+   if(decoded){
       return decoded
-
-   } catch(error) {
-
-      console.error('Token verification failed:', error);
+   }else{
       return null
    }
 

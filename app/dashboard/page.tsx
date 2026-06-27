@@ -12,6 +12,8 @@ import { useRouter } from "next/navigation"
 import { Grid3X3 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import Link from "next/link"
+
 
 
 
@@ -54,7 +56,7 @@ export default function Dashboard() {
    }, [authData, isLoading])
 
    const fetchBoards = async () => {
-      const res = await fetch("/api/Boards")
+      const res = await fetch("/api/boards")
       return res.json()
    }
    const { data: boardsData } = useQuery<{ data: { boards: BoardType[] } }>({
@@ -62,15 +64,14 @@ export default function Dashboard() {
       queryFn: fetchBoards
    })
 
-   function boardHandler() {
-      router.push(`/boards/${userData?._id}`)
-   }
 
    return (
-      <div className=" min-h-screen bg-gray-50">
+      <div className=" z-50 min-h-screen bg-gray-50">
+
 
          {/* Modal */}
          {isModal && <BoardModal isModal={isModal} setIsModal={setIsModal} />}
+
 
          {/* Navbar */}
          <Navbar></Navbar>
@@ -84,7 +85,7 @@ export default function Dashboard() {
 
             {/* */}
             <div className=" grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
-               <Card onClick={boardHandler} >
+               <Card>
                   <CardContent className=" p-4 sm:p-6">
                      <div className=" flex items-center justify-between">
                         <div>
@@ -97,7 +98,7 @@ export default function Dashboard() {
                      </div>
                   </CardContent>
                </Card>
-               <Card onClick={boardHandler} >
+               <Card>
                   <CardContent className=" p-4 sm:p-6">
                      <div className=" flex items-center justify-between">
                         <div>
@@ -110,7 +111,7 @@ export default function Dashboard() {
                      </div>
                   </CardContent>
                </Card>
-               <Card onClick={boardHandler} >
+               <Card>
                   <CardContent className=" p-4 sm:p-6">
                      <div className=" flex items-center justify-between">
                         <div>
@@ -123,7 +124,7 @@ export default function Dashboard() {
                      </div>
                   </CardContent>
                </Card>
-               <Card onClick={boardHandler} >
+               <Card>
                   <CardContent className=" p-4 sm:p-6">
                      <div className=" flex items-center justify-between">
                         <div>
@@ -165,7 +166,7 @@ export default function Dashboard() {
                </div>
 
 
-               {/* </div> */}
+               {/* ... */}
                <div className=" rounded-sm flex items-center space-x-2 bg-white p-3">
 
                   {
@@ -173,31 +174,33 @@ export default function Dashboard() {
                         viewMode === "grid" ? (
                            <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 items-center sm:justify-between space-y-2 sm:space-y-0">
                               {
-                                 boardsData?.data?.boards.map((board , key) =>
+                                 boardsData?.data?.boards.map((board, key) =>
+                                    <Link key={board._id} href={`boards/${board._id}`}>
+                                       <Card className={`min-h-50 h-full group hover:shadow-lg transition-shadow cursor-pointer`} >
+                                          <CardHeader className=" pb-3">
+                                             <div className=" flex items-center justify-between ">
+                                                <div className={` bg-[#000000]  rounded size-4 `}></div>
+                                                <Badge className=" text-xs" variant="secondary">New</Badge>
+                                             </div>
+                                          </CardHeader>
+                                          <CardContent className=" p-4 sm:p-6">
+                                             <CardTitle className=" sm:text-lg text-base mb-2 group-hover:text-blue-600 transition-colors">{board.title}</CardTitle>
+                                             <CardDescription className=" text-sm mb-4">{board.des}</CardDescription>
+                                             <div className=" flex flex-col sm:flex-row sm:items-center sm:justify-between justify-between text-xs text-gray-500 space-y-1 sm:space-y-0">
+                                                <span>
+                                                   Create
+                                                   {new Date(board.createdAt).toLocaleDateString()}
+                                                </span>
+                                                <span>
+                                                   Update
+                                                   {new Date(board.updatedAt).toLocaleDateString()}
+                                                </span>
 
-                                    <Card className={` ${key > 0 ? "mt-4" : ""} group hover:shadow-lg transition-shadow cursor-pointer`} onClick={boardHandler} key={board._id}>
-                                       <CardHeader className=" pb-3">
-                                          <div className=" flex items-center justify-between ">
-                                             <div className={` bg-[#000000]  rounded size-4 `}></div>
-                                             <Badge className=" text-xs" variant="secondary">New</Badge>
-                                          </div>
-                                       </CardHeader>
-                                       <CardContent className=" p-4 sm:p-6">
-                                          <CardTitle className=" sm:text-lg text-base mb-2 group-hover:text-blue-600 transition-colors">{board.title}</CardTitle>
-                                          <CardDescription className=" text-sm mb-4">{board.des}</CardDescription>
-                                          <div className=" flex flex-col sm:flex-row sm:items-center sm:justify-between justify-between text-xs text-gray-500 space-y-1 sm:space-y-0">
-                                             <span>
-                                                Create
-                                                {new Date(board.createdAt).toLocaleDateString()}
-                                             </span>
-                                             <span>
-                                                Update
-                                                {new Date(board.updatedAt).toLocaleDateString()}
-                                             </span>
+                                             </div>
+                                          </CardContent>
+                                       </Card>
+                                    </Link>
 
-                                          </div>
-                                       </CardContent>
-                                    </Card>
                                  )
                               }
                               <Card className=" border-2 h-full border-dashed border-gray-300 hover:border-blue-400 transition-colors cursor-pointer group">
@@ -210,31 +213,34 @@ export default function Dashboard() {
                         ) : (
                            <div className=" w-full flex flex-col gap-4">
                               {
-                                 boardsData?.data?.boards.map((board , key) =>
-                                 
-                                    <Card className={`${key > 0 ? "mt-4" : ""} group w-full hover:shadow-lg transition-shadow cursor-pointer`} onClick={boardHandler} key={board._id}>
-                                       <CardHeader className=" pb-3">
-                                          <div className=" flex items-center justify-between ">
-                                             <div className={` bg-[#000000]  rounded size-4 `}></div>
-                                             <Badge className=" text-xs" variant="secondary">New</Badge>
-                                          </div>
-                                       </CardHeader>
-                                       <CardContent className=" p-4 sm:p-6">
-                                          <CardTitle className=" sm:text-lg text-base mb-2 group-hover:text-blue-600 transition-colors">{board.title}</CardTitle>
-                                          <CardDescription className=" text-sm mb-4">{board.des}</CardDescription>
-                                          <div className=" flex flex-col sm:flex-row sm:items-center sm:justify-between justify-between text-xs text-gray-500 space-y-1 sm:space-y-0">
-                                             <span>
-                                                Create
-                                                {new Date(board.createdAt).toLocaleDateString()}
-                                             </span>
-                                             <span>
-                                                Update
-                                                {new Date(board.updatedAt).toLocaleDateString()}
-                                             </span>
+                                 boardsData?.data?.boards.map((board, key) =>
 
-                                          </div>
-                                       </CardContent>
-                                    </Card>
+                                    <Link key={board._id} href={`boards/${board._id}`}>
+                                       <Card className={` group w-full hover:shadow-lg transition-shadow cursor-pointer`} >
+                                          <CardHeader className=" pb-3">
+                                             <div className=" flex items-center justify-between ">
+                                                <div className={` bg-[#000000]  rounded size-4 `}></div>
+                                                <Badge className=" text-xs" variant="secondary">New</Badge>
+                                             </div>
+                                          </CardHeader>
+                                          <CardContent className=" p-4 sm:p-6">
+                                             <CardTitle className=" sm:text-lg text-base mb-2 group-hover:text-blue-600 transition-colors">{board.title}</CardTitle>
+                                             <CardDescription className=" text-sm mb-4">{board.des}</CardDescription>
+                                             <div className=" flex flex-col sm:flex-row sm:items-center sm:justify-between justify-between text-xs text-gray-500 space-y-1 sm:space-y-0">
+                                                <span>
+                                                   Create
+                                                   {new Date(board.createdAt).toLocaleDateString()}
+                                                </span>
+                                                <span>
+                                                   Update
+                                                   {new Date(board.updatedAt).toLocaleDateString()}
+                                                </span>
+
+                                             </div>
+                                          </CardContent>
+                                       </Card>
+                                    </Link>
+
                                  )
                               }
                               <Card className=" border-2 h-full border-dashed border-gray-300 hover:border-blue-400 transition-colors cursor-pointer group">

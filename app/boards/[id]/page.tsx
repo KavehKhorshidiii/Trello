@@ -21,34 +21,72 @@ type CardType = {
 }
 
 
-export default function Cards() {
+export default function Board() {
 
    const params = useParams();
    const boardId = params.id as string ?? ""
    const [isModal, setIsModal] = useState(false)
 
-
-   async function fetchCards() {
-      const res = await fetch(`/api/Cards/${boardId}`)
+   // fetch Board Data
+   async function fetchBoardData() {
+      const res = await fetch(`/api/boards/${boardId}`)
       return res.json()
    }
-   const { data: cardData, isPending } = useQuery({
-      queryKey: ["cards"],
-      queryFn: fetchCards
+   const { data: boardData, isPending } = useQuery({
+      queryKey: ["board"],
+      queryFn: fetchBoardData
    })
 
 
-   return (
-      <div>
 
-         <Navbar></Navbar>
+   // async function fetchCards() {
+   //    const res = await fetch(`/api/Cards/${boardId}`)
+   //    return res.json()
+   // }
+   // const { data: cardData, isPending } = useQuery({
+   //    queryKey: ["cards"],
+   //    queryFn: fetchCards
+   // })
+
+
+
+   return (
+      <div className=' min-h-screen bg-gray-50'>
 
          {/* Modal */}
          {isModal && <CardModal params={boardId} isModal={isModal} setIsModal={setIsModal} />}
 
+         <Navbar boardTitle={boardData?.[0].title} ></Navbar>
 
-         <Button onClick={() => setIsModal(true)} className="w-full sm:w-auto"><Plus className=" size-4"></Plus> Create Card </Button>
-         {
+         <Button onClick={() => setIsModal(true)} className="w-full sm:w-auto"><Plus className=" size-4"></Plus> Create Task </Button>
+
+
+         <main>
+            <div>
+               <div>
+                  <div>
+                     <span>Total Task:0</span>
+                  </div>
+               </div>
+            </div>
+         </main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         {/* {
             cardData?.data?.cards?.map((card: CardType) =>
                <Card key={card._id}>
                   <CardContent className=" p-4 sm:p-6">
@@ -64,7 +102,7 @@ export default function Cards() {
                   </CardContent>
                </Card>
             )
-         }
+         } */}
       </div>
    )
 }
