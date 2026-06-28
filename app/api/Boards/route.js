@@ -20,7 +20,6 @@ export async function GET() {
       await connectDB()
 
       const boards = await BoardModel.find({ author: verifyToken.id }).select("-__v")
-
       return NextResponse.json({ success: true, data: { boards: boards } })
 
    } catch {

@@ -21,13 +21,13 @@ export async function GET(req, { params }) {
 
       await connectDB()
 
-      const cards = await cardModel.find({ board: boardID.card }).select("-__v")
+      const Tasks = await cardModel.find({ board: boardID?.id }).select("-__v")
 
-      return NextResponse.json({ success: true, data: { cards: cards } })
+      return NextResponse.json({ success: true, data: { Tasks } })
 
    } catch {
 
-      return NextResponse.json({ success: false, data: { cards: null } })
+      return NextResponse.json({ success: false, data: null })
 
    }
 

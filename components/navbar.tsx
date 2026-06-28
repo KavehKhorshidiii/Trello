@@ -30,7 +30,6 @@ export default function Navbar({ boardTitle }: PropsType) {
    const PathName = usePathname()
    const splitPathName = PathName.split("/")
    const boardID = splitPathName[2] 
-   
    const isHomePage = PathName === "/"
    const isDashboardPage = PathName === "/dashboard"
    const isBoardPage = PathName.startsWith("/boards")
@@ -127,9 +126,6 @@ export default function Navbar({ boardTitle }: PropsType) {
          <header className=" flex justify-center border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
             <div className=' container mx-auto flex justify-between items-center px-4 py-3 sm:py-4 '>
 
-
-
-
                <div className=' flex items-center justify-between'>
                   <div className='flex items-center space-x-2 sm:space-x-4 min-w-0'>
                      <Link href="/dashboard" className=' flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-gray-900 shrink-0'>
@@ -157,7 +153,7 @@ export default function Navbar({ boardTitle }: PropsType) {
                </div>
 
                {/* filter */}
-               
+
             </div>
          </header >
       )

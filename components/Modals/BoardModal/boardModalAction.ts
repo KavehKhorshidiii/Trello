@@ -4,7 +4,7 @@ import connectDB from "@/lib/connectDB/connectDB"
 import { cookies } from "next/headers"
 import { verifyJwtToken } from "@/lib/auth"
 import BoardModel from "@/Models/boardModel/boardModel"
-
+import ColumnModel from "@/Models/columnModel/columnModel"
 
 
 
@@ -28,7 +28,7 @@ export default async function boardModalAction(prevState: stateType, formData: F
    const tokenValue = cookiesStore.get("token")?.value
    if (!tokenValue) { return { success: false, errors: {}, message: "Token does not exist." } }
    const verifyTokenValue = verifyJwtToken(tokenValue)
-  
+
    let userID;
    if (
       typeof verifyTokenValue === "object" &&
@@ -48,6 +48,23 @@ export default async function boardModalAction(prevState: stateType, formData: F
       author: userID
    })
 
+   const createDefaultColumns = await ColumnModel.insertMany([
+      {
+         title: "Todo",
+         board: createBoard._id,
+         order: 0
+      },
+      {
+         title: "In Progress",
+         board: createBoard._id,
+         order: 1
+      },
+      {
+         title: "Done",
+         board: createBoard._id,
+         order: 2
+      }
+   ])
 
 
    return { success: true, errors: {}, message: "successfully" }

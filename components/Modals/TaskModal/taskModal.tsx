@@ -1,7 +1,7 @@
 'use client'
 import { X } from "lucide-react"
 import { useActionState, useEffect } from "react"
-import cardModalAction from "./cardModalAction"
+import cardModalAction from "./taskModalAction"
 import { useQueryClient } from "@tanstack/react-query"
 
 

@@ -15,12 +15,6 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 
 
-
-
-
-
-
-
 type BoardType = {
    _id: string;
    title: string;
@@ -46,6 +40,7 @@ export default function Dashboard() {
       queryFn: fetchAuth,
    })
 
+   
    const setIsLogin = authData?.success
    const userData = authData?.data
    const router = useRouter()
@@ -65,13 +60,12 @@ export default function Dashboard() {
    })
 
 
+
    return (
       <div className=" z-50 min-h-screen bg-gray-50">
 
-
          {/* Modal */}
          {isModal && <BoardModal isModal={isModal} setIsModal={setIsModal} />}
-
 
          {/* Navbar */}
          <Navbar></Navbar>
@@ -116,7 +110,7 @@ export default function Dashboard() {
                      <div className=" flex items-center justify-between">
                         <div>
                            <p className=" text-xs sm:text-sm font-medium text-gray-600">Recent Activity</p>
-                           <p className=" text-xs sm:text-sm font-medium text-gray-600">{boardsData?.data?.boards.length}</p>
+                           <p className=" text-xs sm:text-sm font-medium text-gray-600">{boardsData?.data?.boards?.length}</p>
                         </div>
                         <div className=" h-10 w-10 sm:h-12 sm:w-12 bg-blue-100 rounded-lg flex items-center justify-center ">
                            <div className=" h-5 w-5 sm:h-6 sm:w-6 text-blue-600">📊</div>
@@ -170,13 +164,13 @@ export default function Dashboard() {
                <div className=" rounded-sm flex items-center space-x-2 bg-white p-3">
 
                   {
-                     boardsData?.data?.boards.length == 0 ? (<p>No Board yet</p>) :
+                     boardsData?.data?.boards?.length == 0 ? (<p>No Board yet</p>) :
                         viewMode === "grid" ? (
                            <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 items-center sm:justify-between space-y-2 sm:space-y-0">
                               {
-                                 boardsData?.data?.boards.map((board, key) =>
-                                    <Link key={board._id} href={`boards/${board._id}`}>
-                                       <Card className={`min-h-50 h-full group hover:shadow-lg transition-shadow cursor-pointer`} >
+                                 boardsData?.data?.boards?.map((board, key) =>
+                                    <Link className=" h-full" key={board._id} href={`boards/${board._id}`}>
+                                       <Card className={` group h-full hover:shadow-lg transition-shadow cursor-pointer`} >
                                           <CardHeader className=" pb-3">
                                              <div className=" flex items-center justify-between ">
                                                 <div className={` bg-[#000000]  rounded size-4 `}></div>
@@ -203,7 +197,7 @@ export default function Dashboard() {
 
                                  )
                               }
-                              <Card className=" border-2 h-full border-dashed border-gray-300 hover:border-blue-400 transition-colors cursor-pointer group">
+                              <Card onClick={ ()=>setIsModal(true) } className=" border-2 h-full border-dashed border-gray-300 hover:border-blue-400 transition-colors cursor-pointer group">
                                  <CardContent className=" p-4 sm:p-6 flex flex-col items-center justify-center h-full min-h-50">
                                     <Plus className=" size-6 sm:size-8  group-hover:text-blue-600 " />
                                     <p className="text-sm sm:text-base text-gray-600 group-hover:text-blue-600 font-medium">Create new board</p>
@@ -243,7 +237,7 @@ export default function Dashboard() {
 
                                  )
                               }
-                              <Card className=" border-2 h-full border-dashed border-gray-300 hover:border-blue-400 transition-colors cursor-pointer group">
+                              <Card onClick={ ()=>setIsModal(true) } className=" border-2 h-full border-dashed border-gray-300 hover:border-blue-400 transition-colors cursor-pointer group">
                                  <CardContent className=" p-4 sm:p-6 flex flex-col items-center justify-center h-full min-h-50">
                                     <Plus className=" size-6 sm:size-8  group-hover:text-blue-600 " />
                                     <p className="text-sm sm:text-base text-gray-600 group-hover:text-blue-600 font-medium">Create new board</p>
