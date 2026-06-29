@@ -6,8 +6,10 @@ import { useQueryClient } from "@tanstack/react-query"
 
 
 
-export default function BoardModal({ isCardModal, setIsCardModal, params }: { isCardModal: boolean, setIsCardModal: (value: boolean) => void, params: string }) {
+export default function TaskModal({ isCardModal, setIsCardModal, params }: { isCardModal: boolean, setIsCardModal: (value: boolean) => void, params:{ColumnId:string , BoardId:string} }) {
 
+   // params.BoardId
+   // params.ColumnId
 
    const [state, formAction, pendding] = useActionState(cardModalAction, { success: null, errors: {}, message: "" })
 
@@ -17,7 +19,7 @@ export default function BoardModal({ isCardModal, setIsCardModal, params }: { is
 
       if (state.success) {
          setIsCardModal(false)
-         queryClient.invalidateQueries({ queryKey: ["cards"] })
+         queryClient.invalidateQueries({ queryKey: ["tasks"] })
       }
 
    }, [state.success])
@@ -28,7 +30,8 @@ export default function BoardModal({ isCardModal, setIsCardModal, params }: { is
             <div onClick={() => setIsCardModal(false)}><X></X></div>
 
             <form action={formAction} className=" flex-col">
-               <input type="hidden" name="columnId" value={params} />
+               <input type="hidden" name="columnId" value={params.ColumnId} />
+               <input type="hidden" name="boardId" value={params.BoardId} />
                <div className=" flex flex-col">
                   <label htmlFor="">Title</label>
                   <input name="title" className=" border-2" type="text" />

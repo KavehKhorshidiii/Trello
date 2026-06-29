@@ -1,196 +1,20 @@
-// 'use client'
-// import CardModal from '@/components/Modals/TaskModal/taskModal'
-// import { Button } from '@/components/ui/button'
-// import { CardContent, CardHeader } from '@/components/ui/card'
-// import { Badge, CircleCheck, MoreHorizontal, Plus } from 'lucide-react'
-// import { useState } from 'react'
-// import { Card } from "@/components/ui/card"
-// import { useParams } from 'next/navigation';
-// import { useQuery } from '@tanstack/react-query'
-// import Navbar from '@/components/navbar'
-// import ColumnModal from '@/components/Modals/ColumnModal/columnModal'
-
-
-
-// type CardType = {
-//    board: string,
-//    color: string,
-//    createdAt: string,
-//    title: string,
-//    des: string,
-//    updatedAt: string,
-//    _id: string
-// }
-
-
-// export default function Board() {
-
-//    const params = useParams();
-//    const boardId = params.id as string ?? ""
-//    const [isModal, setIsModal] = useState(false)
-//    const [isModalColumn, setIsModalColumn] = useState(false)
-
-//    // fetch Board Data
-//    async function fetchBoardData() {
-//       const res = await fetch(`/api/boards/${boardId}`)
-//       return res.json()
-//    }
-//    const { data: boardData, isPending } = useQuery({
-//       queryKey: ["board"],
-//       queryFn: fetchBoardData
-//    })
-
-//    // fetch Task Data
-//    async function fetchCards() {
-//       const res = await fetch(`/api/task/${boardId}`)
-//       return res.json()
-//    }
-//    const { data: cardData } = useQuery({
-//       queryKey: ["cards"],
-//       queryFn: fetchCards
-//    })
-
-//    // fetch columns
-//    async function fetchColumns() {
-//       const res = await fetch(`/api/column/${boardId}`)
-//       return res.json()
-//    }
-//    const { data: Columns } = useQuery({
-//       queryKey: ["columns"],
-//       queryFn: fetchColumns
-//    })
-
-
-
-//    // function Column() {
-//    //    return (
-//    //       <div>
-//    //          <div>
-//    //             {/* column Header */}
-//    //             <div>
-//    //                <div>
-//    //                   <div>
-//    //                      <h3>column title name</h3>
-//    //                      <Badge></Badge>
-//    //                   </div>
-//    //                </div>
-//    //             </div>
-//    //          </div>
-//    //       </div>
-//    //    )
-//    // }
-
-//    return (
-//       <div className='  px-4 py-3 sm:py-4 flex flex-col min-h-screen bg-gray-50'>
-
-
-//          {/* Card Modal */}
-//          {isModal && <CardModal params={boardId} isModal={isModal} setIsModal={setIsModal} />}
-//          {/* Column Modal */}
-//          {isModalColumn && <ColumnModal params={boardId} isModalColumn={isModalColumn} setIsModalColumn={setIsModalColumn} />}
-
-
-//          <div>
-//             <Navbar boardTitle={boardData?.[0].title} ></Navbar>
-
-//             {/* content */}
-//             <main className=' flex border-8 flex-col container mx-auto px-2 sm:px-4 py-4 sm:py-6'>
-
-//                <Button onClick={() => setIsModal(true)} className="w-full sm:w-auto"><Plus className=" size-4"></Plus> Create Task </Button>
-
-//                <div className=' sm:flex-row sm:items-center sm:justify-between mb-6 space-y-4 sm:space-y-0'>
-//                   {/* <div className=' flex-wrap items-center gap-4 sm:gap-6'> */}
-
-//                   <div className=' text-sm text-gray-600 '>
-//                      <span className=' font-medium'>Total Task:0</span>
-//                      {/* Columns */}
-//                      <Button onClick={() => setIsModalColumn(true)} className="w-full sm:w-auto"><Plus className=" size-4"></Plus> Create Column </Button>
-//                   </div>
-
-
-//                   <div className="overflow-x-auto flex-1">
-//                      <div className="flex flex-row gap-4 min-w-max">
-
-//                         {Columns?.map((Col: CardType) => (
-//                            <div
-//                               key={Col._id}
-//                               className="flex flex-col w-96  overflow-y-auto rounded-2xl bg-gray-300 p-4 "
-//                            >
-
-//                               {/* header */}
-//                               <div className="flex justify-between mb-4">
-//                                  <p className="font-semibold text-sm truncate text-gray-900">
-//                                     {Col.title}
-//                                  </p>
-
-//                                  <Button variant="ghost" size="sm">
-//                                     <MoreHorizontal />
-//                                  </Button>
-//                               </div>
-
-//                               {/* tasks */}
-//                               <div className="flex flex-col gap-y-2 ">
-//                                  <p className="p-2 w-full overflow-auto h-60 wrap-break-word whitespace-normal rounded-2xl bg-white">
-//                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, cumque.
-//                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, cumque.
-//                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, cumque.
-//                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, cumque.
-//                                  </p>
-
-
-//                               </div>
-
-//                            </div>
-//                         ))}
-
-//                         {/* add column */}
-//                         <Card
-//                            onClick={() => setIsModalColumn(true)}
-//                            className="w-96 border-2 h-[700px] border-dashed border-gray-300 hover:border-blue-400 cursor-pointer"
-//                         >
-//                            <CardContent className="flex flex-col items-center justify-center h-full">
-//                               <Plus className="size-8 group-hover:text-blue-600" />
-//                               <p className="text-gray-600 font-medium">
-//                                  Create new Column
-//                               </p>
-//                            </CardContent>
-//                         </Card>
-
-//                      </div>
-//                   </div>
-
-
-
-
-
-
-//                </div>
-//             </main>
-
-
-//          </div>
-
-
-
-
-//       </div >
-//    )
-// }
-
-
-
 'use client'
 import CardModal from '@/components/Modals/TaskModal/taskModal'
-import { Button } from '@/components/ui/button'
 import { CardContent, CardHeader } from '@/components/ui/card'
-import { Badge, CircleCheck, MoreHorizontal, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { useState } from 'react'
 import { Card } from "@/components/ui/card"
 import { useParams } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import Navbar from '@/components/navbar'
 import ColumnModal from '@/components/Modals/ColumnModal/columnModal'
 import BoardColumn from '@/components/BoardColumn/BoardColumn'
+
+import { DndContext } from "@dnd-kit/core";
+import { SortableContext, horizontalListSortingStrategy } from "@dnd-kit/sortable";
+
+import { DragEndEvent } from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
 
 
 
@@ -203,6 +27,25 @@ type CardType = {
    updatedAt: string,
    _id: string
 }
+type CardFuncType = {
+   board: string,
+   column: string,
+   color: string,
+   createdAt: string,
+   title: string,
+   des: string,
+   updatedAt: string,
+   _id: string
+}
+type ColType = {
+   _id: string
+   title: string,
+   board: string,
+   order: number,
+   __v: number
+}
+
+
 
 
 export default function Board() {
@@ -211,6 +54,7 @@ export default function Board() {
    const boardId = params.id as string ?? ""
    const [isModalColumn, setIsModalColumn] = useState(false)
    const [isCardModal, setIsCardModal] = useState(false)
+   const [selectColumnId, setSelectedColumnId] = useState<string>("")
 
 
    // fetch Board Data
@@ -236,20 +80,74 @@ export default function Board() {
       const res = await fetch(`/api/column/${boardId}`)
       return res.json()
    }
-   const { data: Columns } = useQuery({
+   const { data: columnsData } = useQuery({
       queryKey: ["columns"],
       queryFn: fetchColumns
    })
+   // fetch task
+   async function fetchTask() {
+      const res = await fetch(`/api/task/${boardId}`)
+      return res.json()
+   }
+   const { data: Task } = useQuery({
+      queryKey: ["tasks"],
+      queryFn: fetchTask
+   })
+
+   const ReorderColumn = async (columns: ColType[]) => {
+      const res = await fetch('/api/column/reorder', {
+         method: "PATCH",
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify(columns)
+      })
+      console.log("=>", res)
+   }
+
+   const updateColumns = useMutation({
+      mutationFn: ReorderColumn,
+   });
+
+   const [columns, setColumns] = useState<ColType[]>([]); // <- show Columns 
+
+   const displayColumns = columns.length > 0 ? columns : (columnsData ?? []);
+
+   function handleDragEnd(event: DragEndEvent) {
+
+      const { active, over } = event;
+
+      if (!over) return;
+
+      if (active.id === over.id) return;
+
+      const currentColumns: ColType[] = columns.length > 0 ? columns : (columnsData ?? []);
+
+      const oldIndex: number = currentColumns.findIndex(
+         (col => col._id === active.id)
+      );
+
+      const newIndex: number = currentColumns.findIndex(
+         (col => col._id === over.id)
+      );
+
+      const newColumns = arrayMove(currentColumns, oldIndex, newIndex);
+      const sortColumn = newColumns.map((col, index) => ({ ...col, order: index }))
+      setColumns(sortColumn);
+
+      updateColumns.mutate(sortColumn);
+
+   }
+
 
 
 
    return (
       <div className=' min-h-screen bg-white'>
 
-          {/* Card Modal */}
-          {isCardModal && <CardModal params={boardId} isCardModal={isCardModal} setIsCardModal={setIsCardModal} />}
-          {/* Column Modal */}
-          {isModalColumn && <ColumnModal params={boardId} isModalColumn={isModalColumn} setIsModalColumn={setIsModalColumn} />}
+
+         {/* Card Modal */}
+         {isCardModal && <CardModal params={{ ColumnId: selectColumnId, BoardId: boardId }} isCardModal={isCardModal} setIsCardModal={setIsCardModal} />}
+         {/* Column Modal */}
+         {isModalColumn && <ColumnModal params={boardId} isModalColumn={isModalColumn} setIsModalColumn={setIsModalColumn} />}
 
 
          <Navbar boardTitle={boardData?.[0].title} ></Navbar>
@@ -287,16 +185,21 @@ export default function Board() {
                {/* ── Kanban board ── */}
                <main className=" flex overflow-x-auto">
                   <div className="flex gap-4 p-6 w-max">
-                     {
-                        Columns?.map((col: CardType) => (
-                           <BoardColumn key={col._id} data={col} isCardModal={isCardModal} setIsCardModal={setIsCardModal} ></BoardColumn>
-                        ))
-                     }
+                     <DndContext onDragEnd={handleDragEnd}>
+                        <SortableContext strategy={horizontalListSortingStrategy} items={displayColumns.map((col: CardType) => col._id)} >
+                           {
+                              displayColumns?.map((col: CardType) => (
+                                 <BoardColumn tasks={Task?.data?.Tasks.filter((task: CardFuncType) => task.column === col._id)} key={col._id} boardData={col} isCardModal={isCardModal} setIsCardModal={setIsCardModal} setSelectedColumnId={setSelectedColumnId} ></BoardColumn>
+                              ))
+                           }
+                        </SortableContext>
+                     </DndContext>
+
                      {/* add column */}
-                     <Card onClick={() => setIsModalColumn(true)} className="w-[300px] border-2  border-dashed border-gray-300 hover:border-blue-400 cursor-pointer">
-                        <CardContent className="flex flex-col items-center justify-center h-full">
-                           <Plus className="size-8 group-hover:text-blue-600" />
-                           <p className="text-gray-600 font-medium">Create new Column</p>
+                     <Card onClick={() => setIsModalColumn(true)} className=" group w-[300px] h-52  border-2  border-dashed border-gray-300 hover:border-blue-400 cursor-pointer">
+                        <CardContent className="flex  group-hover:text-blue-600 flex-col items-center justify-center h-full">
+                           <Plus className="size-8 " />
+                           <p className="text-gray-600  group-hover:text-blue-600 font-medium">Create new Column</p>
                         </CardContent>
                      </Card>
                   </div>

@@ -16,7 +16,16 @@ const CardSchema = new Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "column",
       index: true,
-      required:true
+      required:true,
+   },
+    board: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "board",
+      index: true,
+      required:true,
+   },
+   order: {
+      type:Number
    }
 }, {timestamps: true})
 

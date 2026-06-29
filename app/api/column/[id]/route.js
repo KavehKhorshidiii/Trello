@@ -8,7 +8,7 @@ export async function GET(req, { params }) {
    
    await connectDB()
 
-   const columns = await ColumnModel.find({board:boardID.id})
+   const columns = await ColumnModel.find({board:boardID.id}).sort({order:1})
 
    return NextResponse.json(columns)
 

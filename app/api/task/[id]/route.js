@@ -21,7 +21,7 @@ export async function GET(req, { params }) {
 
       await connectDB()
 
-      const Tasks = await cardModel.find({ board: boardID?.id }).select("-__v")
+      const Tasks = await cardModel.find({ board: boardID?.id }).select("-__v").sort({order:1})
 
       return NextResponse.json({ success: true, data: { Tasks } })
 
