@@ -29,7 +29,7 @@ export default function Navbar({ boardTitle }: PropsType) {
 
    const PathName = usePathname()
    const splitPathName = PathName.split("/")
-   const boardID = splitPathName[2] 
+   const boardID = splitPathName[2]
    const isHomePage = PathName === "/"
    const isDashboardPage = PathName === "/dashboard"
    const isBoardPage = PathName.startsWith("/boards")
@@ -136,23 +136,34 @@ export default function Navbar({ boardTitle }: PropsType) {
                   </div>
                   <div className=' mx-4 h-4 sm:h-6 w-px  bg-gray-300 hidden sm:block' />
                   <div className=' flex items-center space-x-1 sm:space-x-2 min-w-0'>
-                     <CircleCheck className=' text-blue-600' />
+                     {/* <CircleCheck className=' text-blue-600' /> */}
                      <span className='text-lg font-bold text-gray-900 truncate  space-x-1 sm:space-x-2 min-w-0'>{boardTitle}</span>
                      {
                         (
-                           <Button onClick={()=>setIsModal(!isModal)} variant={"ghost"} size={"sm"} className=" size-7 flex shrink-0 p-0 ">
+                           <Button onClick={() => setIsModal(!isModal)} variant={"ghost"} size={"sm"} className=" size-7 flex shrink-0 p-0 ">
                               <MoreHorizontal></MoreHorizontal>
                            </Button>
                         )
                      }
                      {
                         isModal &&
-                        <ChangeColorNavbar isModal={isModal} setIsModal={()=>setIsModal(!isModal)} params={boardID}/>
+                        <ChangeColorNavbar isModal={isModal} setIsModal={() => setIsModal(!isModal)} params={boardID} />
                      }
                   </div>
                </div>
 
-               {/* filter */}
+               {/* Filter - profile */}
+               <div>
+                  <div className=' gap-2 flex space-x-1 text-xl sm:space-x-1'>
+                     <button className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-gray-800 border border-gray-200 rounded-lg px-3 py-1.5 hover:bg-gray-50 transition-colors">
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                           <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                        </svg>
+                        Filter
+                     </button>
+                     <div className=' bg-blue-600 flex justify-center text-white items-center size-10 rounded-full'>{[...userData?.firstname ?? ""][0]}</div>
+                  </div>
+               </div>
 
             </div>
          </header >

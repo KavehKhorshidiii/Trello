@@ -12,9 +12,9 @@ const CardSchema = new Schema({
       type: String,
       default: "#ffffff"
    },
-   board: {
+   column: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "board",
+      ref: "column",
       index: true,
       required:true
    }

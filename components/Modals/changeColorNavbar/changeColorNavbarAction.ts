@@ -27,8 +27,6 @@ export default async function changeColorNavbarAction(prevState: stateType, form
       boardId: formData.get("boardId")
    }
 
-   console.log(title, color, boardId)
-
 
    const cookiesStore = await cookies()
    const tokenValue = cookiesStore.get("token")?.value

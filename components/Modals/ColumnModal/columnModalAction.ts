@@ -30,7 +30,7 @@ export default async function columnModelAction(prevState: stateType, formData: 
    await connectDB() 
 
    const lastColumn = await ColumnModel.find({board:boardId}).sort({order: -1})
-   const OrderNumber = lastColumn ? lastColumn[0]?.order + 1 : 0
+   const OrderNumber = lastColumn[0] ? lastColumn[0]?.order + 1 : 0
 
    const createCard = await ColumnModel.create({
       title,

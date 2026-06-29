@@ -9,7 +9,6 @@ export async function GET(req, { params }) {
    await connectDB()
 
    const columns = await ColumnModel.find({board:boardID.id})
-   console.log(columns)
 
    return NextResponse.json(columns)
 
