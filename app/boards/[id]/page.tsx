@@ -160,11 +160,14 @@ export default function Board() {
       const overTask = currentTasks.find(t => t._id === over.id);
       if (!activeTask) return;
 
+      const overData = event.over?.data?.current;
+      console.log(overData)
+
 
       // MOVE BETWEEN COLUMNS
       if (activeType === "task") {
          const fromColumn = activeTask.column;
-         const toColumn = overTask?.column;
+         const toColumn = overData?.type === "column" ? over.id : overTask?.column;
          if (toColumn && fromColumn !== toColumn) {
             const movedTasks = currentTasks.map(task => {
                if (task._id === active.id) {
