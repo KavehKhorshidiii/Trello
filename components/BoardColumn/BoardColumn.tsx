@@ -59,6 +59,14 @@ export default function BoardColumn({ boardData, isCardModal, tasks, setIsCardMo
       data: { type: "column", column: boardData },
    });
 
+   const { setNodeRef: setDropRef, isOver } = useDroppable({
+      id: boardData._id,
+      data: {
+         type: "column",
+         column: boardData,
+      },
+   });
+
    const style = {
       transform: CSS.Transform.toString(transform),
       transition,
@@ -72,13 +80,13 @@ export default function BoardColumn({ boardData, isCardModal, tasks, setIsCardMo
 
 
    return (
-      <div {...attributes} {...listeners}  style={style} ref={setNodeRef} className=" flex flex-col w-[300px] shrink-0 cursor-grab">
+      <div style={style} ref={(node) => {setNodeRef(node); setDropRef(node)}} className={` flex flex-col w-[300px] shrink-0 `}>
 
 
-         <div className="flex flex-col gap-3 bg-gray-50 rounded-xl border border-gray-200 p-3 min-h-[120px]">
+         <div className={`${isOver ? " border-2 border-dashed border-blue-600 " : " border-gray-200" } flex flex-col gap-3 bg-gray-50 rounded-xl border p-3 min-h-[120px]`}>
 
             {/* Column header */}
-            <div className="flex items-center border-b-1  justify-between mb-3">
+            <div  {...attributes} {...listeners} className="flex items-center border-b-1  justify-between mb-3">
                <div className="flex w-full justify-between items-center gap-2">
                   <div className=" flex gap-2 items-center">
                      <div>
