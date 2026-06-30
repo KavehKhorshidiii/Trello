@@ -94,47 +94,85 @@ export default function Board() {
       queryFn: fetchTask
    })
 
+   // update Columns
    const ReorderColumn = async (columns: ColType[]) => {
       const res = await fetch('/api/column/reorder', {
          method: "PATCH",
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(columns)
       })
-      console.log("=>", res)
    }
-
    const updateColumns = useMutation({
       mutationFn: ReorderColumn,
    });
+   // update Columns
+   const ReorderTaskCard = async (tasks: CardType[]) => {
+      const res = await fetch('/api/task/reorder', {
+         method: "PATCH",
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify(tasks)
+      })
+   }
+   const updateTaskCard = useMutation({
+      mutationFn: ReorderTaskCard,
+   });
 
+   // // //
    const [columns, setColumns] = useState<ColType[]>([]); // <- show Columns 
-
    const displayColumns = columns.length > 0 ? columns : (columnsData ?? []);
+
+   const [tasks, setTasks] = useState<CardType[]>([]); // <- show Columns
+   const displayTasks = tasks.length > 0 ? tasks : (Task?.data?.Tasks ?? []);
+   //console.log("displayTasks =>" , displayTasks)
+
 
    function handleDragEnd(event: DragEndEvent) {
 
       const { active, over } = event;
-
       if (!over) return;
-
       if (active.id === over.id) return;
 
-      const currentColumns: ColType[] = columns.length > 0 ? columns : (columnsData ?? []);
+      const activeType = active.data.current?.type;
+      const overType = over.data.current?.type;
 
-      const oldIndex: number = currentColumns.findIndex(
-         (col => col._id === active.id)
-      );
+      // Columns
+      if (activeType === "column") {
+         const currentColumns: ColType[] = columns.length > 0 ? columns : (columnsData ?? []);
+         const oldIndex: number = currentColumns.findIndex((col => col._id === active.id));
+         const newIndex: number = currentColumns.findIndex((col => col._id === over.id));
+         const newColumns = arrayMove(currentColumns, oldIndex, newIndex);
+         const sortColumn = newColumns.map((col, index) => ({ ...col, order: index }))
+         setColumns(sortColumn);
+         updateColumns.mutate(sortColumn);
+      }
 
-      const newIndex: number = currentColumns.findIndex(
-         (col => col._id === over.id)
-      );
+      // Card Task
+      if (activeType === "task") {
+         const currentTaskCard: CardType[] = tasks.length > 0 ? (tasks) : (Task?.data?.Tasks || [])
+         const oldIndexTask = currentTaskCard.findIndex((task: CardType) => task._id === active?.id)
+         const newIndexTask = currentTaskCard.findIndex((task: CardType) => task._id === over?.id)
+         if (oldIndexTask === -1 || newIndexTask === -1) return;
+         const newTaskList = arrayMove(currentTaskCard, oldIndexTask, newIndexTask);
+         const sortTask = newTaskList.map((task, index) => ({ ...task, order: index }))
+         setTasks(sortTask)
+         updateTaskCard.mutate(sortTask);
+      }
 
-      const newColumns = arrayMove(currentColumns, oldIndex, newIndex);
-      const sortColumn = newColumns.map((col, index) => ({ ...col, order: index }))
-      setColumns(sortColumn);
 
-      updateColumns.mutate(sortColumn);
+      const currentTaskCard = tasks.length > 0 ? tasks : (Task?.data?.Tasks || []);
 
+      const findTask = currentTaskCard.find(t => t._id === active.id);
+
+      if (!findTask) return;
+
+      const droppedTask = currentTaskCard.find(t => t._id === over.id);
+
+      const finalToColumn = toColumn || droppedTask?.column || task.column;
+
+
+
+
+      //console.log("action => ", active.data.current); console.log("over => ", over.data.current);
    }
 
 
@@ -189,7 +227,7 @@ export default function Board() {
                         <SortableContext strategy={horizontalListSortingStrategy} items={displayColumns.map((col: CardType) => col._id)} >
                            {
                               displayColumns?.map((col: CardType) => (
-                                 <BoardColumn tasks={Task?.data?.Tasks.filter((task: CardFuncType) => task.column === col._id)} key={col._id} boardData={col} isCardModal={isCardModal} setIsCardModal={setIsCardModal} setSelectedColumnId={setSelectedColumnId} ></BoardColumn>
+                                 <BoardColumn tasks={displayTasks.filter((task: CardFuncType) => task.column === col._id)} key={col._id} boardData={col} isCardModal={isCardModal} setIsCardModal={setIsCardModal} setSelectedColumnId={setSelectedColumnId} ></BoardColumn>
                               ))
                            }
                         </SortableContext>

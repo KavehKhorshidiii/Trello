@@ -1,6 +1,9 @@
+'use client'
 import { MoreHorizontal, Plus } from "lucide-react"
 import { GripHorizontal } from 'lucide-react';
 import { Button } from "../ui/button"
+import TaskCard from "../TaskCard/TaskCard";
+import { useState } from "react";
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -8,6 +11,7 @@ import { CSS } from "@dnd-kit/utilities";
 
 import { DndContext } from "@dnd-kit/core";
 import { SortableContext, horizontalListSortingStrategy } from "@dnd-kit/sortable";
+import { verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 
@@ -37,6 +41,9 @@ type CardFuncType = {
 export default function BoardColumn({ boardData, isCardModal, tasks, setIsCardModal, setSelectedColumnId }: { boardData: CardType, isCardModal: boolean, tasks: CardFuncType[], setIsCardModal: (value: boolean) => void, setSelectedColumnId: (value: string) => void }) {
 
 
+   const handleDragEnd = () => {
+      console.log("object")
+   }
 
    const AddCardHandler = () => {
       setIsCardModal(!isCardModal)
@@ -51,12 +58,18 @@ export default function BoardColumn({ boardData, isCardModal, tasks, setIsCardMo
       transition,
    } = useSortable({
       id: boardData._id,
+      data: {type: "column",column: boardData},
    });
 
    const style = {
       transform: CSS.Transform.toString(transform),
       transition,
    };
+
+
+   const [Tasks, setTasks] = useState<CardFuncType[]>([]);
+   const displayTasks = Tasks.length > 0 ? Tasks : (tasks ?? []);
+   //console.log(displayTasks)
 
 
    return (
@@ -82,27 +95,15 @@ export default function BoardColumn({ boardData, isCardModal, tasks, setIsCardMo
             </div>
 
             {/* Cards area */}
-            <SortableContext strategy={horizontalListSortingStrategy} items={tasks?.map((task: CardType) => task._id)} >
-            {
-               tasks?.map((task: CardFuncType) =>
-
-                  <div key={task._id} className=" border flex flex-col justify-between rounded-xl  overflow-y-auto">
-                     <div>
-                        <div className=" px-2 pt-2 font-bold flex items-center justify-between">
-                           <p>{task.title}</p>
-                           <Button variant="ghost" size="sm"><MoreHorizontal /></Button>
-                        </div>
-                        <p className=" px-2">{task.des}</p>
-                     </div>
-                     <div className=" flex items-center text-sm justify-between bg-gray-50 sticky bottom-0  boarder border p-2 overflow-y-auto">
-                        <span className=" size-3 bg-blue-500 rounded-full"></span>
-                        <span>{task.updatedAt.split("T")[0]}</span>
-                     </div>
-                  </div>
-
-               )
-            }
+            {/* <DndContext> */}
+            <SortableContext strategy={verticalListSortingStrategy} items={(tasks || []).map((task: CardFuncType) => task._id)} >
+               {
+                  displayTasks?.map((task: CardFuncType) =>
+                     <TaskCard key={task._id} data={task} />
+                  )
+               }
             </SortableContext>
+            {/* </DndContext> */}
 
 
             {/* Add a card */}
