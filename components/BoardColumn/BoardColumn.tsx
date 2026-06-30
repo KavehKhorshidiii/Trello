@@ -9,7 +9,8 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 
-import { DndContext } from "@dnd-kit/core";
+
+import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, horizontalListSortingStrategy } from "@dnd-kit/sortable";
 import { verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { DragEndEvent } from "@dnd-kit/core";
@@ -41,9 +42,6 @@ type CardFuncType = {
 export default function BoardColumn({ boardData, isCardModal, tasks, setIsCardModal, setSelectedColumnId }: { boardData: CardType, isCardModal: boolean, tasks: CardFuncType[], setIsCardModal: (value: boolean) => void, setSelectedColumnId: (value: string) => void }) {
 
 
-   const handleDragEnd = () => {
-      console.log("object")
-   }
 
    const AddCardHandler = () => {
       setIsCardModal(!isCardModal)
@@ -58,7 +56,7 @@ export default function BoardColumn({ boardData, isCardModal, tasks, setIsCardMo
       transition,
    } = useSortable({
       id: boardData._id,
-      data: {type: "column",column: boardData},
+      data: { type: "column", column: boardData },
    });
 
    const style = {
@@ -67,19 +65,20 @@ export default function BoardColumn({ boardData, isCardModal, tasks, setIsCardMo
    };
 
 
+
    const [Tasks, setTasks] = useState<CardFuncType[]>([]);
    const displayTasks = Tasks.length > 0 ? Tasks : (tasks ?? []);
    //console.log(displayTasks)
 
 
    return (
-      <div style={style} ref={setNodeRef} className=" flex flex-col w-[300px] shrink-0">
+      <div {...attributes} {...listeners}  style={style} ref={setNodeRef} className=" flex flex-col w-[300px] shrink-0 cursor-grab">
 
 
          <div className="flex flex-col gap-3 bg-gray-50 rounded-xl border border-gray-200 p-3 min-h-[120px]">
 
             {/* Column header */}
-            <div  {...attributes} {...listeners} className="flex items-center border-b-1  justify-between mb-3">
+            <div className="flex items-center border-b-1  justify-between mb-3">
                <div className="flex w-full justify-between items-center gap-2">
                   <div className=" flex gap-2 items-center">
                      <div>

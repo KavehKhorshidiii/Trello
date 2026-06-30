@@ -7,11 +7,12 @@ export async function PATCH(req){
    await connectDB()
 
    const updateTaskCard = await req.json()
+   console.log(updateTaskCard)
 
    const operations = updateTaskCard.map((x) => ({
       updateOne:{
          filter: {_id: x._id},
-         update: {order: x.order}
+         update: {order: x.order , column:x.column}
       }
    }))
 

@@ -10,11 +10,13 @@ import Navbar from '@/components/navbar'
 import ColumnModal from '@/components/Modals/ColumnModal/columnModal'
 import BoardColumn from '@/components/BoardColumn/BoardColumn'
 
-import { DndContext } from "@dnd-kit/core";
+import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, horizontalListSortingStrategy } from "@dnd-kit/sortable";
 
 import { DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
+
+import { DndContext, useSensors, PointerSensor, useSensor } from "@dnd-kit/core";
 
 
 
@@ -105,7 +107,7 @@ export default function Board() {
    const updateColumns = useMutation({
       mutationFn: ReorderColumn,
    });
-   // update Columns
+   // update CardTask
    const ReorderTaskCard = async (tasks: CardType[]) => {
       const res = await fetch('/api/task/reorder', {
          method: "PATCH",
@@ -117,13 +119,13 @@ export default function Board() {
       mutationFn: ReorderTaskCard,
    });
 
-   // // //
+
+
    const [columns, setColumns] = useState<ColType[]>([]); // <- show Columns 
    const displayColumns = columns.length > 0 ? columns : (columnsData ?? []);
 
    const [tasks, setTasks] = useState<CardType[]>([]); // <- show Columns
    const displayTasks = tasks.length > 0 ? tasks : (Task?.data?.Tasks ?? []);
-   //console.log("displayTasks =>" , displayTasks)
 
 
    function handleDragEnd(event: DragEndEvent) {
@@ -131,13 +133,16 @@ export default function Board() {
       const { active, over } = event;
       if (!over) return;
       if (active.id === over.id) return;
-
       const activeType = active.data.current?.type;
-      const overType = over.data.current?.type;
 
-      // Columns
+
+
+
+      //REORDER Columns ✅
       if (activeType === "column") {
+         console.log("object")
          const currentColumns: ColType[] = columns.length > 0 ? columns : (columnsData ?? []);
+         console.log(currentColumns)
          const oldIndex: number = currentColumns.findIndex((col => col._id === active.id));
          const newIndex: number = currentColumns.findIndex((col => col._id === over.id));
          const newColumns = arrayMove(currentColumns, oldIndex, newIndex);
@@ -146,34 +151,71 @@ export default function Board() {
          updateColumns.mutate(sortColumn);
       }
 
-      // Card Task
+
+
+
+
+      const currentTasks: CardFuncType[] = tasks.length > 0 ? tasks : (Task?.data?.Tasks || []);
+      const activeTask = currentTasks.find(t => t._id === active.id);
+      const overTask = currentTasks.find(t => t._id === over.id);
+      if (!activeTask) return;
+
+
+      // MOVE BETWEEN COLUMNS
       if (activeType === "task") {
-         const currentTaskCard: CardType[] = tasks.length > 0 ? (tasks) : (Task?.data?.Tasks || [])
-         const oldIndexTask = currentTaskCard.findIndex((task: CardType) => task._id === active?.id)
-         const newIndexTask = currentTaskCard.findIndex((task: CardType) => task._id === over?.id)
-         if (oldIndexTask === -1 || newIndexTask === -1) return;
-         const newTaskList = arrayMove(currentTaskCard, oldIndexTask, newIndexTask);
-         const sortTask = newTaskList.map((task, index) => ({ ...task, order: index }))
-         setTasks(sortTask)
-         updateTaskCard.mutate(sortTask);
+         const fromColumn = activeTask.column;
+         const toColumn = overTask?.column;
+         if (toColumn && fromColumn !== toColumn) {
+            const movedTasks = currentTasks.map(task => {
+               if (task._id === active.id) {
+                  return {
+                     ...task,
+                     column: toColumn,
+                  };
+               }
+               return task;
+            });
+
+            setTasks(movedTasks);
+            updateTaskCard.mutate(movedTasks);
+            return;
+         }
       }
 
 
-      const currentTaskCard = tasks.length > 0 ? tasks : (Task?.data?.Tasks || []);
-
-      const findTask = currentTaskCard.find(t => t._id === active.id);
-
-      if (!findTask) return;
-
-      const droppedTask = currentTaskCard.find(t => t._id === over.id);
-
-      const finalToColumn = toColumn || droppedTask?.column || task.column;
 
 
 
+      // REORDER CARD-TASK IN COLUMN
+      const oldIndex = currentTasks.findIndex(t => t._id === active.id);
+      const newIndex = currentTasks.findIndex(t => t._id === over.id);
 
-      //console.log("action => ", active.data.current); console.log("over => ", over.data.current);
+      if (oldIndex === -1 || newIndex === -1) return;
+
+      const reordered = arrayMove(currentTasks, oldIndex, newIndex);
+
+      const sorted = reordered.map((task, index) => ({
+         ...task,
+         order: index,
+      }));
+
+      setTasks(sorted);
+      updateTaskCard.mutate(sorted);
+
+
+
    }
+
+
+
+
+   const sensors = useSensors(
+      useSensor(PointerSensor, {
+         activationConstraint: {
+            distance: 5,
+         },
+      })
+   );
 
 
 
@@ -223,7 +265,7 @@ export default function Board() {
                {/* ── Kanban board ── */}
                <main className=" flex overflow-x-auto">
                   <div className="flex gap-4 p-6 w-max">
-                     <DndContext onDragEnd={handleDragEnd}>
+                     <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
                         <SortableContext strategy={horizontalListSortingStrategy} items={displayColumns.map((col: CardType) => col._id)} >
                            {
                               displayColumns?.map((col: CardType) => (
