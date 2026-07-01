@@ -1,118 +1,76 @@
 'use client'
 // Imports
+import Spinner from '../spinner/spinner';
+import { redirect , usePathname } from 'next/navigation';
 import { ArrowLeft, ArrowRightIcon, CircleCheck, MoreHorizontal } from 'lucide-react';
-import { redirect } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '../ui/button';
-import { usePathname } from "next/navigation"
 import ChangeColorNavbar from "@/components/Modals/changeColorNavbar/changeColorNavbar"
 import { useQuery } from "@tanstack/react-query";
-import Spinner from '../spinner/spinner';
-
-
-
-// Types
-type IUser = {
-   _id: string
-   firstname: string
-   username: string
-   role: string
-}
 
 
 export default function Navbar({ boardTitle }: { boardTitle: string }) {
 
 
-   const PathName = usePathname()
-   const splitPathName = PathName.split("/")
-   const boardID = splitPathName[2]
-   const isHomePage = PathName === "/"
-   const isDashboardPage = PathName === "/dashboard"
-   const isBoardPage = PathName.startsWith("/boards")
-   //const [isLogin, setIsLogin] = useState<boolean>()
-   //const [userData, setUserData] = useState<IUser | null>(null)
-   const [isModal, setIsModal] = useState(false)
+   const PathName = usePathname(); const splitPathName = PathName.split("/"); const boardID = splitPathName[2];  // Path Name
+   const isHomePage = PathName === "/";  // home page
+   const isDashboardPage = PathName === "/dashboard";  // dashboard page
+   const isBoardPage = PathName.startsWith("/boards");  // board/...
+   const [isModal, setIsModal] = useState(false) // Modal
 
 
-
-
+   // API -> /api/authCheck
    const authCheck = async () => {
       const res = await fetch("/api/authCheck")
       return res.json()
    }
-
-   const { data, isLoading, error } = useQuery({
+   const { data, isLoading } = useQuery({
       queryKey: ["authCheck"],
       queryFn: authCheck,
    })
 
-   const isLogin = data?.success ?? false
-   const userData = data?.data ?? null
-   console.log(isLogin)
-   console.log(userData)
-   //console.log(data?.success)
+
+   const isLogin = data?.success ?? false;  // Is the user registered?
+   const userData = data?.data ?? null;  // User Data
 
 
-   // function isLoginHandler(response: { success: boolean, data: IUser }) {
-   //    if (response.success) {
-   //       setIsLogin(true)
-   //       setUserData(response.data)
-   //    } else {
-   //       setIsLogin(false)
-   //       setUserData(null)
-   //    }
-   // }
-
-   // useEffect(()=>{
-   //    if (data?.response?.success) {
-   //       const isLogin = true
-   //       console.log(isLogin)
-   //    } else {
-   //       const isLogin = false
-   //       console.log(isLogin)
-   //    }
-   // },[data])
-
-   // useEffect(() => {
-   //    fetch("/api/authCheck")
-   //       .then(res => res.json())
-   //       .then(response => isLoginHandler(response))
-   // }, [])
-
-
-   // if PathName = Homepage
+   // if PathName -> Homepage
    if (isHomePage) {
       return (
-         <header className=" flex justify-center border bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+         <header className=" border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
             <div className=' container mx-auto flex justify-between items-center px-4 py-3 sm:py-4 '>
 
-
-
-               {/*  */}
-               <div className='flex items-center space-x-2 text-2xl'>
+               {/* Project name and logo */}
+               <div className='flex items-center space-x-2'>
                   <CircleCheck className='size-6 sm:size-8 text-blue-600' />
-                  <span className=' text-xl md:text-2xl font-bold text-gray-900'>Trello Clone </span>
+                  <span className=' text-xl sm:text-2xl font-bold text-gray-900'>Trello</span>
                </div>
 
-               <div className=' flex space-x-1 text-xl sm:space-x-1'>
+               {/* Login buttons and Dashboard Button */}
+               <div className=' flex space-x-1 text-xl sm:space-x-4'>
                   {
                      isLoading ? <Spinner /> : isLogin ? (
-                        <div className=' flex gap-1 flex-col sm:flex-row items-end sm:items-center'>
-                           <span className=' text-xs sm:text-sm text-gray-600 hidden sm:block'>welcome {userData?.firstname}</span>
+
+                        // If the user was registered -> 
+                        <div className=' flex gap-1 flex-col sm:flex-row items-end sm:items-center sm:space-y-0 sm:space-x-4'>
+                           <span className=' text-xs sm:text-base text-gray-600 hidden sm:block'>welcome {userData?.firstname}</span>
                            <Link href="/dashboard">
-                              <Button size="sm" className=" text-xs sm:text-sm">
-                                 Go to dashboard<ArrowRightIcon></ArrowRightIcon>
-                              </Button>
+                              <Button size="sm" className=" text-xs px-3 py-5 sm:text-base">Go to dashboard<ArrowRightIcon></ArrowRightIcon></Button>
                            </Link>
                         </div>
+
                      ) : (
-                         <>
-                           <button onClick={() => redirect('/auth/signIn')} className=' p-1 text-sm' >Sign In</button>
-                           <button onClick={() => redirect('/auth/signUp')} className=' px-2 py-1 text-sm bg-black text-white rounded-lg'>Sign Up</button>
-                        </>
+
+                        // If the user was not registered
+                        <div>
+                           {/* SignIn and SignUp Button */}
+                           <button onClick={() => redirect('/auth/signIn')} className=' text-sm sm:text-base px-3 py-1 ' >Sign In</button>
+                           <button onClick={() => redirect('/auth/signUp')} className=' sm:text-base px-3 py-1 text-sm bg-black text-white rounded-lg'>Sign Up</button>
+                        </div>
+
                      )
-                     
+
                   }
                </div>
 
@@ -121,7 +79,12 @@ export default function Navbar({ boardTitle }: { boardTitle: string }) {
       )
    }
 
-   // if PathName = Dashboard
+
+
+
+
+
+   // if PathName -> Dashboard
    if (isDashboardPage) {
       return (
          <header className=" flex justify-center border bg-white/80 backdrop-blur-sm sticky top-0 z-50">
@@ -144,7 +107,8 @@ export default function Navbar({ boardTitle }: { boardTitle: string }) {
       )
    }
 
-   // if board = board
+
+   // if board -> board
    if (isBoardPage) {
       return (
          <header className=" flex justify-center border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
