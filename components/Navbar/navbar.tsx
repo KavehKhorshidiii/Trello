@@ -1,17 +1,19 @@
 'use client'
-
+// Imports
 import { ArrowLeft, ArrowRightIcon, CircleCheck, MoreHorizontal } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { usePathname } from "next/navigation"
 import ChangeColorNavbar from "@/components/Modals/changeColorNavbar/changeColorNavbar"
+import { useQuery } from "@tanstack/react-query";
+import Spinner from '../spinner/spinner';
 
 
 
-
-interface IUser {
+// Types
+type IUser = {
    _id: string
    firstname: string
    username: string
@@ -19,12 +21,7 @@ interface IUser {
 }
 
 
-interface PropsType {
-   boardTitle?: string;
-   // onEditBoard?: () => void
-}
-
-export default function Navbar({ boardTitle }: PropsType) {
+export default function Navbar({ boardTitle }: { boardTitle: string }) {
 
 
    const PathName = usePathname()
@@ -33,29 +30,58 @@ export default function Navbar({ boardTitle }: PropsType) {
    const isHomePage = PathName === "/"
    const isDashboardPage = PathName === "/dashboard"
    const isBoardPage = PathName.startsWith("/boards")
-   const [isLogin, setIsLogin] = useState<boolean>()
-   const [userData, setUserData] = useState<IUser | null>(null)
+   //const [isLogin, setIsLogin] = useState<boolean>()
+   //const [userData, setUserData] = useState<IUser | null>(null)
    const [isModal, setIsModal] = useState(false)
 
 
 
-   function isLoginHandler(response: { success: boolean, data: IUser }) {
-      if (response.success) {
-         setIsLogin(true)
-         setUserData(response.data)
-      } else {
-         setIsLogin(false)
-         setUserData(null)
-      }
+
+   const authCheck = async () => {
+      const res = await fetch("/api/authCheck")
+      return res.json()
    }
 
-   useEffect(() => {
-      fetch("/api/authCheck")
-         .then(res => res.json())
-         .then(response => isLoginHandler(response))
-   }, [])
+   const { data, isLoading, error } = useQuery({
+      queryKey: ["authCheck"],
+      queryFn: authCheck,
+   })
 
-   // if PathName -> Homepage
+   const isLogin = data?.success ?? false
+   const userData = data?.data ?? null
+   console.log(isLogin)
+   console.log(userData)
+   //console.log(data?.success)
+
+
+   // function isLoginHandler(response: { success: boolean, data: IUser }) {
+   //    if (response.success) {
+   //       setIsLogin(true)
+   //       setUserData(response.data)
+   //    } else {
+   //       setIsLogin(false)
+   //       setUserData(null)
+   //    }
+   // }
+
+   // useEffect(()=>{
+   //    if (data?.response?.success) {
+   //       const isLogin = true
+   //       console.log(isLogin)
+   //    } else {
+   //       const isLogin = false
+   //       console.log(isLogin)
+   //    }
+   // },[data])
+
+   // useEffect(() => {
+   //    fetch("/api/authCheck")
+   //       .then(res => res.json())
+   //       .then(response => isLoginHandler(response))
+   // }, [])
+
+
+   // if PathName = Homepage
    if (isHomePage) {
       return (
          <header className=" flex justify-center border bg-white/80 backdrop-blur-sm sticky top-0 z-50">
@@ -71,8 +97,7 @@ export default function Navbar({ boardTitle }: PropsType) {
 
                <div className=' flex space-x-1 text-xl sm:space-x-1'>
                   {
-                     isLogin ? (
-
+                     isLoading ? <Spinner /> : isLogin ? (
                         <div className=' flex gap-1 flex-col sm:flex-row items-end sm:items-center'>
                            <span className=' text-xs sm:text-sm text-gray-600 hidden sm:block'>welcome {userData?.firstname}</span>
                            <Link href="/dashboard">
@@ -81,14 +106,13 @@ export default function Navbar({ boardTitle }: PropsType) {
                               </Button>
                            </Link>
                         </div>
-
                      ) : (
-                        <>
+                         <>
                            <button onClick={() => redirect('/auth/signIn')} className=' p-1 text-sm' >Sign In</button>
                            <button onClick={() => redirect('/auth/signUp')} className=' px-2 py-1 text-sm bg-black text-white rounded-lg'>Sign Up</button>
                         </>
                      )
-
+                     
                   }
                </div>
 
@@ -97,7 +121,7 @@ export default function Navbar({ boardTitle }: PropsType) {
       )
    }
 
-   // if PathName -> Dashboard
+   // if PathName = Dashboard
    if (isDashboardPage) {
       return (
          <header className=" flex justify-center border bg-white/80 backdrop-blur-sm sticky top-0 z-50">
@@ -120,7 +144,7 @@ export default function Navbar({ boardTitle }: PropsType) {
       )
    }
 
-   // if board -> board
+   // if board = board
    if (isBoardPage) {
       return (
          <header className=" flex justify-center border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">

@@ -1,5 +1,5 @@
 'use client'
-import Navbar from "@/components/navbar"
+import Navbar from "@/components/Navbar/navbar"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { FilterIcon, List, Plus, Search } from "lucide-react"

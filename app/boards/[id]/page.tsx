@@ -1,21 +1,15 @@
 'use client'
 import CardModal from '@/components/Modals/TaskModal/taskModal'
-import { CardContent, CardHeader } from '@/components/ui/card'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
-import { Card } from "@/components/ui/card"
 import { useParams } from 'next/navigation';
 import { useMutation, useQuery } from '@tanstack/react-query'
-import Navbar from '@/components/navbar'
+import Navbar from '@/components/Navbar/navbar'
 import ColumnModal from '@/components/Modals/ColumnModal/columnModal'
 import BoardColumn from '@/components/BoardColumn/BoardColumn'
-
-import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, horizontalListSortingStrategy } from "@dnd-kit/sortable";
-
 import { DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
-
 import { DndContext, useSensors, PointerSensor, useSensor } from "@dnd-kit/core";
 
 
@@ -255,19 +249,17 @@ export default function Board() {
 
                   {/* Add Task – pushed to the right */}
                   <div className="ml-auto">
-                     <button className="flex items-center gap-2 bg-gray-900 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                           <line x1="12" y1="5" x2="12" y2="19" />
-                           <line x1="5" y1="12" x2="19" y2="12" />
-                        </svg>
-                        Add Task
+                     <button onClick={() => setIsModalColumn(true)} className="flex items-center gap-2 bg-gray-900 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                        <Plus className=' size-4'></Plus>
+                        Create new Column
                      </button>
                   </div>
                </div>
 
+
                {/* ── Kanban board ── */}
-               <main className=" flex overflow-x-auto">
-                  <div className="flex gap-4 p-6 w-max">
+               <main className=" flex overflow-x-auto w-full ">
+                  <div className="flex flex-col w-full sm:flex-row gap-4 p-6">
                      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
                         <SortableContext strategy={horizontalListSortingStrategy} items={displayColumns.map((col: CardType) => col._id)} >
                            {
@@ -277,25 +269,11 @@ export default function Board() {
                            }
                         </SortableContext>
                      </DndContext>
-
-                     {/* add column */}
-                     <Card onClick={() => setIsModalColumn(true)} className=" group w-[300px] h-52  border-2  border-dashed border-gray-300 hover:border-blue-400 cursor-pointer">
-                        <CardContent className="flex  group-hover:text-blue-600 flex-col items-center justify-center h-full">
-                           <Plus className="size-8 " />
-                           <p className="text-gray-600  group-hover:text-blue-600 font-medium">Create new Column</p>
-                        </CardContent>
-                     </Card>
                   </div>
-
-
-
                </main>
 
             </div>
-
          </div>
-
-
       </div>
    )
 

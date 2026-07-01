@@ -74,13 +74,10 @@ export default function BoardColumn({ boardData, isCardModal, tasks, setIsCardMo
 
 
 
-   const [Tasks, setTasks] = useState<CardFuncType[]>([]);
-   const displayTasks = Tasks.length > 0 ? Tasks : (tasks ?? []);
-   //console.log(displayTasks)
 
 
    return (
-      <div style={style} ref={(node) => {setNodeRef(node); setDropRef(node)}} className={` flex flex-col w-[300px] shrink-0 `}>
+      <div style={style} ref={(node) => {setNodeRef(node); setDropRef(node)}} className={`flex flex-col sm:w-75 shrink-0 `}>
 
 
          <div className={`${isOver ? " border-2 border-dashed border-blue-600 " : " border-gray-200" } flex flex-col gap-3 bg-gray-50 rounded-xl border p-3 min-h-[120px]`}>
@@ -105,7 +102,7 @@ export default function BoardColumn({ boardData, isCardModal, tasks, setIsCardMo
             {/* <DndContext> */}
             <SortableContext strategy={verticalListSortingStrategy} items={(tasks || []).map((task: CardFuncType) => task._id)} >
                {
-                  displayTasks?.map((task: CardFuncType) =>
+                  tasks?.map((task: CardFuncType) =>
                      <TaskCard key={task._id} data={task} />
                   )
                }
