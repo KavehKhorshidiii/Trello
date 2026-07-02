@@ -41,14 +41,14 @@ export default function Dashboard() {
    })
 
    
-   const setIsLogin = authData?.success
+   //const setIsLogin = authData?.success
    const userData = authData?.data
-   const router = useRouter()
+   //const router = useRouter()
 
 
-   useEffect(() => {
-      if (!setIsLogin && isLoading === false) { router.push('/') }
-   }, [authData, isLoading])
+   // useEffect(() => {
+   //    if (!setIsLogin && isLoading === false) { router.push('/') }
+   // }, [authData, isLoading])
 
    const fetchBoards = async () => {
       const res = await fetch("/api/boards")

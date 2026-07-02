@@ -1,7 +1,7 @@
 'use client'
 import CardModal from '@/components/Modals/TaskModal/taskModal'
 import { Plus } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation';
 import { useMutation, useQuery } from '@tanstack/react-query'
 import Navbar from '@/components/Navbar/navbar'
@@ -11,6 +11,9 @@ import { SortableContext, horizontalListSortingStrategy } from "@dnd-kit/sortabl
 import { DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { DndContext, useSensors, PointerSensor, useSensor } from "@dnd-kit/core";
+import { useRouter } from 'next/navigation';
+
+
 
 
 
@@ -46,11 +49,32 @@ type ColType = {
 
 export default function Board() {
 
+   const router = useRouter()
    const params = useParams();
    const boardId = params.id as string ?? ""
    const [isModalColumn, setIsModalColumn] = useState(false)
    const [isCardModal, setIsCardModal] = useState(false)
    const [selectColumnId, setSelectedColumnId] = useState<string>("")
+
+
+     // auth data
+   const fetchAuth = async () => {
+      const res = await fetch("/api/authCheck")
+      return res.json()
+   }
+   const { data: authData, isLoading } = useQuery({
+      queryKey: ["auth"],
+      queryFn: fetchAuth,
+   })
+
+   //const setIsLogin = authData?.success
+   //const userData = authData?.data
+
+
+   // useEffect(() => {
+   //    if (!setIsLogin && isLoading === false) { router.push('/') }
+   // }, [authData, isLoading])
+
 
 
    // fetch Board Data
@@ -89,6 +113,9 @@ export default function Board() {
       queryKey: ["tasks"],
       queryFn: fetchTask
    })
+ 
+
+
 
    // update Columns
    const ReorderColumn = async (columns: ColType[]) => {
