@@ -6,7 +6,7 @@ import changeColorNavbarAction from "./changeColorNavbarAction"
 
 
 
-export default function BoardModal({ isModal, setIsModal, params }: { isModal: boolean, setIsModal: (value: boolean) => void, params: string }) {
+export default function BoardModal({ changeBoardNameModal, setChangeBoardNameModal, params }: { changeBoardNameModal: boolean, setChangeBoardNameModal: (value: boolean) => void, params: string }) {
 
 
    const [state, formAction, pendding] = useActionState(changeColorNavbarAction, { success: null, errors: {}, message: "" })
@@ -16,7 +16,7 @@ export default function BoardModal({ isModal, setIsModal, params }: { isModal: b
    useEffect(() => {
 
       if (state.success) {
-         setIsModal(false)
+         setChangeBoardNameModal(false)
          queryClient.invalidateQueries({ queryKey: ["board"] })
       }
 
@@ -25,7 +25,7 @@ export default function BoardModal({ isModal, setIsModal, params }: { isModal: b
    return (
       <div className=" fixed flex justify-center items-center border-4 backdrop-blur-sm w-screen z-60 top-0 left-0 bg-black/30 h-screen bg-blur-2xl">
          <div className=" flex-col z-60 flex size-96 bg-white">
-            <div onClick={() => setIsModal(false)}><X></X></div>
+            <div onClick={() => setChangeBoardNameModal(false)}><X></X></div>
 
             <form action={formAction} className=" w-full flex-col">
                <input type="hidden" name="boardId" value={params} />

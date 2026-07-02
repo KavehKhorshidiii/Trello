@@ -11,7 +11,7 @@ import { verifyJwtToken } from "../../../lib/auth";
 export async function GET() {
    
    try {
-      
+
       const cookiesStore = await cookies()
       const tokenValue = cookiesStore.get("token")?.value
       
@@ -47,4 +47,16 @@ export async function GET() {
       return NextResponse.json({ success: false, data: null }, { status: 500 })
    }
 
+}
+
+export async function POST() {
+   const res = NextResponse.json({ success: true })
+
+   res.cookies.set("token" , "" , {
+      httpOnly:true,
+      maxAge:0,
+      path:'/'
+   })
+
+   return res
 }
