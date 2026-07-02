@@ -88,27 +88,22 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
          <header className=" border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
             <div className=' container mx-auto flex justify-between items-center px-4 py-3 sm:py-4 '>
 
-               {/*  */}
+               {/* Project name and logo */}
                <div className='flex items-center space-x-2 text-2xl'>
                   <Image className=' size-6 sm:size-8  text-blue-600' alt='Icon-app' width={200} height={200} src={'/app-Icon/trello.png'}></Image>
-                  <span className=' text-xl md:text-2xl font-bold text-gray-900'>Trello</span>
+                  <span className=' select-none text-xl md:text-2xl font-bold text-gray-900'>Trello</span>
                </div>
 
+               {/* Profile */}
                {
                   isLoading ? (<Spinner />) : (
                      <div className=' relative flex space-x-1 text-xl sm:space-x-1'>
-                        {/* <div onClick={() => setProfileModal(!profileModal)} className=' select-none cursor-pointer hover:bg-blue-700 m-0 bg-blue-600 flex justify-center text-white items-center size-8 sm:size-12 rounded-full'>
-                           {[...userData?.firstname ?? ""][0]}
-                           <div className=' text-red-600'><X/></div>
-                        </div> */}
-                        <div onClick={() => setProfileModal(!profileModal)} className={` ${profileModal ? ' bg-red-600 hover:bg-red-700' : ' bg-blue-600 hover:bg-blue-700'} select-none cursor-pointer  m-0 flex justify-center text-white items-center size-8 sm:size-12 rounded-full`}>
-                           <p className={`${profileModal ? "hidden" : " block"}`}>
-                              {[...userData?.firstname ?? ""][0]}
-                           </p>
-                           <div className={`${profileModal ? " block" : " hidden"} text-white`}><X /></div>
+                        <div onClick={() => setProfileModal(!profileModal)} className={` ${profileModal ? ' bg-red-600 hover:bg-red-700' : ' bg-blue-600 hover:bg-blue-700'} select-none cursor-pointer transition-all duration-200 m-0 flex justify-center text-white items-center size-8 sm:size-12 rounded-full`}>
+                           <p className={`${profileModal ? "hidden" : " block"}`}>{[...userData?.firstname ?? ""][0]}</p>
+                           <div className={`${profileModal ? " opacity-100" : " opacity-0"} absolute transition-all  text-white`}><X className={`${profileModal ? "  rotate-90" : " rotate-0"}`} /></div>
                         </div>
 
-
+                        {/* profile modal */}
                         <Card className={`${profileModal === true ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"} absolute select-none transition-all duration-200 min-w-80 border-2 bg-white rounded-2xl p-5 top-full right-1/2 `}>
                            <div className=' flex gap-4 items-center'>
                               <div className=' m-0 bg-blue-600 flex justify-center text-white text-lg  items-center size-8 sm:size-12 rounded-full'>{[...userData?.firstname ?? ""][0]}</div>
@@ -119,12 +114,9 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
                            </div>
                            <Button className="bg-red-600 cursor-pointer hover:bg-red-700">signOut</Button>
                         </Card>
-
-
                      </div>
                   )
                }
-
 
             </div>
          </header >
