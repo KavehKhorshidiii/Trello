@@ -1,7 +1,7 @@
 'use client'
 import CardModal from '@/components/Modals/TaskModal/taskModal'
 import { Plus } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useParams } from 'next/navigation';
 import { useMutation, useQuery } from '@tanstack/react-query'
 import Navbar from '@/components/Navbar/navbar'
@@ -66,14 +66,6 @@ export default function Board() {
       queryKey: ["auth"],
       queryFn: fetchAuth,
    })
-
-   //const setIsLogin = authData?.success
-   //const userData = authData?.data
-
-
-   // useEffect(() => {
-   //    if (!setIsLogin && isLoading === false) { router.push('/') }
-   // }, [authData, isLoading])
 
 
 

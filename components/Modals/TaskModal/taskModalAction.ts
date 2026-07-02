@@ -2,7 +2,7 @@
 
 import connectDB from "@/lib/connectDB/connectDB"
 import { cookies } from "next/headers"
-import { verifyJwtToken } from "@/lib/auth"
+import { verifyJwtToken } from "@/lib/Auth/auth"
 import CardModel from "@/Models/cardModel/cardModel"
 import { useQueryClient } from "@tanstack/react-query";
 

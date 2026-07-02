@@ -4,7 +4,7 @@ import connectDB from "@/lib/connectDB/connectDB"
 import UsersModel from "@/Models/usersmodel/usersmodel"
 import { compare } from "bcrypt"
 import { cookies } from "next/headers"
-import { JWTFunc } from "@/lib/auth"
+import { generateJwtToken } from "@/lib/Auth/auth"
 import { redirect } from "next/navigation"
 
 
@@ -36,7 +36,7 @@ export default async function SignInAction(prevState: prevState, formData: FormD
    }
 
    // JWT Token
-   const JWTToken = JWTFunc(findUser._id.toString())
+   const JWTToken = generateJwtToken(findUser._id.toString())
 
 
    // Cookie

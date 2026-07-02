@@ -7,7 +7,7 @@ import { ArrowLeft, ArrowRightIcon, X, MoreHorizontal } from 'lucide-react';
 import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '../ui/button';
-import ChangeColorNavbar from "@/components/Modals/changeColorNavbar/changeColorNavbar"
+import EditBoardModal from "@/components/Modals/editBoardModal/editBoardModal"
 import Image from 'next/image';
 import { Card } from '../ui/card';
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
@@ -22,6 +22,7 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
    const [profileModal, setProfileModal] = useState(false) // Profile Modal
    const route = useRouter() // useRoute
    const queryClient = useQueryClient(); // Query Client
+   const [changeNamePending, setChangeNamePending] = useState(false) // change name pending
 
 
    // Route Type
@@ -172,8 +173,9 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
 
                      {/* edit board name */}
                      <div className=' flex items-center space-x-1 sm:space-x-2 min-w-0'>
-                        {/* <CircleCheck className=' text-blue-600' /> */}
-                        <span className='text-lg select-none font-bold text-gray-900 truncate  space-x-1 sm:space-x-2 min-w-0'>{boardTitle}</span>
+                        {
+                           changeNamePending ? <Spinner /> : <span className='text-lg select-none font-bold text-gray-900 truncate  space-x-1 sm:space-x-2 min-w-0'>{boardTitle}</span>
+                        }
                         {
                            (
                               <Button onClick={() => setChangeBoardNameModal(!changeBoardNameModal)} variant={"ghost"} size={"sm"} className=" size-7 cursor-pointer flex shrink-0 p-0 ">
@@ -182,7 +184,7 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
                            )
                         }
                         {
-                           changeBoardNameModal && <ChangeColorNavbar changeBoardNameModal={changeBoardNameModal} setChangeBoardNameModal={() => setChangeBoardNameModal(!changeBoardNameModal)} params={boardID} />
+                           changeBoardNameModal && <EditBoardModal setChangeNamePending={setChangeNamePending} changeBoardNameModal={changeBoardNameModal} setChangeBoardNameModal={() => setChangeBoardNameModal(!changeBoardNameModal)} params={boardID} />
                         }
                      </div>
                   </div>

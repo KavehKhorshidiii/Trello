@@ -1,6 +1,6 @@
 'use server'
 
-import { hashPass, JWTFunc } from '@/lib/auth'
+import { hashPass, generateJwtToken } from '@/lib/Auth/auth'
 import connectDB from '@/lib/connectDB/connectDB'
 import UsersModel from '@/Models/usersmodel/usersmodel'
 import { cookies } from 'next/headers'
@@ -41,7 +41,7 @@ export default async function SignUpAction(prevState: prevState, formData: FormD
    const newUser = await UsersModel.create({ firstname, username, password: pass, role: (await UsersModel.find()).length === 0 ? "ADMIN" : "USER" })
 
    // JWT token 
-   const JWTToken = JWTFunc(newUser._id.toString())
+   const JWTToken = generateJwtToken(newUser._id.toString())
 
    // Cookie
    const Cookie = (await cookies()).set("token", JWTToken, {
@@ -50,7 +50,7 @@ export default async function SignUpAction(prevState: prevState, formData: FormD
       maxAge: 60 * 60 * 24 * 7
    })
 
-   
+
    redirect('/')
 
    // success return

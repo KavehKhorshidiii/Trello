@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { verifyJwtToken } from "../../../lib/auth";
+import { verifyJwtToken } from "../../../lib/Auth/auth";
 import { cookies } from "next/headers";
 import connectDB from "@/lib/connectDB/connectDB";
 import BoardModel from "@/Models/boardModel/boardModel";
