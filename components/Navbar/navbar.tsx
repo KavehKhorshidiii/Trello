@@ -1,4 +1,6 @@
 'use client'
+
+
 // Imports
 import Spinner from '../spinner/spinner';
 import { redirect, usePathname } from 'next/navigation';
@@ -108,8 +110,8 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
                            <div className=' flex gap-4 items-center'>
                               <div className=' m-0 bg-blue-600 flex justify-center text-white text-lg  items-center size-8 sm:size-12 rounded-full'>{[...userData?.firstname ?? ""][0]}</div>
                               <div>
-                                 <p className=' sm:text-xl font-bold'>Kaveh</p>
-                                 <p className=' sm:text-lg'>Kaveh-khorshidi</p>
+                                 <p className=' sm:text-xl font-bold'>{userData.firstname}</p>
+                                 <p className=' sm:text-lg'>{userData.username}</p>
                               </div>
                            </div>
                            <Button className="bg-red-600 cursor-pointer hover:bg-red-700">signOut</Button>
