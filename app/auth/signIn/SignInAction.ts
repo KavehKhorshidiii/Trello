@@ -38,14 +38,12 @@ export default async function SignInAction(prevState: prevState, formData: FormD
    // JWT Token
    const JWTToken = generateJwtToken(findUser._id.toString())
 
-
    // Cookie
    const Cookie = (await cookies()).set("token", JWTToken, {
       httpOnly: true,
       path: "/",
       maxAge: 60 * 60 * 24 * 7
    })
-
 
    redirect('/')
 

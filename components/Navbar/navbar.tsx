@@ -4,7 +4,7 @@
 import Spinner from '../spinner/spinner';
 import { useRouter, usePathname } from 'next/navigation';
 import { ArrowLeft, ArrowRightIcon, X, MoreHorizontal } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import EditBoardModal from "@/components/Modals/editBoardModal/editBoardModal"
@@ -63,6 +63,13 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
       refetchOnWindowFocus: false,
       retry: false,
    })
+
+   
+   // update navbar
+   useEffect(() => {
+      queryClient.invalidateQueries({ queryKey: ["authCheck"] })
+      queryClient.refetchQueries({ queryKey: ["authCheck"] })
+   }, [PathName])
 
 
    const isLogin = data?.success ?? false;  // Is the user registered?
