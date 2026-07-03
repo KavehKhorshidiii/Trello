@@ -10,7 +10,8 @@ import { Button } from '../ui/button';
 import EditBoardModal from "@/components/Modals/editBoardModal/editBoardModal"
 import Image from 'next/image';
 import { Card } from '../ui/card';
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
+import { useIsLogin } from '@/hooks/useIsLogin';
 
 
 export default function Navbar({ boardTitle }: { boardTitle?: string }) {
@@ -25,6 +26,10 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
    const [changeNamePending, setChangeNamePending] = useState(false) // change name pending
 
 
+   // check user login 
+   const {isLogin , data , isLoading , signOut} = useIsLogin()
+
+
    // Route Type
    const routeType = (() => {
       if (PathName === "/") return "home"
@@ -34,46 +39,11 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
    })()
 
 
-   // sign out -> /api/authChe
-   const signOut = useMutation({
-      mutationFn: async () => {
-         const res = await fetch('/api/authCheck', {
-            method: "POST"
-         })
-         return res.json()
-      },
-      onSuccess: () => {
-         queryClient.clear();
-         route.push('/')
-      }
-
-   })
-
-
-   // check user login -> /api/authCheck
-   const authCheck = async () => {
-      const res = await fetch("/api/authCheck")
-      return res.json()
-   }
-   const { data, isLoading } = useQuery({
-      queryKey: ["authCheck"],
-      queryFn: authCheck,
-      staleTime: 5 * 60 * 1000,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      retry: false,
-   })
-
-   
    // update navbar
    useEffect(() => {
       queryClient.invalidateQueries({ queryKey: ["authCheck"] })
       queryClient.refetchQueries({ queryKey: ["authCheck"] })
    }, [PathName])
-
-
-   const isLogin = data?.success ?? false;  // Is the user registered?
-   const userData = data?.data ?? null;  // User Data
 
 
    // Navbar JSX
@@ -96,7 +66,7 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
 
                            // If the user was registered -> 
                            <div className=' flex gap-1 flex-col sm:flex-row items-end sm:items-center sm:space-y-0 sm:space-x-4'>
-                              <span className=' text-xs sm:text-base select-none text-gray-600 hidden sm:block'>welcome {userData?.firstname}</span>
+                              <span className=' text-xs sm:text-base select-none text-gray-600 hidden sm:block'>welcome {data?.firstname}</span>
                               <Link href="/dashboard">
                                  <Button size="sm" className="cursor-pointer text-xs px-3 py-5 sm:text-base">Go to dashboard<ArrowRightIcon></ArrowRightIcon></Button>
                               </Link>
@@ -136,17 +106,17 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
                      isLoading ? (<Spinner />) : (
                         <div className=' relative flex space-x-1 text-xl sm:space-x-1'>
                            <div onClick={() => setProfileModal(!profileModal)} className={` ${profileModal ? ' bg-red-600 hover:bg-red-700' : ' bg-blue-600 hover:bg-blue-700'} select-none cursor-pointer transition-all duration-200 m-0 flex justify-center text-white items-center size-8 sm:size-12 rounded-full`}>
-                              <p className={`${profileModal ? "hidden" : " block"}`}>{[userData?.firstname?.[0] ?? ""]}</p>
+                              <p className={`${profileModal ? "hidden" : " block"}`}>{[data?.firstname?.[0] ?? ""]}</p>
                               <div className={`${profileModal ? " opacity-100" : " opacity-0"} absolute transition-all  text-white`}><X className={`${profileModal ? "  rotate-90" : " rotate-0"}`} /></div>
                            </div>
 
                            {/* profile modal */}
                            <Card className={`${profileModal === true ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"} absolute select-none transition-all duration-200 min-w-80 bg-white rounded-2xl p-5 top-full right-1/2 `}>
                               <div className=' flex gap-4 items-center'>
-                                 <div className=' m-0 bg-blue-600 flex justify-center text-white text-lg  items-center size-8 sm:size-12 rounded-full'>{[userData?.firstname?.[0] ?? ""]}</div>
+                                 <div className=' m-0 bg-blue-600 flex justify-center text-white text-lg  items-center size-8 sm:size-12 rounded-full'>{[data?.firstname?.[0] ?? ""]}</div>
                                  <div>
-                                    <p className=' sm:text-xl font-bold'>{userData?.firstname}</p>
-                                    <p className=' sm:text-lg'>{userData?.username}</p>
+                                    <p className=' sm:text-xl font-bold'>{data?.firstname}</p>
+                                    <p className=' sm:text-lg'>{data?.username}</p>
                                  </div>
                               </div>
                               <Button onClick={() => signOut.mutate()} className="bg-red-600 cursor-pointer hover:bg-red-700">signOut</Button>
@@ -212,17 +182,17 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
 
                            {/* profile */}
                            <div onClick={() => setProfileModal(!profileModal)} className={` ${profileModal ? ' bg-red-600 hover:bg-red-700' : ' bg-blue-600 hover:bg-blue-700'} select-none cursor-pointer transition-all duration-200 m-0 flex justify-center text-white items-center size-8 sm:size-12 rounded-full`}>
-                              <p className={`${profileModal ? "hidden" : " block"}`}>{userData?.firstname?.[0] ?? ""}</p>
+                              <p className={`${profileModal ? "hidden" : " block"}`}>{data?.firstname?.[0] ?? ""}</p>
                               <div className={`${profileModal ? " opacity-100" : " opacity-0"} absolute transition-all  text-white`}><X className={`${profileModal ? "  rotate-90" : " rotate-0"}`} /></div>
                            </div>
 
                            {/* profile modal */}
                            <Card className={`${profileModal === true ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"} absolute select-none transition-all duration-200 min-w-80 bg-white rounded-2xl p-5 top-full right-1/2 `}>
                               <div className=' flex gap-4 items-center'>
-                                 <div className=' m-0 bg-blue-600 flex justify-center text-white text-lg  items-center size-8 sm:size-12 rounded-full'>{userData?.firstname?.[0] ?? ""}</div>
+                                 <div className=' m-0 bg-blue-600 flex justify-center text-white text-lg  items-center size-8 sm:size-12 rounded-full'>{data?.firstname?.[0] ?? ""}</div>
                                  <div>
-                                    <p className=' sm:text-xl font-bold'>{userData?.firstname}</p>
-                                    <p className=' sm:text-lg'>{userData?.username}</p>
+                                    <p className=' sm:text-xl font-bold'>{data?.firstname}</p>
+                                    <p className=' sm:text-lg'>{data?.username}</p>
                                  </div>
                               </div>
                               <Button onClick={() => signOut.mutate()} className="bg-red-600 cursor-pointer hover:bg-red-700">signOut</Button>
@@ -238,4 +208,5 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
       }
    }
 
+   
 }
