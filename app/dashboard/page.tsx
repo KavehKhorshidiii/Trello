@@ -61,7 +61,7 @@ export default function Dashboard() {
 
 
    type ColorKey = "blue" | "red" | "green" | "cyan" | "purple" | "yellow" | "gray";
-   const colorMap:Record<ColorKey, string>  = {
+   const colorMap: Record<ColorKey, string> = {
       blue: "bg-blue-600",
       red: "bg-red-600",
       green: "bg-green-600",
@@ -166,12 +166,12 @@ export default function Dashboard() {
                <Button variant={viewMode === "list" ? "default" : "ghost"} size="sm" onClick={() => setViewModal("list")}>
                   <List />
                </Button>
+
                {/* Search bar */}
                <div className=" relative mb-4 sm:mb-6">
                   <Search className=" absolute left-3 top-1/2 transform -translate-y-1/2 size-4 text-gray-400" />
                   <Input id="search" placeholder="Search boards..." className=" pl-10"></Input>
                </div>
-
 
                {/* ... */}
                <div className=" rounded-sm flex items-center space-x-2 bg-white p-3">
@@ -261,15 +261,9 @@ export default function Dashboard() {
                         )
                   }
 
-                  {/* </div> */}
-
                </div>
-
             </div>
-
-
          </main>
-
       </div>
    )
 

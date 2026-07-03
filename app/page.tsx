@@ -99,7 +99,7 @@ export default async function Home() {
 
                      <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <div>
-                           <Link href={'/auth/signIn'}>
+                           <Link href={'/dashboard'}>
                               <Button size="lg" className="text-lg px-8">
                                  Go to Dashboard
                                  <ArrowRight className="ml-2 h-5 w-5" />
@@ -170,7 +170,7 @@ export default async function Home() {
                )}
                {isLogin && (
                   <div>
-                     <Link href={'/auth/signIn'}>
+                     <Link href={'/dashboard'}>
                         <Button size="lg" variant="secondary" className="text-lg px-8">
                            View Your Boards
                            <ArrowRight className="ml-2 h-5 w-5" />
