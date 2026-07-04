@@ -1,5 +1,7 @@
 'use server'
 
+
+// import
 import connectDB from "@/lib/connectDB/connectDB"
 import { cookies } from "next/headers"
 import { verifyJwtToken } from "@/lib/Auth/auth"
@@ -7,15 +9,17 @@ import BoardModel from "@/Models/boardModel/boardModel"
 import ColumnModel from "@/Models/columnModel/columnModel"
 
 
-
+// types
 type stateType = {
    success: boolean | null,
    errors: object,
    message: string
 }
 
+
 export default async function boardModalAction(prevState: stateType, formData: FormData): Promise<stateType> {
 
+   // formData
    const { title, des, color } = {
       title: formData.get("title"),
       des: formData.get("des"),
@@ -23,11 +27,11 @@ export default async function boardModalAction(prevState: stateType, formData: F
    }
 
 
-
    const cookiesStore = await cookies()
    const tokenValue = cookiesStore.get("token")?.value
    if (!tokenValue) { return { success: false, errors: {}, message: "Token does not exist." } }
    const verifyTokenValue = verifyJwtToken(tokenValue)
+
 
    let userID;
    if (
@@ -48,6 +52,8 @@ export default async function boardModalAction(prevState: stateType, formData: F
       author: userID
    })
 
+
+   // create default Columns
    const createDefaultColumns = await ColumnModel.insertMany([
       {
          title: "Todo",

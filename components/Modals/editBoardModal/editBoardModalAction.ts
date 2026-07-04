@@ -1,9 +1,12 @@
 'use server'
 
+
+// imports
 import connectDB from "@/lib/connectDB/connectDB"
 import BoardModel from "@/Models/boardModel/boardModel"
 
 
+// types
 type stateType = {
    success: boolean | null,
    errors: object,
@@ -28,7 +31,6 @@ export default async function changeColorNavbarAction(prevState: stateType, form
    const board = await BoardModel.findById(boardId);
 
    if (!board) { return { success: false, errors: {}, message: "Board not found" } }
-
 
    const titleStr = title?.trim()
    const colorStr = color?.trim()

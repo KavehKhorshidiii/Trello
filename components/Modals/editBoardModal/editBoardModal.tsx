@@ -9,7 +9,7 @@ import Spinner from "@/components/spinner/spinner"
 
 export default function EditBoardModal({ setChangeBoardNameModal, boardId }: { setChangeBoardNameModal: (value: boolean) => void, boardId: string }) {
 
-   const [state , formAction , pending] = useActionState(changeColorNavbarAction, { success: null, errors: {}, message: "" }) // useActionState
+   const [state, formAction, pending] = useActionState(changeColorNavbarAction, { success: null, errors: {}, message: "" }) // useActionState
 
    const [color, setColor] = useState('') // select color State
 
@@ -24,6 +24,16 @@ export default function EditBoardModal({ setChangeBoardNameModal, boardId }: { s
       }
    }, [state.success])
 
+
+   // close on ESC
+   useEffect(() => {
+      const handleEsc = (e: KeyboardEvent) => {
+         if (e.key === "Escape") setChangeBoardNameModal(false);
+      };
+
+      window.addEventListener("keydown", handleEsc);
+      return () => window.removeEventListener("keydown", handleEsc);
+   }, []);
 
 
    return (
@@ -50,7 +60,7 @@ export default function EditBoardModal({ setChangeBoardNameModal, boardId }: { s
                </div>
                <div className="flex justify-end gap-2 pt-2">
                   <button type="button" disabled={pending} onClick={() => setChangeBoardNameModal(false)} className="px-3 py-1.5 text-sm border rounded hover:bg-gray-50 transition">Cancel</button>
-                  <button type="submit" disabled={pending} className="px-4 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition disabled:opacity-50">{pending ? <Spinner/> : "Create"}</button>
+                  <button type="submit" disabled={pending} className="px-4 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition disabled:opacity-50">{pending ? <Spinner /> : "Create"}</button>
                </div>
             </form>
 
