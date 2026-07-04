@@ -12,6 +12,7 @@ import { DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { DndContext, useSensors, PointerSensor, useSensor } from "@dnd-kit/core";
 import { useRouter } from 'next/navigation';
+import EditBoardModal from '@/components/Modals/editBoardModal/editBoardModal';
 
 
 
@@ -53,8 +54,16 @@ export default function Board() {
    const params = useParams();
    const boardId = params.id as string ?? ""
    const [isModalColumn, setIsModalColumn] = useState(false)
+   //const [isModalBoardEdit, setIsModalBoardEdit] = useState(false)
    const [isCardModal, setIsCardModal] = useState(false)
-   const [selectColumnId, setSelectedColumnId] = useState<string>("")
+
+   const [selectColumnId, setSelectedColumnId] = useState()
+
+   
+   const [changeBoardNameModal, setChangeBoardNameModal] = useState(false)
+   const [changeBoardNameModalPending, setChangeBoardNameModalPending] = useState(false)
+   
+   
 
 
      // auth data
@@ -239,20 +248,25 @@ export default function Board() {
    return (
       <div className=' min-h-screen bg-white'>
 
+         <Navbar editBoardData={setChangeBoardNameModal} boardTitle={boardData?.[0].title} ></Navbar>
 
          {/* Card Modal */}
-         {isCardModal && <CardModal params={{ ColumnId: selectColumnId, BoardId: boardId }} isCardModal={isCardModal} setIsCardModal={setIsCardModal} />}
+         {isCardModal && <CardModal  params={{ ColumnId: selectColumnId, BoardId: boardId }} isCardModal={isCardModal} setIsCardModal={setIsCardModal} />}
          {/* Column Modal */}
          {isModalColumn && <ColumnModal params={boardId} isModalColumn={isModalColumn} setIsModalColumn={setIsModalColumn} />}
+         {/* Edit Board Data Modal */}
+         {changeBoardNameModal && <EditBoardModal setChangeBoardNameModal={setChangeBoardNameModal} boardId={boardId} />}
+      
 
 
-         <Navbar boardTitle={boardData?.[0].title} ></Navbar>
 
 
 
          <div className=' flex justify-center'>
+            
 
             <div className=' container flex justify-between flex-col '>
+
 
                {/* ── Stats bar ── */}
                <div className="flex items-center gap-6 px-6 py-3 border-b border-gray-100">

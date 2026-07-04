@@ -1,20 +1,29 @@
 'use client'
+
+// imports
 import Navbar from "@/components/Navbar/navbar"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { FilterIcon, List, Plus, Search } from "lucide-react"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { CircleCheck, Rocket } from "lucide-react"
+import { Card } from "@/components/ui/card"
 import { CardContent } from "@/components/ui/card"
 import BoardModal from "@/components/Modals/BoardModal/boardModal"
 import { useQuery } from "@tanstack/react-query"
-import { useRouter } from "next/navigation"
 import { Grid3X3 } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import Link from "next/link"
+import BoardCard from "@/components/BoardCard/BoardCard"
+import CreateBoardCard from "@/components/CreateBoardCard/CreateBoardCard"
+import { useIsLogin } from "@/hooks/useIsLogin"
 
+// icons
+import {
+   LayoutGrid,
+   Rocket,
+   CircleCheck,
+   Clock3,
+} from "lucide-react";
 
+// types
 type BoardType = {
    _id: string;
    title: string;
@@ -28,28 +37,13 @@ type BoardType = {
 
 export default function Dashboard() {
 
-   const [isModal, setIsModal] = useState(false)
-   const [viewMode, setViewModal] = useState<"grid" | "list">("grid")
-
-   const fetchAuth = async () => {
-      const res = await fetch("/api/authCheck")
-      return res.json()
-   }
-   const { data: authData, isLoading } = useQuery({
-      queryKey: ["auth"],
-      queryFn: fetchAuth,
-   })
+   const [addBoardModal, setAddBoardModal] = useState(false) // add new board modal
+   const [viewMode, setViewModal] = useState<"grid" | "list">("grid") // board View Model
+   const {data} = useIsLogin() // authCheck and userdata hook
+   const [search , setSearch] = useState<string>('') // search value
 
 
-   //const setIsLogin = authData?.success
-   const userData = authData?.data
-   //const router = useRouter()
-
-
-   // useEffect(() => {
-   //    if (!setIsLogin && isLoading === false) { router.push('/') }
-   // }, [authData, isLoading])
-
+   // board Data
    const fetchBoards = async () => {
       const res = await fetch("/api/boards")
       return res.json()
@@ -60,210 +54,145 @@ export default function Dashboard() {
    })
 
 
-   type ColorKey = "blue" | "red" | "green" | "cyan" | "purple" | "yellow" | "gray";
-   const colorMap: Record<ColorKey, string> = {
-      blue: "bg-blue-600",
-      red: "bg-red-600",
-      green: "bg-green-600",
-      cyan: "bg-cyan-600",
-      purple: "bg-purple-600",
-      yellow: "bg-amber-600",
-      gray: "bg-gray-600",
-   };
+   // board data and filter data
+   const boards = boardsData?.data?.boards ?? [];
+   const filteredBoards:BoardType[] = boards.filter((board)=>board.title.includes(search) )
 
 
+   // Dashboard Stats 
+   const stats = [
+      {
+         title: "Total Boards",
+         value: boardsData?.data?.boards?.length ?? 0,
+         subtitle: "All your boards",
+         icon: LayoutGrid,
+         iconBg: "bg-blue-100",
+         iconColor: "text-blue-600",
+         hover: "group-hover:bg-blue-600",
+         hoverIcon: "group-hover:text-white",
+      },
+      {
+         title: "Active Boards",
+         value: boardsData?.data?.boards?.length ?? 0,
+         subtitle: "Currently active",
+         icon: Rocket,
+         iconBg: "bg-green-100",
+         iconColor: "text-green-600",
+         hover: "group-hover:bg-green-600",
+         hoverIcon: "group-hover:text-white",
+      },
+      {
+         title: "Completed Tasks",
+         value: 0,
+         subtitle: "Coming soon",
+         icon: CircleCheck,
+         iconBg: "bg-purple-100",
+         iconColor: "text-purple-600",
+         hover: "group-hover:bg-purple-600",
+         hoverIcon: "group-hover:text-white",
+      },
+      {
+         title: "Pending Tasks",
+         value: 0,
+         subtitle: "Coming soon",
+         icon: Clock3,
+         iconBg: "bg-orange-100",
+         iconColor: "text-orange-600",
+         hover: "group-hover:bg-orange-600",
+         hoverIcon: "group-hover:text-white",
+      },
+   ];
 
 
    return (
       <div className=" z-50 min-h-screen bg-gray-50">
 
          {/* Modal */}
-         {isModal && <BoardModal isModal={isModal} setIsModal={setIsModal} />}
+         {addBoardModal && <BoardModal addBoardModal={addBoardModal} setAddBoardModal={setAddBoardModal} />}
 
          {/* Navbar */}
          <Navbar></Navbar>
 
          {/* main */}
          <main className=" container mx-auto px-4 sm:py-8 py-6 ">
-            <div className=" mb-6 sm:mb-8">
-               <h1 className=" text-2xl sm:text-3xl font-bold text-gray-900 mb-2"> welcome back {userData?.firstname}👋</h1>
+
+            {/* Header */}
+            <header className=" mb-6 sm:mb-8">
+               <h1 className=" text-2xl sm:text-3xl font-bold text-gray-900 mb-2"> welcome back {data?.firstname}👋</h1>
                <p className=" text-gray-600">Here`s what`s happening with your board.</p>
-            </div>
+            </header>
 
-            {/* */}
-            <div className=" grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
-               <Card>
-                  <CardContent className=" p-4 sm:p-6">
-                     <div className=" flex items-center justify-between">
-                        <div>
-                           <p className=" text-xs sm:text-sm font-medium text-gray-600">test</p>
-                           <p className=" text-xs sm:text-sm font-medium text-gray-600">{2}</p>
-                        </div>
-                        <div className=" h-10 w-10 sm:h-12 sm:w-12 bg-blue-100 rounded-lg flex items-center justify-center ">
-                           <CircleCheck className=" h-5 w-5 sm:h-6 sm:w-6 text-blue-600"></CircleCheck>
-                        </div>
-                     </div>
-                  </CardContent>
-               </Card>
-               <Card>
-                  <CardContent className=" p-4 sm:p-6">
-                     <div className=" flex items-center justify-between">
-                        <div>
-                           <p className=" text-xs sm:text-sm font-medium text-gray-600">Active Project</p>
-                           <p className=" text-xs sm:text-sm font-medium text-gray-600">{2}</p>
-                        </div>
-                        <div className=" h-10 w-10 sm:h-12 sm:w-12 bg-green-100 rounded-lg flex items-center justify-center ">
-                           <Rocket className=" h-5 w-5 sm:h-6 sm:w-6 text-green-600"></Rocket>
-                        </div>
-                     </div>
-                  </CardContent>
-               </Card>
-               <Card>
-                  <CardContent className=" p-4 sm:p-6">
-                     <div className=" flex items-center justify-between">
-                        <div>
-                           <p className=" text-xs sm:text-sm font-medium text-gray-600">Recent Activity</p>
-                           <p className=" text-xs sm:text-sm font-medium text-gray-600">{boardsData?.data?.boards?.length}</p>
-                        </div>
-                        <div className=" h-10 w-10 sm:h-12 sm:w-12 bg-blue-100 rounded-lg flex items-center justify-center ">
-                           <div className=" h-5 w-5 sm:h-6 sm:w-6 text-blue-600">📊</div>
-                        </div>
-                     </div>
-                  </CardContent>
-               </Card>
-               <Card>
-                  <CardContent className=" p-4 sm:p-6">
-                     <div className=" flex items-center justify-between">
-                        <div>
-                           <p className=" text-xs sm:text-sm font-medium text-gray-600">text</p>
-                           <p className=" text-xs sm:text-sm font-medium text-gray-600">{2}</p>
-                        </div>
-                        <div className=" h-10 w-10 sm:h-12 sm:w-12 bg-blue-100 rounded-lg flex items-center justify-center ">
-                           <CircleCheck className=" h-5 w-5 sm:h-6 sm:w-6 text-blue-600"></CircleCheck>
-                        </div>
-                     </div>
-                  </CardContent>
-               </Card>
+            {/* Dashboard Statistics */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+               {stats.map((stat) => (
+                  <Card key={stat.title} className="group border-0 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                     <CardContent className="p-5">
+                        <div className="flex items-center justify-between">
 
+                           <div>
+                              <p className="text-sm font-medium text-gray-500">{stat.title}</p>
+                              <h2 className="mt-2 text-xl font-bold text-gray-900">{stat.value}</h2>
+                              <p className="mt-2 text-xs text-gray-400">{stat.subtitle}</p>
+                           </div>
+
+                           <div className={`flex h-14 w-14 items-center justify-center rounded-2xl transition-all duration-300 ${stat.iconBg} ${stat.hover}`}>
+                              <stat.icon className={`h-7 w-7 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 ${stat.iconColor} ${stat.hoverIcon}`} />
+                           </div>
+
+                        </div>
+                     </CardContent>
+                  </Card>
+               ))}
             </div>
 
 
 
+            {/* search & viewModel */}
+            <div className=" my-9 sm:my-16">
+               {/* Controls */}
+               <div className="flex flex-col gap-4 mb-6">
+                  <div>
+                     <h2 className="text-2xl font-bold text-gray-900">Your Boards</h2>
+                     <p className="text-gray-500">Manage your projects and collaborate with your team</p>
+                  </div>
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 
-            <div className=" mb-6 sm:mb-8">
+                     {/* Search */}
+                     <div className="relative w-full sm:max-w-sm">
+                        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                        <Input onChange={(e)=>setSearch(e.target.value)} id="search" placeholder="Search boards..." className="pl-10" />
+                     </div>
 
+                     {/* viewMode */}
+                     <div className="flex items-center gap-2">
+                        <Button variant="outline" size="sm"> <FilterIcon className="h-4 w-4" />Filter </Button>
+                        <div className="flex items-center  rounded-lg border">
+                           <Button variant={viewMode === "grid" ? "default" : "ghost"} size="sm" onClick={() => setViewModal("grid")} ><Grid3X3 className="h-4 w-4" /></Button>
+                           <Button variant={viewMode === "list" ? "default" : "ghost"} size="sm" onClick={() => setViewModal("list")}><List className="h-4 w-4" /></Button>
+                        </div>
+                        <Button onClick={() => setAddBoardModal(true)} className="gap-2"><Plus className="h-4 w-4" /> Create Board</Button>
+                     </div>
 
-               <div>
-                  <h2 className=" text-xl sm:text-2xl font-bold text-gray-900">Your Boards</h2>
-                  <p className=" text-gray-600">Manage your projects and tasks</p>
+                  </div>
                </div>
 
-               <Button variant="outline" size="sm"><FilterIcon></FilterIcon>Filter</Button>
-               <Button onClick={() => setIsModal(true)} className=" py-5 my-5 w-full sm:w-auto"><Plus className=" size-4"></Plus> Create Board </Button>
-               <Button variant={viewMode === "grid" ? "default" : "ghost"} size="sm" onClick={() => setViewModal("grid")}>
-                  <Grid3X3 />
-               </Button>
-               <Button variant={viewMode === "list" ? "default" : "ghost"} size="sm" onClick={() => setViewModal("list")}>
-                  <List />
-               </Button>
 
-               {/* Search bar */}
-               <div className=" relative mb-4 sm:mb-6">
-                  <Search className=" absolute left-3 top-1/2 transform -translate-y-1/2 size-4 text-gray-400" />
-                  <Input id="search" placeholder="Search boards..." className=" pl-10"></Input>
-               </div>
-
-               {/* ... */}
-               <div className=" rounded-sm flex items-center space-x-2 bg-white p-3">
-
-                  {
-                     boardsData?.data?.boards?.length == 0 ? (<p>No Board yet</p>) :
-                        viewMode === "grid" ? (
-                           <div className="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 items-center sm:justify-between space-y-2 sm:space-y-0">
-                              {
-                                 boardsData?.data?.boards?.map((board) =>
-                                    <Link className=" h-full" key={board._id} href={`boards/${board._id}`}>
-                                       <Card className={` group h-full hover:shadow-lg transition-shadow cursor-pointer`} >
-                                          <CardHeader className=" pb-3">
-                                             <div className=" flex items-center justify-between ">
-                                                <div className={`${colorMap[board.color as keyof typeof colorMap]} rounded size-4 `}></div>
-                                                <Badge className=" text-xs" variant="secondary">New</Badge>
-                                             </div>
-                                          </CardHeader>
-                                          <CardContent className=" p-4 sm:p-6">
-                                             <CardTitle className=" sm:text-lg text-base mb-2 group-hover:text-blue-600 transition-colors">{board.title}</CardTitle>
-                                             <CardDescription className=" text-sm mb-4">{board.des}</CardDescription>
-                                             <div className=" flex flex-col sm:flex-row sm:items-center sm:justify-between justify-between text-xs text-gray-500 space-y-1 sm:space-y-0">
-                                                <span>
-                                                   Create
-                                                   {new Date(board.createdAt).toLocaleDateString()}
-                                                </span>
-                                                <span>
-                                                   Update
-                                                   {new Date(board.updatedAt).toLocaleDateString()}
-                                                </span>
-
-                                             </div>
-                                          </CardContent>
-                                       </Card>
-                                    </Link>
-
-                                 )
-                              }
-                              <Card onClick={() => setIsModal(true)} className=" border-2 h-full border-dashed border-gray-300 hover:border-blue-400 transition-colors cursor-pointer group">
-                                 <CardContent className=" p-4 sm:p-6 flex flex-col items-center justify-center h-full min-h-50">
-                                    <Plus className=" size-6 sm:size-8  group-hover:text-blue-600 " />
-                                    <p className="text-sm sm:text-base text-gray-600 group-hover:text-blue-600 font-medium">Create new board</p>
-                                 </CardContent>
-                              </Card>
-                           </div>
-                        ) : (
-                           <div className=" w-full flex flex-col gap-4">
-                              {
-                                 boardsData?.data?.boards.map((board, key) =>
-
-                                    <Link key={board._id} href={`boards/${board._id}`}>
-                                       <Card className={` group w-full hover:shadow-lg transition-shadow cursor-pointer`} >
-                                          <CardHeader className=" pb-3">
-                                             <div className=" flex items-center justify-between ">
-                                                <div className={` bg-[#000000]  rounded size-4 `}></div>
-                                                <Badge className=" text-xs" variant="secondary">New</Badge>
-                                             </div>
-                                          </CardHeader>
-                                          <CardContent className=" p-4 sm:p-6">
-                                             <CardTitle className=" sm:text-lg text-base mb-2 group-hover:text-blue-600 transition-colors">{board.title}</CardTitle>
-                                             <CardDescription className=" text-sm mb-4">{board.des}</CardDescription>
-                                             <div className=" flex flex-col sm:flex-row sm:items-center sm:justify-between justify-between text-xs text-gray-500 space-y-1 sm:space-y-0">
-                                                <span>
-                                                   Create
-                                                   {new Date(board.createdAt).toLocaleDateString()}
-                                                </span>
-                                                <span>
-                                                   Update
-                                                   {new Date(board.updatedAt).toLocaleDateString()}
-                                                </span>
-
-                                             </div>
-                                          </CardContent>
-                                       </Card>
-                                    </Link>
-
-                                 )
-                              }
-                              <Card onClick={() => setIsModal(true)} className=" border-2 h-full border-dashed border-gray-300 hover:border-blue-400 transition-colors cursor-pointer group">
-                                 <CardContent className=" p-4 sm:p-6 flex flex-col items-center justify-center h-full min-h-50">
-                                    <Plus className=" size-6 sm:size-8  group-hover:text-blue-600 " />
-                                    <p className="text-sm sm:text-base text-gray-600 group-hover:text-blue-600 font-medium">Create new board</p>
-                                 </CardContent>
-                              </Card>
-                           </div>
-
+               {/* Boards */}
+               {
+                  <div className={viewMode === "grid" ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" : "flex flex-col gap-4"} >
+                     {
+                        filteredBoards.map((board) =>
+                           <BoardCard key={board._id} board={board} viewMode={viewMode} />
                         )
-                  }
+                     }
+                     <CreateBoardCard onClick={() => setAddBoardModal(true)} />
+                  </div>
+               }
 
-               </div>
             </div>
+
          </main>
+
       </div>
    )
 

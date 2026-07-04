@@ -7,27 +7,23 @@ import { ArrowLeft, ArrowRightIcon, X, MoreHorizontal } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '../ui/button';
-import EditBoardModal from "@/components/Modals/editBoardModal/editBoardModal"
 import Image from 'next/image';
 import { Card } from '../ui/card';
 import { useQueryClient } from "@tanstack/react-query";
 import { useIsLogin } from '@/hooks/useIsLogin';
 
 
-export default function Navbar({ boardTitle }: { boardTitle?: string }) {
+export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: ((value: boolean) => void), boardTitle?: string }) {
 
 
    const PathName = usePathname(); // Path Name
-   const boardID = PathName.split("/")[2] ?? "" // board ID
-   const [changeBoardNameModal, setChangeBoardNameModal] = useState(false) // change Board Name Modal
    const [profileModal, setProfileModal] = useState(false) // Profile Modal
    const route = useRouter() // useRoute
    const queryClient = useQueryClient(); // Query Client
-   const [changeNamePending, setChangeNamePending] = useState(false) // change name pending
 
 
    // check user login 
-   const {isLogin , data , isLoading , signOut} = useIsLogin()
+   const { isLogin, data, isLoading, signOut } = useIsLogin()
 
 
    // Route Type
@@ -105,21 +101,30 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
                   {
                      isLoading ? (<Spinner />) : (
                         <div className=' relative flex space-x-1 text-xl sm:space-x-1'>
-                           <div onClick={() => setProfileModal(!profileModal)} className={` ${profileModal ? ' bg-red-600 hover:bg-red-700' : ' bg-blue-600 hover:bg-blue-700'} select-none cursor-pointer transition-all duration-200 m-0 flex justify-center text-white items-center size-8 sm:size-12 rounded-full`}>
+                           <div onClick={() => setProfileModal(!profileModal)} className={` ${profileModal ? ' bg-red-600 hover:bg-red-500' : ' bg-blue-600 hover:bg-blue-700'} select-none cursor-pointer transition-all duration-200 m-0 flex justify-center text-white items-center size-8 sm:size-12 rounded-full`}>
                               <p className={`${profileModal ? "hidden" : " block"}`}>{[data?.firstname?.[0] ?? ""]}</p>
                               <div className={`${profileModal ? " opacity-100" : " opacity-0"} absolute transition-all  text-white`}><X className={`${profileModal ? "  rotate-90" : " rotate-0"}`} /></div>
                            </div>
 
                            {/* profile modal */}
-                           <Card className={`${profileModal === true ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"} absolute select-none transition-all duration-200 min-w-80 bg-white rounded-2xl p-5 top-full right-1/2 `}>
-                              <div className=' flex gap-4 items-center'>
-                                 <div className=' m-0 bg-blue-600 flex justify-center text-white text-lg  items-center size-8 sm:size-12 rounded-full'>{[data?.firstname?.[0] ?? ""]}</div>
-                                 <div>
-                                    <p className=' sm:text-xl font-bold'>{data?.firstname}</p>
-                                    <p className=' sm:text-lg'>{data?.username}</p>
+                           <Card className={`absolute top-full right-0 mt-2 w-80 overflow-hidden rounded-xl border bg-white shadow-xl transition-all duration-200 ${profileModal ? "translate-y-0 opacity-100" : "-translate-y-2 pointer-events-none opacity-0" }`}>
+                              {/* Header */}
+                              <div className="flex items-center gap-4 p-5">
+                                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-lg font-semibold text-white"> {data?.firstname?.[0] ?? "U"} </div>
+                                 <div className="min-w-0">
+                                    <p className="truncate text-lg font-semibold text-gray-900">{data?.firstname}</p>
+                                    <p className="truncate text-sm text-gray-500">{data?.username}</p>
                                  </div>
                               </div>
-                              <Button onClick={() => signOut.mutate()} className="bg-red-600 cursor-pointer hover:bg-red-700">signOut</Button>
+
+                              <div className="border-t" />
+
+                              {/* Actions */}
+                              <div className="p-4">
+                                 <Button onClick={() => signOut.mutate()} variant="destructive" className=" bg-red-600 hover:bg-red-500 text-white  w-full cursor-pointer">
+                                    Sign out
+                                 </Button>
+                              </div>
                            </Card>
                         </div>
                      )
@@ -151,17 +156,14 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
                      {/* edit board name */}
                      <div className=' flex items-center space-x-1 sm:space-x-2 min-w-0'>
                         {
-                           changeNamePending ? <Spinner /> : <span className='text-lg select-none font-bold text-gray-900 truncate  space-x-1 sm:space-x-2 min-w-0'>{boardTitle}</span>
+                           <span className='text-lg select-none font-bold text-gray-900 truncate  space-x-1 sm:space-x-2 min-w-0'>{boardTitle}</span>
                         }
                         {
                            (
-                              <Button onClick={() => setChangeBoardNameModal(!changeBoardNameModal)} variant={"ghost"} size={"sm"} className=" size-7 cursor-pointer flex shrink-0 p-0 ">
+                              <Button onClick={() => editBoardData?.(true)} variant={"ghost"} size={"sm"} className=" size-7 cursor-pointer flex shrink-0 p-0 ">
                                  <MoreHorizontal></MoreHorizontal>
                               </Button>
                            )
-                        }
-                        {
-                           changeBoardNameModal && <EditBoardModal setChangeNamePending={setChangeNamePending} changeBoardNameModal={changeBoardNameModal} setChangeBoardNameModal={() => setChangeBoardNameModal(!changeBoardNameModal)} params={boardID} />
                         }
                      </div>
                   </div>
@@ -169,35 +171,33 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
 
                   {/* Filter - profile */}
                   {
-                     isLoading ? (<Spinner />) : (
-                        <div className=' relative flex gap-2 items-center space-x-1 text-xl sm:space-x-1'>
-
-                           {/* filter */}
-                           <div className=' gap-2 flex space-x-1 text-base sm:space-x-1'>
-                              <button className="flex cursor-pointer items-center gap-1.5 text-sm text-gray-600 hover:text-gray-800 border border-gray-200 rounded-lg px-3 py-1.5 hover:bg-gray-50 transition-colors">
-                                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" /></svg>
-                                 Filter
-                              </button>
-                           </div>
-
-                           {/* profile */}
-                           <div onClick={() => setProfileModal(!profileModal)} className={` ${profileModal ? ' bg-red-600 hover:bg-red-700' : ' bg-blue-600 hover:bg-blue-700'} select-none cursor-pointer transition-all duration-200 m-0 flex justify-center text-white items-center size-8 sm:size-12 rounded-full`}>
-                              <p className={`${profileModal ? "hidden" : " block"}`}>{data?.firstname?.[0] ?? ""}</p>
+                         isLoading ? (<Spinner />) : (
+                        <div className=' relative flex space-x-1 text-xl sm:space-x-1'>
+                           <div onClick={() => setProfileModal(!profileModal)} className={` ${profileModal ? ' bg-red-600 hover:bg-red-500' : ' bg-blue-600 hover:bg-blue-700'} select-none cursor-pointer transition-all duration-200 m-0 flex justify-center text-white items-center size-8 sm:size-12 rounded-full`}>
+                              <p className={`${profileModal ? "hidden" : " block"}`}>{[data?.firstname?.[0] ?? ""]}</p>
                               <div className={`${profileModal ? " opacity-100" : " opacity-0"} absolute transition-all  text-white`}><X className={`${profileModal ? "  rotate-90" : " rotate-0"}`} /></div>
                            </div>
 
                            {/* profile modal */}
-                           <Card className={`${profileModal === true ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"} absolute select-none transition-all duration-200 min-w-80 bg-white rounded-2xl p-5 top-full right-1/2 `}>
-                              <div className=' flex gap-4 items-center'>
-                                 <div className=' m-0 bg-blue-600 flex justify-center text-white text-lg  items-center size-8 sm:size-12 rounded-full'>{data?.firstname?.[0] ?? ""}</div>
-                                 <div>
-                                    <p className=' sm:text-xl font-bold'>{data?.firstname}</p>
-                                    <p className=' sm:text-lg'>{data?.username}</p>
+                           <Card className={`absolute top-full right-0 mt-2 w-80 overflow-hidden rounded-xl border bg-white shadow-xl transition-all duration-200 ${profileModal ? "translate-y-0 opacity-100" : "-translate-y-2 pointer-events-none opacity-0" }`}>
+                              {/* Header */}
+                              <div className="flex items-center gap-4 p-5">
+                                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-lg font-semibold text-white"> {data?.firstname?.[0] ?? "U"} </div>
+                                 <div className="min-w-0">
+                                    <p className="truncate text-lg font-semibold text-gray-900">{data?.firstname}</p>
+                                    <p className="truncate text-sm text-gray-500">{data?.username}</p>
                                  </div>
                               </div>
-                              <Button onClick={() => signOut.mutate()} className="bg-red-600 cursor-pointer hover:bg-red-700">signOut</Button>
-                           </Card>
 
+                              <div className="border-t" />
+
+                              {/* Actions */}
+                              <div className="p-4">
+                                 <Button onClick={() => signOut.mutate()} variant="destructive" className=" bg-red-600 hover:bg-red-500 text-white  w-full cursor-pointer">
+                                    Sign out
+                                 </Button>
+                              </div>
+                           </Card>
                         </div>
                      )
                   }
@@ -208,5 +208,5 @@ export default function Navbar({ boardTitle }: { boardTitle?: string }) {
       }
    }
 
-   
+
 }

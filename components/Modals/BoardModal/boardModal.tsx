@@ -1,54 +1,108 @@
-'use client'
-import { X } from "lucide-react"
-import { useActionState, useEffect } from "react"
-import BoardModalAction from "./boardModalAction"
-import { useQueryClient } from "@tanstack/react-query"
+"use client";
+
+import { X } from "lucide-react";
+import { useActionState, useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import BoardModalAction from "./boardModalAction";
+import Colors from "@/components/Colors/Colors";
+import { useState } from "react";
+import Spinner from "@/components/spinner/spinner";
 
 
+export default function BoardModal({addBoardModal , setAddBoardModal}: { addBoardModal: boolean; setAddBoardModal: (value: boolean) => void; }) {
 
-export default function BoardModal({ isModal, setIsModal }: { isModal: boolean, setIsModal: (value: boolean) => void }) {
+   const [state, formAction, pending] = useActionState(BoardModalAction, { success: null, errors: {}, message: "", });
 
-   const [state, formAction, pendding] = useActionState(BoardModalAction, { success: null, errors: {}, message: "" })
+   const queryClient = useQueryClient();
+   const [color, setColor] = useState("");
 
-
-   const queryClient = useQueryClient()
-
-
+   // close modal + refresh boards
    useEffect(() => {
-
       if (state.success) {
-         setIsModal(false)
-         queryClient.invalidateQueries({ queryKey: ["boards"] })
+         setAddBoardModal(false);
+         queryClient.invalidateQueries({ queryKey: ["boards"] });
       }
+   }, [state.success]);
 
-   }, [state.success])
+   // close on ESC
+   useEffect(() => {
+      const handleEsc = (e: KeyboardEvent) => {
+         if (e.key === "Escape") setAddBoardModal(false);
+      };
 
+      window.addEventListener("keydown", handleEsc);
+      return () => window.removeEventListener("keydown", handleEsc);
+   }, []);
 
+   if (!addBoardModal) return null;
 
    return (
-      <div className=" fixed border-4 backdrop-blur-sm w-full z-60 bg-black/30  h-screen flex justify-center bg-blur-2xl  items-center">
-         <div className=" flex-col z-60 flex size-96 bg-white">
-            <div onClick={() => setIsModal(false)}><X></X></div>
+      <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/40 backdrop-blur-sm">
 
-            <form action={formAction} className=" flex-col">
-               <div className=" flex flex-col">
-                  <label htmlFor="">Title</label>
-                  <input name="title" className=" border-2" type="text" />
+         <div className="w-full max-w-md bg-white rounded-lg shadow-xl overflow-hidden">
+
+            {/* Header */}
+            <div className="flex items-center justify-between px-4 py-3 border-b">
+               <h2 className="text-sm font-medium text-gray-900">Create Board</h2>
+               <button onClick={() => setAddBoardModal(false)} className="text-gray-500 hover:text-gray-700 transition"><X size={18} /></button>
+            </div>
+
+            {/* Form */}
+            <form action={formAction} className="flex flex-col gap-4 p-4">
+
+               {/* Title */}
+               <div className="flex flex-col gap-1">
+                  <label className="text-sm text-gray-600">Title</label>
+                  <input
+                     name="title"
+                     minLength={1}
+                     maxLength={30}
+                     placeholder="Enter board title"
+                     className="border rounded px-3 h-9 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
                </div>
-               <div className=" flex flex-col">
-                  <label htmlFor="">Description</label>
-                  <input name="des" className=" border-2" type="text" />
+
+               {/* Description */}
+               <div className="flex flex-col gap-1">
+                  <label className="text-sm text-gray-600">Description</label>
+                  <input
+                     name="des"
+                     maxLength={60}
+                     placeholder="Short description..."
+                     className="border rounded px-3 h-9 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
                </div>
-               <div className=" flex justify-start gap-3 items-center">
-                  color
-                  <div className=" flex gap-1">
-                     <input name="color" defaultValue="#000000" className=" size-10" type="color" />
-                  </div>
+
+               {/* Color */}
+               <div className="flex flex-col gap-2">
+                  <label className="text-sm text-gray-600">Color</label>
+                  <input type="hidden" name="color" value={color} />
+                  <Colors setColor={setColor} />
                </div>
-               <button type="submit" className=" border-2 rounded-sm px-3 py-1">add</button>
+
+               {/* Actions */}
+               <div className="flex justify-end gap-2 pt-2">
+
+                  <button
+                     type="button"
+                     onClick={() => setAddBoardModal(false)}
+                     className="px-3 py-1.5 text-sm border rounded hover:bg-gray-50 transition"
+                  >
+                     Cancel
+                  </button>
+
+                  <button
+                     type="submit"
+                     disabled={pending}
+                     className="px-4 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition disabled:opacity-50"
+                  >
+                     {pending ? <Spinner/> : "Create"}
+                  </button>
+
+               </div>
+
             </form>
-
          </div>
       </div>
-   )
+   );
 }
