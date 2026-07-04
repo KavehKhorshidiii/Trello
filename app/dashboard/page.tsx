@@ -38,7 +38,7 @@ type BoardType = {
 
 export default function Dashboard() {
 
-   
+
    const [addBoardModal, setAddBoardModal] = useState(false) // add new board modal
    const [viewMode, setViewModal] = useState<"grid" | "list">("grid") // board View Model
    const { data } = useIsLogin() // authCheck and userdata hook
@@ -149,8 +149,6 @@ export default function Dashboard() {
                   </Card>
                ))}
             </div>
-
-
 
             {/* search & viewModel */}
             <div className=" my-9 sm:my-16">

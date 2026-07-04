@@ -59,14 +59,13 @@ export default function Board() {
 
    const [selectColumnId, setSelectedColumnId] = useState()
 
-   
-   const [changeBoardNameModal, setChangeBoardNameModal] = useState(false)
-   const [changeBoardNameModalPending, setChangeBoardNameModalPending] = useState(false)
-   
-   
+
+   const [editBoardData, setEditBoardData] = useState(false)
 
 
-     // auth data
+
+
+   // auth data
    const fetchAuth = async () => {
       const res = await fetch("/api/authCheck")
       return res.json()
@@ -84,9 +83,11 @@ export default function Board() {
       return res.json()
    }
    const { data: boardData, isPending } = useQuery({
-      queryKey: ["board"],
+      queryKey: ["boards"],
       queryFn: fetchBoardData
    })
+
+
    // fetch Task Data
    async function fetchCards() {
       const res = await fetch(`/api/task/${boardId}`)
@@ -114,7 +115,7 @@ export default function Board() {
       queryKey: ["tasks"],
       queryFn: fetchTask
    })
- 
+
 
 
 
@@ -229,8 +230,6 @@ export default function Board() {
    }
 
 
-
-
    const sensors = useSensors(
       useSensor(PointerSensor, {
          activationConstraint: {
@@ -240,27 +239,25 @@ export default function Board() {
    );
 
 
-
-
    return (
       <div className=' min-h-screen bg-white'>
 
-         <Navbar editBoardData={setChangeBoardNameModal} boardTitle={boardData?.[0].title} ></Navbar>
+         <Navbar editBoardData={setEditBoardData} boardTitle={boardData?.boardData?.[0]?.title} ></Navbar>
 
          {/* Card Modal */}
-         {isCardModal && <CardModal  params={{ ColumnId: selectColumnId, BoardId: boardId }} isCardModal={isCardModal} setIsCardModal={setIsCardModal} />}
+         {isCardModal && <CardModal params={{ ColumnId: selectColumnId, BoardId: boardId }} isCardModal={isCardModal} setIsCardModal={setIsCardModal} />}
          {/* Column Modal */}
          {isModalColumn && <ColumnModal params={boardId} isModalColumn={isModalColumn} setIsModalColumn={setIsModalColumn} />}
          {/* Edit Board Data Modal */}
-         {changeBoardNameModal && <EditBoardModal setChangeBoardNameModal={setChangeBoardNameModal} boardId={boardId} />}
-      
+         {editBoardData && <EditBoardModal setEditBoardData={setEditBoardData} boardId={boardId} />}
+
 
 
 
 
 
          <div className=' flex justify-center'>
-            
+
 
             <div className=' container flex justify-between flex-col '>
 

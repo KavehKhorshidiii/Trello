@@ -107,7 +107,7 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
                            </div>
 
                            {/* profile modal */}
-                           <Card className={`absolute top-full right-0 mt-2 w-80 overflow-hidden rounded-xl border bg-white shadow-xl transition-all duration-200 ${profileModal ? "translate-y-0 opacity-100" : "-translate-y-2 pointer-events-none opacity-0" }`}>
+                           <Card className={`absolute top-full right-0 mt-1 w-80 overflow-hidden rounded-xl border bg-white shadow-xl transition-all duration-200 ${profileModal ? "translate-y-0 opacity-100" : "-translate-y-2 pointer-events-none opacity-0" }`}>
                               {/* Header */}
                               <div className="flex items-center gap-4 p-5">
                                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-lg font-semibold text-white"> {data?.firstname?.[0] ?? "U"} </div>
@@ -120,7 +120,7 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
                               <div className="border-t" />
 
                               {/* Actions */}
-                              <div className="p-4">
+                              <div className="px-4">
                                  <Button onClick={() => signOut.mutate()} variant="destructive" className=" bg-red-600 hover:bg-red-500 text-white  w-full cursor-pointer">
                                     Sign out
                                  </Button>
@@ -179,7 +179,7 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
                            </div>
 
                            {/* profile modal */}
-                           <Card className={`absolute top-full right-0 mt-2 w-80 overflow-hidden rounded-xl border bg-white shadow-xl transition-all duration-200 ${profileModal ? "translate-y-0 opacity-100" : "-translate-y-2 pointer-events-none opacity-0" }`}>
+                           <Card className={`absolute top-full right-0 mt-1 w-80 overflow-hidden rounded-xl border bg-white shadow-xl transition-all duration-200 ${profileModal ? "translate-y-0 opacity-100" : "-translate-y-2 pointer-events-none opacity-0" }`}>
                               {/* Header */}
                               <div className="flex items-center gap-4 p-5">
                                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-lg font-semibold text-white"> {data?.firstname?.[0] ?? "U"} </div>
@@ -192,7 +192,7 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
                               <div className="border-t" />
 
                               {/* Actions */}
-                              <div className="p-4">
+                              <div className="px-4">
                                  <Button onClick={() => signOut.mutate()} variant="destructive" className=" bg-red-600 hover:bg-red-500 text-white  w-full cursor-pointer">
                                     Sign out
                                  </Button>

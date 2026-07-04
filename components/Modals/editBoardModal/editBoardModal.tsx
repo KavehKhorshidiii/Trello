@@ -7,7 +7,7 @@ import Colors from "@/components/Colors/Colors"
 import Spinner from "@/components/spinner/spinner"
 
 
-export default function EditBoardModal({ setChangeBoardNameModal, boardId }: { setChangeBoardNameModal: (value: boolean) => void, boardId: string }) {
+export default function EditBoardModal({ setEditBoardData, boardId }: { setEditBoardData: (value: boolean) => void, boardId: string }) {
 
    const [state, formAction, pending] = useActionState(changeColorNavbarAction, { success: null, errors: {}, message: "" }) // useActionState
 
@@ -19,8 +19,8 @@ export default function EditBoardModal({ setChangeBoardNameModal, boardId }: { s
    // update board name
    useEffect(() => {
       if (state.success) {
-         setChangeBoardNameModal(false)
-         queryClient.invalidateQueries({ queryKey: ["board"] })
+         setEditBoardData(false)
+         queryClient.invalidateQueries({ queryKey: ["boards"] })
       }
    }, [state.success])
 
@@ -28,7 +28,7 @@ export default function EditBoardModal({ setChangeBoardNameModal, boardId }: { s
    // close on ESC
    useEffect(() => {
       const handleEsc = (e: KeyboardEvent) => {
-         if (e.key === "Escape") setChangeBoardNameModal(false);
+         if (e.key === "Escape") setEditBoardData(false);
       };
 
       window.addEventListener("keydown", handleEsc);
@@ -43,7 +43,7 @@ export default function EditBoardModal({ setChangeBoardNameModal, boardId }: { s
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b">
                <span className="font-medium text-sm">Edit Board</span>
-               <button onClick={() => setChangeBoardNameModal(false)} disabled={pending} className="text-gray-500 hover:text-gray-700"><X size={18} /></button>
+               <button onClick={() => setEditBoardData(false)} disabled={pending} className="text-gray-500 hover:text-gray-700"><X size={18} /></button>
             </div>
 
             {/* Form */}
@@ -59,7 +59,7 @@ export default function EditBoardModal({ setChangeBoardNameModal, boardId }: { s
                   <Colors setColor={setColor} />
                </div>
                <div className="flex justify-end gap-2 pt-2">
-                  <button type="button" disabled={pending} onClick={() => setChangeBoardNameModal(false)} className="px-3 py-1.5 text-sm border rounded hover:bg-gray-50 transition">Cancel</button>
+                  <button type="button" disabled={pending} onClick={() => setEditBoardData(false)} className="px-3 py-1.5 text-sm border rounded hover:bg-gray-50 transition">Cancel</button>
                   <button type="submit" disabled={pending} className="px-4 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition disabled:opacity-50">{pending ? <Spinner /> : "Create"}</button>
                </div>
             </form>
