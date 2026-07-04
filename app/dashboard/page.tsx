@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input"
 import BoardCard from "@/components/BoardCard/BoardCard"
 import CreateBoardCard from "@/components/CreateBoardCard/CreateBoardCard"
 import { useIsLogin } from "@/hooks/useIsLogin"
+import DeleteBoardModal from "@/components/Modals/BoardModal/deleteBoardModal/deleteBoardModal"
 
 // icons
 import {
@@ -37,10 +38,11 @@ type BoardType = {
 
 export default function Dashboard() {
 
+   
    const [addBoardModal, setAddBoardModal] = useState(false) // add new board modal
    const [viewMode, setViewModal] = useState<"grid" | "list">("grid") // board View Model
-   const {data} = useIsLogin() // authCheck and userdata hook
-   const [search , setSearch] = useState<string>('') // search value
+   const { data } = useIsLogin() // authCheck and userdata hook
+   const [search, setSearch] = useState<string>('') // search value
 
 
    // board Data
@@ -56,7 +58,7 @@ export default function Dashboard() {
 
    // board data and filter data
    const boards = boardsData?.data?.boards ?? [];
-   const filteredBoards:BoardType[] = boards.filter((board)=>board.title.includes(search) )
+   const filteredBoards: BoardType[] = boards.filter((board) => board.title.includes(search))
 
 
    // Dashboard Stats 
@@ -107,11 +109,14 @@ export default function Dashboard() {
    return (
       <div className=" z-50 min-h-screen bg-gray-50">
 
+
          {/* Modal */}
          {addBoardModal && <BoardModal addBoardModal={addBoardModal} setAddBoardModal={setAddBoardModal} />}
 
+
          {/* Navbar */}
          <Navbar></Navbar>
+
 
          {/* main */}
          <main className=" container mx-auto px-4 sm:py-8 py-6 ">
@@ -160,7 +165,7 @@ export default function Dashboard() {
                      {/* Search */}
                      <div className="relative w-full sm:max-w-sm">
                         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                        <Input onChange={(e)=>setSearch(e.target.value)} id="search" placeholder="Search boards..." className="pl-10" />
+                        <Input onChange={(e) => setSearch(e.target.value)} id="search" placeholder="Search boards..." className="pl-10" />
                      </div>
 
                      {/* viewMode */}
@@ -192,6 +197,7 @@ export default function Dashboard() {
             </div>
 
          </main>
+
 
       </div>
    )

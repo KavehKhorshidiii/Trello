@@ -24,7 +24,6 @@ export default async function boardModalAction(prevState: stateType, formData: F
       boardId: formData.get("boardId"),
    }
 
-   console.log(title, des, color, columnId, boardId)
 
    const cookiesStore = await cookies()
    const tokenValue = cookiesStore.get("token")?.value

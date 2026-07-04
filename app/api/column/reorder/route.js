@@ -17,7 +17,6 @@ export async function PATCH(req){
 
 
    const result = await ColumnModel.bulkWrite(operations)
-   console.log(result)
 
    return NextResponse.json("good")
    

@@ -160,11 +160,9 @@ export default function Board() {
 
 
 
-      //REORDER Columns ✅
+      //REORDER Columns 
       if (activeType === "column") {
-         console.log("object")
          const currentColumns: ColType[] = columns.length > 0 ? columns : (columnsData ?? []);
-         console.log(currentColumns)
          const oldIndex: number = currentColumns.findIndex((col => col._id === active.id));
          const newIndex: number = currentColumns.findIndex((col => col._id === over.id));
          const newColumns = arrayMove(currentColumns, oldIndex, newIndex);
@@ -183,7 +181,6 @@ export default function Board() {
       if (!activeTask) return;
 
       const overData = event.over?.data?.current;
-      console.log(overData)
 
 
       // MOVE BETWEEN COLUMNS

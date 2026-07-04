@@ -11,11 +11,12 @@ import Spinner from "@/components/spinner/spinner";
 
 export default function BoardModal({addBoardModal , setAddBoardModal}: { addBoardModal: boolean; setAddBoardModal: (value: boolean) => void; }) {
 
-   const [state, formAction, pending] = useActionState(BoardModalAction, { success: null, errors: {}, message: "", });
 
+   const [state, formAction, pending] = useActionState(BoardModalAction, { success: null, errors: {}, message: "", });
    const queryClient = useQueryClient();
    const [color, setColor] = useState("");
 
+   
    // close modal + refresh boards
    useEffect(() => {
       if (state.success) {
@@ -23,6 +24,7 @@ export default function BoardModal({addBoardModal , setAddBoardModal}: { addBoar
          queryClient.invalidateQueries({ queryKey: ["boards"] });
       }
    }, [state.success]);
+
 
    // close on ESC
    useEffect(() => {
@@ -34,7 +36,9 @@ export default function BoardModal({addBoardModal , setAddBoardModal}: { addBoar
       return () => window.removeEventListener("keydown", handleEsc);
    }, []);
 
+
    if (!addBoardModal) return null;
+
 
    return (
       <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/40 backdrop-blur-sm">
@@ -76,6 +80,7 @@ export default function BoardModal({addBoardModal , setAddBoardModal}: { addBoar
                </div>
 
             </form>
+            
          </div>
       </div>
    );

@@ -7,7 +7,6 @@ export async function PATCH(req){
    await connectDB()
 
    const updateTaskCard = await req.json()
-   console.log(updateTaskCard)
 
    const operations = updateTaskCard.map((x) => ({
       updateOne:{
