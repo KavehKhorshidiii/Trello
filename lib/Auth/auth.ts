@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 
+
 // hash password
 export async function hashPass(password: string) {
    const hashedPassword = await bcrypt.hash(password, 10)
@@ -20,15 +21,17 @@ export function generateJwtToken(payload: string) {
 }
 
 // verify JWT Token
-export function verifyJwtToken(TokenValue: string) {
+export function verifyJwtToken(TokenValue: string):string | false | jwt.JwtPayload {
 
     try {
 
-      if (!process.env.SECRET_JWT) {
+      const secret = process.env.SECRET_JWT;
+
+      if (!secret) {
          throw new Error("SECRET_JWT is not defined")
       }
 
-      const decoded = jwt.verify(TokenValue, process.env.SECRET_JWT)
+      const decoded = jwt.verify(TokenValue, secret)
 
       return decoded
 

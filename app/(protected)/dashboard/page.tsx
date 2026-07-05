@@ -14,7 +14,8 @@ import { Input } from "@/components/ui/input"
 import BoardCard from "@/components/BoardCard/BoardCard"
 import CreateBoardCard from "@/components/CreateBoardCard/CreateBoardCard"
 import { useIsLogin } from "@/hooks/useIsLogin"
-import DeleteBoardModal from "@/components/Modals/BoardModal/deleteBoardModal/deleteBoardModal"
+import Spinner from "@/components/spinner/spinner"
+
 
 // icons
 import {
@@ -50,7 +51,7 @@ export default function Dashboard() {
       const res = await fetch("/api/boards")
       return res.json()
    }
-   const { data: boardsData } = useQuery<{ data: { boards: BoardType[] } }>({
+   const { data: boardsData, isLoading } = useQuery<{ data: { boards: BoardType[] } }>({
       queryKey: ["boards"],
       queryFn: fetchBoards
    })
@@ -58,7 +59,7 @@ export default function Dashboard() {
 
    // board data and filter data
    const boards = boardsData?.data?.boards ?? [];
-   const filteredBoards: BoardType[] = boards.filter((board) => board.title.includes(search))
+   const filteredBoards: BoardType[] = boards.filter((board) => board.title.toLocaleLowerCase().includes(search))
 
 
    // Dashboard Stats 
@@ -163,7 +164,7 @@ export default function Dashboard() {
                      {/* Search */}
                      <div className="relative w-full sm:max-w-sm">
                         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                        <Input onChange={(e) => setSearch(e.target.value)} id="search" placeholder="Search boards..." className="pl-10" />
+                        <Input onChange={(e) => setSearch(e.target.value.toLocaleLowerCase())} id="search" placeholder="Search boards..." className="pl-10" />
                      </div>
 
                      {/* viewMode */}
@@ -182,14 +183,17 @@ export default function Dashboard() {
 
                {/* Boards */}
                {
-                  <div className={viewMode === "grid" ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" : "flex flex-col gap-4"} >
-                     {
-                        filteredBoards.map((board) =>
-                           <BoardCard key={board._id} board={board} viewMode={viewMode} />
-                        )
-                     }
-                     <CreateBoardCard onClick={() => setAddBoardModal(true)} />
-                  </div>
+                  isLoading ?
+                     <div className=" flex justify-center items-center content-center h-52"><Spinner></Spinner></div>
+                     :
+                     <div className={viewMode === "grid" ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" : "flex flex-col gap-4"} >
+                        {
+                           filteredBoards.map((board) =>
+                              <BoardCard key={board._id} board={board} viewMode={viewMode} />
+                           )
+                        }
+                        <CreateBoardCard onClick={() => setAddBoardModal(true)} />
+                     </div>
                }
 
             </div>

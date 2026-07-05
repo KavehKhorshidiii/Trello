@@ -12,7 +12,6 @@ export async function GET() {
    const cookiesStore = await cookies()
 
    const tokenValue = cookiesStore.get("token")?.value
-
    if (!tokenValue) {
       return NextResponse.json({ success: false, data: null }, { status: 401 })
    }

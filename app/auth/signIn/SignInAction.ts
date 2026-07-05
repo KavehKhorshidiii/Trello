@@ -8,11 +8,15 @@ import { generateJwtToken } from "@/lib/Auth/auth"
 import { redirect } from "next/navigation"
 
 
+
 type prevState = {
    success: null | boolean,
    errors: object,
+   title:string
    message: string
 }
+
+
 
 export default async function SignInAction(prevState: prevState, formData: FormData): Promise<prevState> {
 
@@ -26,13 +30,13 @@ export default async function SignInAction(prevState: prevState, formData: FormD
    const findUser = await UsersModel.findOne({ username })
 
    if (!findUser) {
-      return { success: false, errors: {}, message: "This user does not exist." }
+      return { success: false, errors: {}, title:"exist" , message: "This user does not exist." }
    }
 
    const isMatch = await compare(password, findUser.password) // output -> boolean
 
    if (!isMatch) {
-      return { success: false, errors: {}, message: "The password or username is incorrect." }
+      return { success: false, errors: {} , title:"exist" , message: "The password or username is incorrect." }
    }
 
    // JWT Token
@@ -46,5 +50,5 @@ export default async function SignInAction(prevState: prevState, formData: FormD
    })
 
    redirect('/')
-
+   
 }

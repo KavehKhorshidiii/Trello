@@ -9,6 +9,7 @@ import { redirect } from 'next/navigation'
 type prevState = {
    success: null | boolean,
    errors: object,
+   title:string,
    message: string
 }
 
@@ -26,12 +27,12 @@ export default async function SignUpAction(prevState: prevState, formData: FormD
 
    // check user exist
    if (findUser.length) {
-      return { success: false, errors: {}, message: "A user has already registered with this username." }
+      return { success: false, errors: {},title:"exist" , message: "A user has already registered with this username." }
    }
 
    // password 
    if (password.length <= 8 && password.length >= 20) {
-      return { success: false, errors: {}, message: "Password must be more than 8 characters and less than 20 characters." }
+      return { success: false, errors: {},title:"exist" , message: "Password must be more than 8 characters and less than 20 characters." }
    }
 
    // hash password
@@ -52,8 +53,5 @@ export default async function SignUpAction(prevState: prevState, formData: FormD
 
 
    redirect('/')
-
-   // success return
-   //return { success: true, errors: {}, message: "User SignUp Successfully" }
 
 }
