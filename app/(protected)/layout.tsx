@@ -3,15 +3,19 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
 
-export default async function layout({children}:{children:React.ReactNode}) {
+
+export default async function Layout({children}:{children:React.ReactNode}) {
+
 
    // token
-   const token = await (await cookies()).get("token")?.value
+   const token = (await cookies()).get("token")?.value
    if(!token){redirect("/")}
 
-   // verify token
+   
+   //verify token
    const verifyToken = verifyJwtToken(token as string)
    if(!verifyToken){redirect("/")}
+
 
    return (children)
    

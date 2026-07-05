@@ -4,12 +4,14 @@ import SignUpAction from "./SignUpAction"
 import Link from "next/link"
 import Spinner from "@/components/spinner/spinner"
 import { toast } from "sonner";
+import { useRouter } from "next/navigation"
 
 
 export default function SignUp() {
 
    const initialState = { success: null,title:"" , errors: {}, message: "" }
    const [state, formAction, pending] = useActionState(SignUpAction, initialState)
+   const router = useRouter()
 
       // Toast
       useEffect(() => {
@@ -24,6 +26,11 @@ export default function SignUp() {
                description: state.message,
             });
          }
+
+         setTimeout(()=>{
+            router.push('/')
+         },1000)
+
       }, [state]);
 
    return (

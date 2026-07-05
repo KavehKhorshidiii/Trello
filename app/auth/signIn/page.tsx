@@ -4,12 +4,14 @@ import SignInAction from "@/app/auth/signIn/SignInAction"
 import Spinner from "@/components/spinner/spinner"
 import Link from "next/link"
 import { toast } from "sonner";
+import { useRouter } from "next/navigation"
 
 
 export default function SignIn() {
 
    const initialValue = { success: null, errors: {}, title: "", message: "" }
    const [state, formAction, pending] = useActionState(SignInAction, initialValue)
+   const router = useRouter()
 
    // Toast
    useEffect(() => {
@@ -24,6 +26,11 @@ export default function SignIn() {
             description: state.message,
          });
       }
+
+      setTimeout(() => {
+         router.push("/");
+      }, 1000)
+
    }, [state]);
 
    return (
