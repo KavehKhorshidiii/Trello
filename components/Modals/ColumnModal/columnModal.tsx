@@ -35,7 +35,6 @@ export default function ColumnModal({ isModalColumn, setIsModalColumn, params }:
                </div>
                <button type="submit" className=" border-2 rounded-sm px-3 py-1">add</button>
             </form>
-
          </div>
       </div>
    )

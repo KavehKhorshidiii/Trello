@@ -1,23 +1,21 @@
 'use client'
-import CardModal from '@/components/Modals/TaskModal/taskModal'
+
+
+// imports
+import CardTaskModal from '@/components/Modals/TaskModal/cardTaskModal'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useMutation, useQuery } from '@tanstack/react-query'
 import Navbar from '@/components/Navbar/navbar'
 import ColumnModal from '@/components/Modals/ColumnModal/columnModal'
 import BoardColumn from '@/components/BoardColumn/BoardColumn'
-import { SortableContext, horizontalListSortingStrategy } from "@dnd-kit/sortable";
-import { DragEndEvent } from "@dnd-kit/core";
-import { arrayMove } from "@dnd-kit/sortable";
-import { DndContext, useSensors, PointerSensor, useSensor } from "@dnd-kit/core";
-import { useRouter } from 'next/navigation';
+import { SortableContext, horizontalListSortingStrategy, arrayMove } from "@dnd-kit/sortable"; // dnd
+import { DndContext, useSensors, PointerSensor, DragEndEvent, useSensor } from "@dnd-kit/core";  // dnd
 import EditBoardModal from '@/components/Modals/editBoardModal/editBoardModal';
 
 
-
-
-
+// types
 type CardType = {
    board: string,
    color: string,
@@ -44,28 +42,28 @@ type ColType = {
    order: number,
    __v: number
 }
+type BoardType = {
+   _id: string
+   title: string,
+   board: string,
+   order:number,
+   __v:number
+}
 
 
 
 
 export default function Board() {
 
-   const router = useRouter()
-   const params = useParams();
-   const boardId = params.id as string ?? ""
+   const [cardTaskModal, setCardTaskModal] = useState(false) // Card Task Modal
+   const params = useParams(); const boardId = params.id as string ?? "" // Board ID
+   const [selectColumnId, setSelectedColumnId] = useState<string>("") // Column ID
    const [isModalColumn, setIsModalColumn] = useState(false)
-   //const [isModalBoardEdit, setIsModalBoardEdit] = useState(false)
-   const [isCardModal, setIsCardModal] = useState(false)
-
-   const [selectColumnId, setSelectedColumnId] = useState()
-
-
+   const router = useRouter()
    const [editBoardData, setEditBoardData] = useState(false)
 
 
-
-
-   // auth data
+   // auth check
    const fetchAuth = async () => {
       const res = await fetch("/api/authCheck")
       return res.json()
@@ -74,8 +72,6 @@ export default function Board() {
       queryKey: ["auth"],
       queryFn: fetchAuth,
    })
-
-
 
    // fetch Board Data
    async function fetchBoardData() {
@@ -87,7 +83,6 @@ export default function Board() {
       queryFn: fetchBoardData
    })
 
-
    // fetch Task Data
    async function fetchCards() {
       const res = await fetch(`/api/task/${boardId}`)
@@ -97,6 +92,7 @@ export default function Board() {
       queryKey: ["cards"],
       queryFn: fetchCards
    })
+
    // fetch columns
    async function fetchColumns() {
       const res = await fetch(`/api/column/${boardId}`)
@@ -106,6 +102,7 @@ export default function Board() {
       queryKey: ["columns"],
       queryFn: fetchColumns
    })
+
    // fetch task
    async function fetchTask() {
       const res = await fetch(`/api/task/${boardId}`)
@@ -118,7 +115,7 @@ export default function Board() {
 
 
 
-
+   // update
    // update Columns
    const ReorderColumn = async (columns: ColType[]) => {
       const res = await fetch('/api/column/reorder', {
@@ -143,7 +140,7 @@ export default function Board() {
    });
 
 
-
+   // copy
    const [columns, setColumns] = useState<ColType[]>([]); // <- show Columns 
    const displayColumns = columns.length > 0 ? columns : (columnsData ?? []);
 
@@ -151,6 +148,7 @@ export default function Board() {
    const displayTasks = tasks.length > 0 ? tasks : (Task?.data?.Tasks ?? []);
 
 
+   // handleDragEnd Function
    function handleDragEnd(event: DragEndEvent) {
 
       const { active, over } = event;
@@ -229,7 +227,7 @@ export default function Board() {
 
    }
 
-
+   // dnd sensors
    const sensors = useSensors(
       useSensor(PointerSensor, {
          activationConstraint: {
@@ -238,18 +236,28 @@ export default function Board() {
       })
    );
 
+   console.log(selectColumnId)
 
    return (
-      <div className=' min-h-screen bg-white'>
+      <div className=' min-h-screen bg-gray-50'>
 
-         <Navbar editBoardData={setEditBoardData} boardTitle={boardData?.boardData?.[0]?.title} ></Navbar>
 
-         {/* Card Modal */}
-         {isCardModal && <CardModal params={{ ColumnId: selectColumnId, BoardId: boardId }} isCardModal={isCardModal} setIsCardModal={setIsCardModal} />}
+         {/* MODALS */}
+
+         {/* CardTask Modal */}
+         {cardTaskModal && <CardTaskModal columnId={selectColumnId} boardId={boardId} setCardTaskModal={setCardTaskModal} />}
          {/* Column Modal */}
          {isModalColumn && <ColumnModal params={boardId} isModalColumn={isModalColumn} setIsModalColumn={setIsModalColumn} />}
          {/* Edit Board Data Modal */}
          {editBoardData && <EditBoardModal setEditBoardData={setEditBoardData} boardId={boardId} />}
+
+
+         {/* Navbar */}
+         <Navbar editBoardData={setEditBoardData} boardTitle={boardData?.boardData?.[0]?.title} ></Navbar>
+
+
+
+
 
 
 
@@ -290,8 +298,8 @@ export default function Board() {
                      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
                         <SortableContext strategy={horizontalListSortingStrategy} items={displayColumns.map((col: CardType) => col._id)} >
                            {
-                              displayColumns?.map((col: CardType) => (
-                                 <BoardColumn tasks={displayTasks.filter((task: CardFuncType) => task.column === col._id)} key={col._id} boardData={col} isCardModal={isCardModal} setIsCardModal={setIsCardModal} setSelectedColumnId={setSelectedColumnId} ></BoardColumn>
+                              displayColumns?.map((col: BoardType) => (
+                                 <BoardColumn tasks={displayTasks.filter((task: CardFuncType) => task.column === col._id)} key={col._id} boardData={col} cardTaskModal={cardTaskModal} setCardTaskModal={setCardTaskModal} setSelectedColumnId={setSelectedColumnId} ></BoardColumn>
                               ))
                            }
                         </SortableContext>
@@ -301,6 +309,7 @@ export default function Board() {
 
             </div>
          </div>
+
       </div>
    )
 

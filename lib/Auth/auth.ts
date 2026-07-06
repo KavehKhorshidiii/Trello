@@ -16,7 +16,7 @@ export function generateJwtToken(payload: string) {
 
    if (!SECRET) { throw new Error("SECRET_JWT is not defined") }
 
-   return jwt.sign({ id: payload }, SECRET, { expiresIn: "5h" })
+   return jwt.sign({ id: payload }, SECRET, { expiresIn: "7d" })
 
 }
 

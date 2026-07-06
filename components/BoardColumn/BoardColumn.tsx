@@ -4,12 +4,8 @@ import { GripHorizontal } from 'lucide-react';
 import { Button } from "../ui/button"
 import TaskCard from "../TaskCard/TaskCard";
 import { useState } from "react";
-
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-
-
-
 import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, horizontalListSortingStrategy } from "@dnd-kit/sortable";
 import { verticalListSortingStrategy } from "@dnd-kit/sortable";
@@ -17,17 +13,23 @@ import { DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 
 
-
-type CardType = {
-   board: string,
-   color: string,
-   createdAt: string,
-   title: string,
-   des: string,
-   updatedAt: string,
+// Types
+// type CardType = {
+//    _id: string
+//    title: string,
+//    board: string,
+//    color: string,
+//    createdAt: string,
+//    des: string,
+//    updatedAt: string,
+// }
+type BoardType = {
    _id: string
+   title: string,
+   board: string,
+   order:number,
+   __v:number
 }
-
 type CardFuncType = {
    board: string,
    column: string,
@@ -39,12 +41,11 @@ type CardFuncType = {
    _id: string
 }
 
-export default function BoardColumn({ boardData, isCardModal, tasks, setIsCardModal, setSelectedColumnId }: { boardData: CardType, isCardModal: boolean, tasks: CardFuncType[], setIsCardModal: (value: boolean) => void, setSelectedColumnId: (value: string) => void }) {
-
+export default function BoardColumn({ boardData, cardTaskModal, tasks, setCardTaskModal, setSelectedColumnId }: { boardData: BoardType, cardTaskModal: boolean, tasks: CardFuncType[], setCardTaskModal: (value: boolean) => void, setSelectedColumnId:(value:string) => void }) {
 
 
    const AddCardHandler = () => {
-      setIsCardModal(!isCardModal)
+      setCardTaskModal(!cardTaskModal)
       setSelectedColumnId(boardData._id)
    }
 

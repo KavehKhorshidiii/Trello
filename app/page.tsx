@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar/navbar";
 import { cookies } from "next/headers";
 
-
+// components
 import {
    Card,
    CardContent,
@@ -195,7 +195,7 @@ export default async function Home() {
                      <Link
                         href="https://github.com/KavehKhorshidiii"
                         target="_blank"
-                        className="group w-25 flex items-center gap-2 rounded-full border border-gray-700 px-4 py-2 transition-all duration-300 hover:border-blue-600 hover:bg-gray-800 hover:text-white hover:shadow-lg hover:shadow-blue-500/20"
+                        className="group flex items-center gap-2 rounded-full border border-gray-700 px-4 py-2 transition-all duration-300 hover:border-blue-600 hover:bg-gray-800 hover:text-white hover:shadow-lg hover:shadow-blue-500/20"
                      >
                         <span className="transition-colors duration-300">
                            Developed by <span className="font-semibold text-white">Kaveh</span>
