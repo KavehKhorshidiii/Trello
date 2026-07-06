@@ -81,10 +81,10 @@ export default function BoardColumn({ ColData, cardTaskModal, tasks, setCardTask
          {editColData && <EditColModal setEditColData={setEditColData} ColId={ColData._id} />}
 
 
-         <div className={`group flex min-h-[220px] flex-col rounded-2xl border bg-white shadow-sm transition-all duration-200${isOver ? "border-blue-500 ring-2 ring-blue-200 shadow-lg" : "border-gray-200 hover:shadow-md"}`} >
+         <div className={` flex min-h-[220px] flex-col rounded-2xl border bg-white shadow-sm transition-all duration-200${isOver ? "border-blue-500 ring-2 ring-blue-200 shadow-lg" : "border-gray-200 hover:shadow-md"}`} >
 
             {/* Header */}
-            <div className="sticky top-0 z-10 rounded-t-2xl border-b bg-white p-4">
+            <div className="sticky top-0 z-10 rounded-t-2xl group border-b bg-white p-4">
                <div className="flex items-center justify-between">
                   <div className="flex select-none items-center gap-3">
                      <GripHorizontal {...attributes} {...listeners} className="size-5 cursor-grab text-gray-400 hover:text-gray-600 active:cursor-grabbing" /> {/* Drag Handle */}
@@ -102,8 +102,6 @@ export default function BoardColumn({ ColData, cardTaskModal, tasks, setCardTask
                      }
                   </div>
                </div>
-
-
             </div>
 
             {/* Cards */}
