@@ -8,12 +8,14 @@ import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import DeleteBoardModal from "../Modals/BoardModal/deleteBoardModal/deleteBoardModal";
 import EditBoardModal from "../Modals/editBoardModal/editBoardModal";
+import { Button } from "../ui/button";
+
+
 
 
 // icons
 import {
    Card,
-   CardContent,
    CardHeader,
    CardTitle,
    CardDescription,
@@ -59,15 +61,15 @@ const colorMap: Record<ColorKey, string> = {
 export default function BoardCard({ board, viewMode }: Props) {
 
 
-   const [now] = useState(() => Date.now());
-   const isNew = isNewBoard(board.createdAt, now);
+   const [now] = useState(() => Date.now()); // date
+   const isNew = isNewBoard(board.createdAt, now); // date
    const [menuOpen, setMenuOpen] = useState(false) // menu 
    const [deleteBoardModal, setDeleteBoardModal] = useState(false) // add new board modal
    const [editBoardData, setEditBoardData] = useState(false) // edit board data
 
 
    // Ellipsis Button Handler
-   const EllipsisHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+   const MenuHandler = (e: React.MouseEvent<HTMLDivElement>) => {
       e.preventDefault();
       e.stopPropagation();
       setMenuOpen(!menuOpen);
@@ -92,8 +94,8 @@ export default function BoardCard({ board, viewMode }: Props) {
 
                      <div className={`h-3 w-3 rounded-full ${colorMap[board.color as keyof typeof colorMap] || "bg-gray-300"}`} />
 
-                     <div onClick={EllipsisHandler} className={`hover:text-gray-600 transition-all duration-200 flex flex-col relative px-2 items-center ${menuOpen ? " bg-gray-100 rounded-sm" : ""}`} >
-                        <Ellipsis />
+                     <div onClick={MenuHandler} className={`hover:text-gray-600 transition-all duration-200 flex flex-col relative px-2 items-center`} >
+                        <Button variant="ghost" size="icon" className={`opacity-0 transition-opacity group-hover:opacity-100` + ( menuOpen ? " bg-gray-100 rounded-sm opacity-100" : "" ) }> <Ellipsis /></Button>
                         {
                            isNew && (<Badge variant="secondary" className="text-xs top-full absolute"> New </Badge>)
                         }

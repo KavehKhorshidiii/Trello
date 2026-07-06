@@ -5,14 +5,15 @@
 import CardTaskModal from '@/components/Modals/TaskModal/cardTaskModal'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useMutation, useQuery } from '@tanstack/react-query'
 import Navbar from '@/components/Navbar/navbar'
 import ColumnModal from '@/components/Modals/ColumnModal/columnModal'
+import EditBoardModal from '@/components/Modals/editBoardModal/editBoardModal';
 import BoardColumn from '@/components/BoardColumn/BoardColumn'
 import { SortableContext, horizontalListSortingStrategy, arrayMove } from "@dnd-kit/sortable"; // dnd
 import { DndContext, useSensors, PointerSensor, DragEndEvent, useSensor } from "@dnd-kit/core";  // dnd
-import EditBoardModal from '@/components/Modals/editBoardModal/editBoardModal';
+import Spinner from '@/components/spinner/spinner';
 
 
 // types
@@ -51,9 +52,8 @@ type BoardType = {
 }
 
 
-
-
 export default function Board() {
+
 
    const [cardTaskModal, setCardTaskModal] = useState(false) // Card Task Modal
    const [isModalColumn, setIsModalColumn] = useState(false) // Column Modal
@@ -62,25 +62,13 @@ export default function Board() {
    const [selectColumnId, setSelectedColumnId] = useState<string>("") // Column ID
 
 
-   // - AUTH USER -
-   // Check User Authentication
-   const fetchAuth = async () => {
-      const res = await fetch("/api/authCheck")
-      return res.json()
-   }
-   const { data: authData, isLoading } = useQuery({
-      queryKey: ["auth"],
-      queryFn: fetchAuth,
-   })
-
-
    // - BOARDS -
    // Fetch Board Data
    async function fetchBoardData() {
       const res = await fetch(`/api/boards/${boardId}`)
       return res.json()
    }
-   const { data: boardData, isPending } = useQuery({
+   const { data: boardData } = useQuery({
       queryKey: ["boards"],
       queryFn: fetchBoardData
    })
@@ -92,7 +80,7 @@ export default function Board() {
       const res = await fetch(`/api/column/${boardId}`)
       return res.json()
    }
-   const { data: columnsData } = useQuery({
+   const { data: columnsData , isPending:ColumnsPending } = useQuery({
       queryKey: ["columns"],
       queryFn: fetchColumns
    })
@@ -140,7 +128,7 @@ export default function Board() {
    const [tasks, setTasks] = useState<CardType[]>([]); // TaskCard State
    const displayTasks = tasks.length > 0 ? tasks : (Task?.data?.Tasks ?? []); // Display Tasks
 
-
+   
    // - DRAG AND DROP -
    // handleDragEnd Function
    function handleDragEnd(event: DragEndEvent) {
@@ -254,6 +242,7 @@ export default function Board() {
                      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
                         <SortableContext strategy={horizontalListSortingStrategy} items={displayColumns.map((col: CardType) => col._id)} >
                            {
+                              ColumnsPending ? <div className='w-full'><Spinner /></div> :
                               displayColumns?.map((col: BoardType) => (
                                  <BoardColumn tasks={displayTasks.filter((task: CardFuncType) => task.column === col._id)} key={col._id} boardData={col} cardTaskModal={cardTaskModal} setCardTaskModal={setCardTaskModal} setSelectedColumnId={setSelectedColumnId} ></BoardColumn>
                               ))
