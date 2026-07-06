@@ -10,7 +10,7 @@ const CardSchema = new Schema({
    },
    color: {
       type: String,
-      default: "#ffffff"
+      default: "white"
    },
    column: {
       type: mongoose.Schema.Types.ObjectId,

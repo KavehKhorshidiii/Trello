@@ -65,7 +65,7 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
       <div ref={setNodeRef} style={style} className="group flex h-48 flex-col overflow-hidden rounded-xl border bg-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
 
          {/* Status Line */}
-         <div className={`h-1.5 w-full  ${colorMap[data.color as ColorKey]}`} />
+         <div className={`h-1.5 w-full  ${colorMap[data.color as keyof typeof colorMap] || "bg-gray-300"}`} />
 
          {/* Content */}
          <div className="flex-1 p-4">
@@ -85,7 +85,7 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
          {/* Footer */}
          <div className="flex items-center justify-between border-t bg-gray-50 px-4 py-3 text-sm text-gray-500">
             <div className="flex items-center gap-2">
-               <span className={`h-2 w-2 rounded-full  ${colorMap[data.color as ColorKey]}`}/>
+               <span className={`h-2 w-2 rounded-full  ${colorMap[data.color as keyof typeof colorMap] || "bg-gray-300"}`}/>
             </div>
             <div className="flex items-center gap-2">
                <CalendarDays className="size-4" />
@@ -101,18 +101,3 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
 
 
 
-
-
-// <div style={style} ref={setNodeRef} className="group flex h-48 flex-col overflow-hidden rounded-xl border bg-white shadow-sm transition-shadow duration-200 hover:-translate-y-1 hover:shadow-lg">
-//    <div {...attributes} {...listeners}>
-//       <div className=" px-2 pt-2 font-bold flex items-center justify-between">
-//          <p>{data.title}</p>
-//          <Button variant="ghost" size="sm"><MoreHorizontal /></Button>
-//       </div>
-//       <p className=" px-2">{data.des}</p>
-//    </div>
-//    <div className=" flex items-center text-sm justify-between bg-gray-50 sticky bottom-0  boarder border p-2 overflow-y-auto">
-//       <span className=" size-3 bg-blue-500 rounded-full"></span>
-//       <span>{data.updatedAt.split("T")[0]}</span>
-//    </div>
-// </div>

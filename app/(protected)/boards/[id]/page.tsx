@@ -128,7 +128,7 @@ export default function Board() {
    const [tasks, setTasks] = useState<CardType[]>([]); // TaskCard State
    const displayTasks = tasks.length > 0 ? tasks : (Task?.data?.Tasks ?? []); // Display Tasks
 
-   
+
    // - DRAG AND DROP -
    // handleDragEnd Function
    function handleDragEnd(event: DragEndEvent) {
@@ -223,7 +223,7 @@ export default function Board() {
             <div className=' container flex justify-between flex-col '>
 
                {/* Stats bar & Add New Column */}
-               <div className="flex items-center gap-6 px-6 py-8  border-gray-100">
+               <div className="flex items-center gap-6 pt-7  border-gray-100">
                   {/* Stats bar */}
                   <span className="text-sm text-gray-600"> Total Tasks: <strong className="text-gray-800">{displayTasks.length}</strong></span>
 
@@ -238,13 +238,13 @@ export default function Board() {
 
                {/* Columns */}
                <main className=" flex overflow-x-auto w-full ">
-                  <div className="flex flex-col w-full sm:flex-row gap-4 px-6">
+                  <div className="flex flex-col w-full sm:flex-row gap-4 px-5 py-7">
                      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
                         <SortableContext strategy={horizontalListSortingStrategy} items={displayColumns.map((col: CardType) => col._id)} >
                            {
                               ColumnsPending ? <div className='w-full'><Spinner /></div> :
                               displayColumns?.map((col: BoardType) => (
-                                 <BoardColumn tasks={displayTasks.filter((task: CardFuncType) => task.column === col._id)} key={col._id} boardData={col} cardTaskModal={cardTaskModal} setCardTaskModal={setCardTaskModal} setSelectedColumnId={setSelectedColumnId} ></BoardColumn>
+                                 <BoardColumn tasks={displayTasks.filter((task: CardFuncType) => task.column === col._id)} key={col._id} ColData={col} cardTaskModal={cardTaskModal} setCardTaskModal={setCardTaskModal} setSelectedColumnId={setSelectedColumnId} ></BoardColumn>
                               ))
                            }
                         </SortableContext>

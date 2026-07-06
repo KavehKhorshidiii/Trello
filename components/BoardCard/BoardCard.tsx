@@ -120,8 +120,8 @@ export default function BoardCard({ board, viewMode }: Props) {
 
                   {/* Dates */}
                   <div className="flex flex-col  sm:flex-row sm:justify-between text-xs text-gray-500 gap-1">
-                     <span>Created: {new Date(board.createdAt).toLocaleDateString()}</span>
-                     <span>Updated: {new Date(board.updatedAt).toLocaleDateString()}</span>
+                     <span>Created: {board.createdAt.split("T")[0]}</span>
+                     <span>Updated: {board.updatedAt.split("T")[0]}</span>
                   </div>
                </div>
 
