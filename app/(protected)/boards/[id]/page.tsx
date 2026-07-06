@@ -56,15 +56,14 @@ type BoardType = {
 export default function Board() {
 
    const [cardTaskModal, setCardTaskModal] = useState(false) // Card Task Modal
-   const [isModalColumn, setIsModalColumn] = useState(false) // Modal Column
+   const [isModalColumn, setIsModalColumn] = useState(false) // Column Modal
+   const [editBoardData, setEditBoardData] = useState(false) // Edit Board Modal
    const params = useParams(); const boardId = params.id as string ?? "" // Board ID
    const [selectColumnId, setSelectedColumnId] = useState<string>("") // Column ID
 
-   const router = useRouter()
-   const [editBoardData, setEditBoardData] = useState(false)
 
-
-   // auth check
+   // - AUTH USER -
+   // Check User Authentication
    const fetchAuth = async () => {
       const res = await fetch("/api/authCheck")
       return res.json()
@@ -74,7 +73,9 @@ export default function Board() {
       queryFn: fetchAuth,
    })
 
-   // fetch Board Data
+
+   // - BOARDS -
+   // Fetch Board Data
    async function fetchBoardData() {
       const res = await fetch(`/api/boards/${boardId}`)
       return res.json()
@@ -85,6 +86,7 @@ export default function Board() {
    })
 
 
+   // - COLUMNS -
    // Fetch Columns Data
    async function fetchColumns() {
       const res = await fetch(`/api/column/${boardId}`)
@@ -94,7 +96,6 @@ export default function Board() {
       queryKey: ["columns"],
       queryFn: fetchColumns
    })
-
    // Update -> Columns Reorder
    const ReorderColumn = async (columns: ColType[]) => {
       const res = await fetch('/api/column/reorder', {
@@ -108,16 +109,7 @@ export default function Board() {
    });
 
 
-   // // Fetch TaskCard Data
-   // async function fetchCards() {
-   //    const res = await fetch(`/api/task/${boardId}`)
-   //    return res.json()
-   // }
-   // const { data: cardData } = useQuery({
-   //    queryKey: ["cards"],
-   //    queryFn: fetchCards
-   // })
-
+   // - TASK CARD -
    // Fetch TaskCard
    async function fetchTask() {
       const res = await fetch(`/api/task/${boardId}`)
@@ -127,7 +119,6 @@ export default function Board() {
       queryKey: ["tasks"],
       queryFn: fetchTask
    })
-
    // Update -> CardTask Reorder
    const ReorderTaskCard = async (tasks: CardType[]) => {
       const res = await fetch('/api/task/reorder', {
@@ -141,7 +132,16 @@ export default function Board() {
    });
 
 
+   // - COPY DATA -
+   // Columns
+   const [columns, setColumns] = useState<ColType[]>([]); // Columns State 
+   const displayColumns = columns.length > 0 ? columns : (columnsData ?? []); // Display Columns
+   // Task
+   const [tasks, setTasks] = useState<CardType[]>([]); // TaskCard State
+   const displayTasks = tasks.length > 0 ? tasks : (Task?.data?.Tasks ?? []); // Display Tasks
 
+
+   // - DRAG AND DROP -
    // handleDragEnd Function
    function handleDragEnd(event: DragEndEvent) {
 
@@ -213,17 +213,9 @@ export default function Board() {
    );
 
 
-   // Copy
-   const [columns, setColumns] = useState<ColType[]>([]); // Columns State 
-   const displayColumns = columns.length > 0 ? columns : (columnsData ?? []); // Display Columns
-
-   const [tasks, setTasks] = useState<CardType[]>([]); // TaskCard State
-   const displayTasks = tasks.length > 0 ? tasks : (Task?.data?.Tasks ?? []); // Display Tasks
-
 
    return (
       <div className=' min-h-screen bg-gray-50'>
-
 
          {/* Navbar */}
          <Navbar editBoardData={setEditBoardData} boardTitle={boardData?.boardData?.[0]?.title} ></Navbar>
