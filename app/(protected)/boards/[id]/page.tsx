@@ -84,17 +84,8 @@ export default function Board() {
       queryFn: fetchBoardData
    })
 
-   // fetch Task Data
-   async function fetchCards() {
-      const res = await fetch(`/api/task/${boardId}`)
-      return res.json()
-   }
-   const { data: cardData } = useQuery({
-      queryKey: ["cards"],
-      queryFn: fetchCards
-   })
 
-   // fetch columns
+   // Fetch Columns Data
    async function fetchColumns() {
       const res = await fetch(`/api/column/${boardId}`)
       return res.json()
@@ -104,20 +95,7 @@ export default function Board() {
       queryFn: fetchColumns
    })
 
-   // fetch task
-   async function fetchTask() {
-      const res = await fetch(`/api/task/${boardId}`)
-      return res.json()
-   }
-   const { data: Task } = useQuery({
-      queryKey: ["tasks"],
-      queryFn: fetchTask
-   })
-
-
-
-   // update
-   // update Columns
+   // Update -> Columns Reorder
    const ReorderColumn = async (columns: ColType[]) => {
       const res = await fetch('/api/column/reorder', {
          method: "PATCH",
@@ -128,7 +106,29 @@ export default function Board() {
    const updateColumns = useMutation({
       mutationFn: ReorderColumn,
    });
-   // update CardTask
+
+
+   // // Fetch TaskCard Data
+   // async function fetchCards() {
+   //    const res = await fetch(`/api/task/${boardId}`)
+   //    return res.json()
+   // }
+   // const { data: cardData } = useQuery({
+   //    queryKey: ["cards"],
+   //    queryFn: fetchCards
+   // })
+
+   // Fetch TaskCard
+   async function fetchTask() {
+      const res = await fetch(`/api/task/${boardId}`)
+      return res.json()
+   }
+   const { data: Task } = useQuery({
+      queryKey: ["tasks"],
+      queryFn: fetchTask
+   })
+
+   // Update -> CardTask Reorder
    const ReorderTaskCard = async (tasks: CardType[]) => {
       const res = await fetch('/api/task/reorder', {
          method: "PATCH",
@@ -141,19 +141,12 @@ export default function Board() {
    });
 
 
-   // Copy
-   const [columns, setColumns] = useState<ColType[]>([]); // <- show Columns 
-   const displayColumns = columns.length > 0 ? columns : (columnsData ?? []);
-   const [tasks, setTasks] = useState<CardType[]>([]); // <- show Columns
-   const displayTasks = tasks.length > 0 ? tasks : (Task?.data?.Tasks ?? []);
-
 
    // handleDragEnd Function
    function handleDragEnd(event: DragEndEvent) {
 
-      const { active, over } = event;
-      if (!over ) return;
-      if (active.id === over.id) return;
+      const { active, over } = event; // Active & Over
+      if (!over || active.id === over.id) return;
       const activeType = active.data.current?.type;
 
       // REORDER COLUMN
@@ -167,11 +160,11 @@ export default function Board() {
          updateColumns.mutate(sortColumn);
       }
 
+      // CARD TASK
       const currentTasks: CardFuncType[] = tasks.length > 0 ? tasks : (Task?.data?.Tasks || []);
       const activeTask = currentTasks.find(t => t._id === active.id);
       const overTask = currentTasks.find(t => t._id === over.id);
       if (!activeTask) return;
-
       const overData = event.over?.data?.current;
 
       // MOVE BETWEEN COLUMNS
@@ -201,9 +194,7 @@ export default function Board() {
       const newIndex = currentTasks.findIndex(t => t._id === over.id);
 
       if (oldIndex === -1 || newIndex === -1) return;
-
       const reordered = arrayMove(currentTasks, oldIndex, newIndex);
-
       const sorted = reordered.map((task, index) => ({
          ...task,
          order: index,
@@ -220,6 +211,14 @@ export default function Board() {
          },
       })
    );
+
+
+   // Copy
+   const [columns, setColumns] = useState<ColType[]>([]); // Columns State 
+   const displayColumns = columns.length > 0 ? columns : (columnsData ?? []); // Display Columns
+
+   const [tasks, setTasks] = useState<CardType[]>([]); // TaskCard State
+   const displayTasks = tasks.length > 0 ? tasks : (Task?.data?.Tasks ?? []); // Display Tasks
 
 
    return (
