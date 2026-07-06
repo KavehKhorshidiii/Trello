@@ -1,13 +1,7 @@
 import { Button } from "../ui/button"
-
-
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { DndContext } from "@dnd-kit/core";
-import { SortableContext, horizontalListSortingStrategy } from "@dnd-kit/sortable";
-import { verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { DragEndEvent } from "@dnd-kit/core";
-import { arrayMove } from "@dnd-kit/sortable";
+
 
 import {
    CalendarDays,
@@ -27,7 +21,17 @@ type CardFuncType = {
    _id: string
 }
 
-
+// colors
+type ColorKey = "blue" | "red" | "green" | "cyan" | "purple" | "yellow" | "gray";
+const colorMap: Record<ColorKey, string> = {
+   blue: "bg-blue-600",
+   red: "bg-red-600",
+   green: "bg-green-600",
+   cyan: "bg-cyan-600",
+   purple: "bg-purple-600",
+   yellow: "bg-amber-600",
+   gray: "bg-gray-600",
+};
 
 export default function TaskCard({ data }: { data: CardFuncType }) {
 
@@ -61,8 +65,7 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
       <div ref={setNodeRef} style={style} className="group flex h-48 flex-col overflow-hidden rounded-xl border bg-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
 
          {/* Status Line */}
-         <div className={`h-1.5 w-full  bg-blue-600`} />
-         {/* ${statusColor[data.status as keyof typeof statusColor] ?? "bg-blue-500" */}
+         <div className={`h-1.5 w-full  ${colorMap[data.color as ColorKey]}`} />
 
          {/* Content */}
          <div className="flex-1 p-4">
@@ -82,19 +85,14 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
          {/* Footer */}
          <div className="flex items-center justify-between border-t bg-gray-50 px-4 py-3 text-sm text-gray-500">
             <div className="flex items-center gap-2">
-               <span className={`h-2 w-2 rounded-full bg-blue-600`}
-               />
-               {/* ${statusColor[data.status as keyof typeof statusColor] ?? "bg-blue-500" */}
-               <span className="text-xs font-medium">
-                  {/* {data?.status} */}
-               </span>
+               <span className={`h-2 w-2 rounded-full  ${colorMap[data.color as ColorKey]}`}/>
             </div>
-
             <div className="flex items-center gap-2">
                <CalendarDays className="size-4" />
                <span>{data.updatedAt.split("T")[0]}</span>
             </div>
          </div>
+
       </div>
 
 

@@ -242,18 +242,20 @@ export default function Board() {
       <div className=' min-h-screen bg-gray-50'>
 
 
+         {/* Navbar */}
+         <Navbar editBoardData={setEditBoardData} boardTitle={boardData?.boardData?.[0]?.title} ></Navbar>
+
+
          {/* MODALS */}
 
-         {/* CardTask Modal */}
-         {cardTaskModal && <CardTaskModal columnId={selectColumnId} boardId={boardId} setCardTaskModal={setCardTaskModal} />}
          {/* Column Modal */}
          {isModalColumn && <ColumnModal params={boardId} isModalColumn={isModalColumn} setIsModalColumn={setIsModalColumn} />}
+         {/* CardTask Modal */}
+         {cardTaskModal && <CardTaskModal columnId={selectColumnId} boardId={boardId} setCardTaskModal={setCardTaskModal} />}
          {/* Edit Board Data Modal */}
          {editBoardData && <EditBoardModal setEditBoardData={setEditBoardData} boardId={boardId} />}
 
 
-         {/* Navbar */}
-         <Navbar editBoardData={setEditBoardData} boardTitle={boardData?.boardData?.[0]?.title} ></Navbar>
 
 
 
@@ -266,23 +268,14 @@ export default function Board() {
 
          <div className=' flex justify-center'>
 
-
             <div className=' container flex justify-between flex-col '>
 
+               {/* ── Stats bar & Add New Column ── */}
+               <div className="flex items-center gap-6 px-6 py-3 border-gray-100">
+                  {/* Stats bar */}
+                  <span className="text-sm text-gray-600"> Total Tasks: <strong className="text-gray-800">{displayTasks.length}</strong></span>
 
-               {/* ── Stats bar ── */}
-               <div className="flex items-center gap-6 px-6 py-3 border-b border-gray-100">
-                  <span className="text-sm text-gray-600">
-                     Total Tasks: <strong className="text-gray-800">{"2"}</strong>
-                  </span>
-                  <span className="text-sm text-gray-600">
-                     Completed: <strong className="text-gray-800">{"1"}</strong>
-                  </span>
-                  <span className="text-sm text-gray-600">
-                     In Progress: <strong className="text-gray-800">{"3"}</strong>
-                  </span>
-
-                  {/* Add Task – pushed to the right */}
+                  {/*  Add New Column */}
                   <div className="ml-auto">
                      <button onClick={() => setIsModalColumn(true)} className="flex items-center gap-2 bg-gray-900 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
                         <Plus className=' size-4'></Plus>
@@ -290,7 +283,6 @@ export default function Board() {
                      </button>
                   </div>
                </div>
-
 
                {/* ── Kanban board ── */}
                <main className=" flex overflow-x-auto w-full ">
