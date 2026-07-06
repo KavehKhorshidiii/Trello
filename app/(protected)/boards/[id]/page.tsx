@@ -56,9 +56,10 @@ type BoardType = {
 export default function Board() {
 
    const [cardTaskModal, setCardTaskModal] = useState(false) // Card Task Modal
+   const [isModalColumn, setIsModalColumn] = useState(false) // Modal Column
    const params = useParams(); const boardId = params.id as string ?? "" // Board ID
    const [selectColumnId, setSelectedColumnId] = useState<string>("") // Column ID
-   const [isModalColumn, setIsModalColumn] = useState(false)
+
    const router = useRouter()
    const [editBoardData, setEditBoardData] = useState(false)
 
@@ -140,10 +141,9 @@ export default function Board() {
    });
 
 
-   // copy
+   // Copy
    const [columns, setColumns] = useState<ColType[]>([]); // <- show Columns 
    const displayColumns = columns.length > 0 ? columns : (columnsData ?? []);
-
    const [tasks, setTasks] = useState<CardType[]>([]); // <- show Columns
    const displayTasks = tasks.length > 0 ? tasks : (Task?.data?.Tasks ?? []);
 
@@ -152,14 +152,11 @@ export default function Board() {
    function handleDragEnd(event: DragEndEvent) {
 
       const { active, over } = event;
-      if (!over) return;
+      if (!over ) return;
       if (active.id === over.id) return;
       const activeType = active.data.current?.type;
 
-
-
-
-      //REORDER Columns 
+      // REORDER COLUMN
       if (activeType === "column") {
          const currentColumns: ColType[] = columns.length > 0 ? columns : (columnsData ?? []);
          const oldIndex: number = currentColumns.findIndex((col => col._id === active.id));
@@ -170,17 +167,12 @@ export default function Board() {
          updateColumns.mutate(sortColumn);
       }
 
-
-
-
-
       const currentTasks: CardFuncType[] = tasks.length > 0 ? tasks : (Task?.data?.Tasks || []);
       const activeTask = currentTasks.find(t => t._id === active.id);
       const overTask = currentTasks.find(t => t._id === over.id);
       if (!activeTask) return;
 
       const overData = event.over?.data?.current;
-
 
       // MOVE BETWEEN COLUMNS
       if (activeType === "task") {
@@ -204,9 +196,6 @@ export default function Board() {
       }
 
 
-
-
-
       // REORDER CARD-TASK IN COLUMN
       const oldIndex = currentTasks.findIndex(t => t._id === active.id);
       const newIndex = currentTasks.findIndex(t => t._id === over.id);
@@ -222,11 +211,7 @@ export default function Board() {
 
       setTasks(sorted);
       updateTaskCard.mutate(sorted);
-
-
-
    }
-
    // dnd sensors
    const sensors = useSensors(
       useSensor(PointerSensor, {
@@ -236,7 +221,6 @@ export default function Board() {
       })
    );
 
-   console.log(selectColumnId)
 
    return (
       <div className=' min-h-screen bg-gray-50'>
@@ -256,22 +240,11 @@ export default function Board() {
          {editBoardData && <EditBoardModal setEditBoardData={setEditBoardData} boardId={boardId} />}
 
 
-
-
-
-
-
-
-
-
-
-
          <div className=' flex justify-center'>
-
             <div className=' container flex justify-between flex-col '>
 
-               {/* ── Stats bar & Add New Column ── */}
-               <div className="flex items-center gap-6 px-6 py-3 border-gray-100">
+               {/* Stats bar & Add New Column */}
+               <div className="flex items-center gap-6 px-6 py-8  border-gray-100">
                   {/* Stats bar */}
                   <span className="text-sm text-gray-600"> Total Tasks: <strong className="text-gray-800">{displayTasks.length}</strong></span>
 
@@ -284,9 +257,9 @@ export default function Board() {
                   </div>
                </div>
 
-               {/* ── Kanban board ── */}
+               {/* Columns */}
                <main className=" flex overflow-x-auto w-full ">
-                  <div className="flex flex-col w-full sm:flex-row gap-4 p-6">
+                  <div className="flex flex-col w-full sm:flex-row gap-4 px-6">
                      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
                         <SortableContext strategy={horizontalListSortingStrategy} items={displayColumns.map((col: CardType) => col._id)} >
                            {
