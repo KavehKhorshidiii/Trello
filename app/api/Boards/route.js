@@ -4,6 +4,8 @@ import { verifyJwtToken } from "../../../lib/Auth/auth";
 import { cookies } from "next/headers";
 import connectDB from "@/lib/connectDB/connectDB";
 import BoardModel from "@/Models/boardModel/boardModel";
+import ColumnModel from '../../../Models/columnModel/columnModel'
+import CardModel from '../../../Models/cardModel/cardModel'
 
 // find boards
 export async function GET() {
@@ -27,8 +29,12 @@ export async function GET() {
 export async function DELETE(req) {
 
    const { boardID } = await req.json()
+
    try {
       await connectDB()
+
+      await ColumnModel.deleteMany({board:boardID})
+      await CardModel.deleteMany({board:boardID})
       const res = await BoardModel.findByIdAndDelete(boardID);
       if(!res){return NextResponse.json({ success: true })}
       return NextResponse.json({ success: true })

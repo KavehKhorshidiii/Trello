@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import ColumnModel from '../../../../Models/columnModel/columnModel'
 import connectDB from '../../../../lib/connectDB/connectDB'
+import CardModel from '../../../../Models/cardModel/cardModel'
 
 // Columns
 export async function GET(req, { params }) {
@@ -22,6 +23,7 @@ export async function DELETE(req , {params}){
    
    try{
       await connectDB()
+      await CardModel.deleteMany({column:id})
       const deleteCol = await ColumnModel.findByIdAndDelete(id)
       return NextResponse.json({ success: true })
    }catch{
