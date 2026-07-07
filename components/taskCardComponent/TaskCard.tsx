@@ -6,20 +6,8 @@ import DeleteTaskCardModal from "../Modals/TaskModal/deleteTaskCardModal/deleteT
 import EditTackCardModal from "../Modals/editTaskCardModal/editTaskCardModal";
 import { toast } from "sonner";
 import ShowTaskCard from "../Modals/ShowTaskCard/ShowTaskCard";
+import {CalendarDays, GripVertical,Pen, Trash,Eye, Copy, ChevronLeft} from "lucide-react";
 
-
-
-
-// icons
-import {
-   CalendarDays,
-   GripVertical,
-   Pen,
-   Trash,
-   Eye,
-   Copy,
-   ChevronLeft
-} from "lucide-react";
 
 // types
 type CardFuncType = {

@@ -12,7 +12,7 @@ import { useQuery } from "@tanstack/react-query"
 import { Grid3X3 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import BoardCard from "@/components/boardCardComponent/BoardCard"
-import CreateBoardCard from "@/components/CreateBoardCard/CreateBoardCard"
+import CreateBoardCard from "@/components/createBoardCardComponent/CreateBoardCard"
 import { useIsLogin } from "@/hooks/useIsLogin"
 import Spinner from "@/components/spinnerComponent/spinner"
 import { LayoutGrid, Rocket, CircleCheck, Clock3 } from "lucide-react";
