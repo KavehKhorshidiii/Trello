@@ -23,7 +23,7 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
 
 
    // check user login 
-   const { isLogin, data, isLoading, signOut } = useIsLogin()
+   const { isLogin, data, isLoading, signOut , error } = useIsLogin()
 
 
    // Route Type

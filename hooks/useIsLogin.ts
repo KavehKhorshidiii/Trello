@@ -15,7 +15,7 @@ export function useIsLogin() {
       const res = await fetch("/api/authCheck");
       return res.json();
    };
-   const { data, isLoading } = useQuery({
+   const { data, isLoading,error } = useQuery({
       queryKey: ["authCheck"],
       queryFn: authCheck,
    });
@@ -41,7 +41,8 @@ export function useIsLogin() {
       isLogin: data?.success ?? false,
       data: data?.data ?? null,
       isLoading,
-      signOut
+      signOut,
+      error
    };
 
    

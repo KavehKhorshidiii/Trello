@@ -39,11 +39,10 @@ type PropsType = {
    ColData: BoardType;
    cardTaskModal: boolean;
    tasks: CardFuncType[];
-   TaskIsPending:boolean
 }
 
 
-export default function BoardColumn({ ColData, cardTaskModal, tasks , TaskIsPending, setCardTaskModal, setSelectedColumnId }: PropsType) {
+export default function BoardColumn({ ColData, cardTaskModal, tasks , setCardTaskModal, setSelectedColumnId }: PropsType) {
 
 
    const [OpenColMenu, setOpenColMenu] = useState(false) // Open Column Menu
@@ -108,7 +107,7 @@ export default function BoardColumn({ ColData, cardTaskModal, tasks , TaskIsPend
             {/* Cards */}
             <div className="flex-1 select-none space-y-3 overflow-y-auto p-3">
                <SortableContext strategy={verticalListSortingStrategy} items={(tasks || []).map((task: CardFuncType) => task._id)}>
-                  {tasks?.map((task: CardFuncType) => (<TaskCard key={task._id} TaskIsPending={TaskIsPending} data={task} />))}
+                  {tasks?.map((task: CardFuncType) => (<TaskCard key={task._id} data={task} />))}
                </SortableContext>
                {tasks?.length === 0 && (<div className="rounded-xl border-2 border-dashed border-gray-200 py-10 text-center text-sm text-gray-400">  Drop a task here </div>)}
             </div>

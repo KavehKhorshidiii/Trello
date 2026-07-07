@@ -42,7 +42,7 @@ export default function Dashboard() {
 
    const [addBoardModal, setAddBoardModal] = useState(false) // add new board modal
    const [viewMode, setViewModal] = useState<"grid" | "list">("grid") // board View Model
-   const { data } = useIsLogin() // authCheck and userdata hook
+   const { data , error } = useIsLogin() // authCheck and userdata hook
    const [search, setSearch] = useState<string>('') // search value
 
 

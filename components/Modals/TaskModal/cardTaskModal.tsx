@@ -54,7 +54,7 @@ export default function CardTaskModal({ columnId, boardId, setCardTaskModal }: {
                {/* Description */}
                <div className="flex flex-col gap-1">
                   <label className="text-sm text-gray-600">Description</label>
-                  <input name="des" maxLength={200} placeholder="Short description..." className="border rounded px-3 h-9 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                  <textarea name="des" placeholder="Short description..." className="border rounded px-3 h-9 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
                </div>
 
                {/* Color */}
