@@ -5,7 +5,7 @@
 import connectDB from "@/lib/connectDB/connectDB"
 import { cookies } from "next/headers"
 import { verifyJwtToken } from "@/lib/Auth/auth"
-import BoardModel from "@/models/boardModel/boardModel"
+import BoardModel from '@/models/boardModel/boardModel'
 import ColumnModel from "@/models/columnModel/columnModel"
 
 
