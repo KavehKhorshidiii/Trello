@@ -103,7 +103,7 @@ export default function Board() {
       const res = await fetch(`/api/task/${boardId}`)
       return res.json()
    }
-   const { data: Task } = useQuery({
+   const { data: Task , isPending:TaskIsPending } = useQuery({
       queryKey: ["tasks"],
       queryFn: fetchTask
    })
@@ -244,7 +244,7 @@ export default function Board() {
                            {
                               ColumnsPending ? <div className='w-full'><Spinner /></div> :
                               displayColumns?.map((col: BoardType) => (
-                                 <BoardColumn tasks={displayTasks.filter((task: CardFuncType) => task.column === col._id)} key={col._id} ColData={col} cardTaskModal={cardTaskModal} setCardTaskModal={setCardTaskModal} setSelectedColumnId={setSelectedColumnId} ></BoardColumn>
+                                 <BoardColumn TaskIsPending={TaskIsPending} tasks={displayTasks.filter((task: CardFuncType) => task.column === col._id)} key={col._id} ColData={col} cardTaskModal={cardTaskModal} setCardTaskModal={setCardTaskModal} setSelectedColumnId={setSelectedColumnId} ></BoardColumn>
                               ))
                            }
                         </SortableContext>
