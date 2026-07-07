@@ -23,7 +23,7 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
 
 
    // check user login 
-   const { isLogin, data, isLoading, signOut, error } = useIsLogin()
+   const { isLogin, data, isLoading, signOut } = useIsLogin()
 
 
    // Route Type
@@ -39,7 +39,7 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
    useEffect(() => {
       queryClient.invalidateQueries({ queryKey: ["authCheck"] })
       queryClient.refetchQueries({ queryKey: ["authCheck"] })
-   }, [PathName])
+   }, [PathName , queryClient])
 
 
    // Navbar JSX

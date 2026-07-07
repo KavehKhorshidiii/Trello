@@ -22,7 +22,7 @@ export default function EditBoardModal({ setEditBoardData, boardId }: { setEditB
          setEditBoardData(false)
          queryClient.invalidateQueries({ queryKey: ["boards"] })
       }
-   }, [state.success])
+   }, [state.success , queryClient , setEditBoardData])
 
 
    // close on ESC
@@ -33,7 +33,7 @@ export default function EditBoardModal({ setEditBoardData, boardId }: { setEditB
 
       window.addEventListener("keydown", handleEsc);
       return () => window.removeEventListener("keydown", handleEsc);
-   }, []);
+   }, [setEditBoardData]);
 
 
    return (

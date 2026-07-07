@@ -23,7 +23,7 @@ export default function EditTackCardModal({ SetOpenEditTackCardModal, TaskCardId
          SetOpenEditTackCardModal(false)
          queryClient.invalidateQueries({ queryKey: ["tasks"] })
       }
-   }, [state.success])
+   }, [state.success , SetOpenEditTackCardModal , queryClient])
 
 
    // close on ESC
@@ -34,7 +34,7 @@ export default function EditTackCardModal({ SetOpenEditTackCardModal, TaskCardId
 
       window.addEventListener("keydown", handleEsc);
       return () => window.removeEventListener("keydown", handleEsc);
-   }, []);
+   }, [SetOpenEditTackCardModal]);
 
 
    return (

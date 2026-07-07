@@ -23,7 +23,7 @@ export default function BoardModal({ addBoardModal, setAddBoardModal }: { addBoa
          setAddBoardModal(false);
          queryClient.invalidateQueries({ queryKey: ["boards"] });
       }
-   }, [state.success]);
+   }, [state.success , queryClient , setAddBoardModal]);
 
 
    // close on ESC
@@ -34,7 +34,7 @@ export default function BoardModal({ addBoardModal, setAddBoardModal }: { addBoa
 
       window.addEventListener("keydown", handleEsc);
       return () => window.removeEventListener("keydown", handleEsc);
-   }, []);
+   }, [setAddBoardModal]);
 
 
    if (!addBoardModal) return null;

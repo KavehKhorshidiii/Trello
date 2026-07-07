@@ -25,7 +25,6 @@ import {
 import {
    Ellipsis,
    Pencil,
-   Palette,
    Trash2,
 } from "lucide-react";
 

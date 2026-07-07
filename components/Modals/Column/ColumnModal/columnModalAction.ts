@@ -2,9 +2,6 @@
 
 import connectDB from "@/lib/ConnectDB/connectDB"
 import { cookies } from "next/headers"
-import { verifyJwtToken } from "@/lib/Auth/auth"
-import CardModel from "@/models/cardModel/cardModel"
-import { useQueryClient } from "@tanstack/react-query";
 import ColumnModel from "@/models/columnModel/columnModel"
 
 
@@ -32,7 +29,7 @@ export default async function columnModelAction(prevState: stateType, formData: 
    const lastColumn = await ColumnModel.find({ board: boardId }).sort({ order: -1 })
    const OrderNumber = lastColumn[0] ? lastColumn[0]?.order + 1 : 0
 
-   const createCard = await ColumnModel.create({
+   await ColumnModel.create({
       title,
       board: boardId,
       order: OrderNumber

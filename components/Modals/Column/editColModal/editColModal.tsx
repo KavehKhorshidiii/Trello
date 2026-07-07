@@ -19,7 +19,7 @@ export default function EditColModal({ setEditColData, ColId }: { setEditColData
          setEditColData(false)
          queryClient.invalidateQueries({ queryKey: ["columns"] })
       }
-   }, [state.success])
+   }, [state.success , queryClient , setEditColData])
 
 
    // close on ESC
@@ -30,7 +30,7 @@ export default function EditColModal({ setEditColData, ColId }: { setEditColData
 
       window.addEventListener("keydown", handleEsc);
       return () => window.removeEventListener("keydown", handleEsc);
-   }, []);
+   }, [setEditColData]);
 
 
    return (

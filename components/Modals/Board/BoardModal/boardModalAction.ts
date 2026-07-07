@@ -54,7 +54,7 @@ export default async function boardModalAction(prevState: stateType, formData: F
 
 
    // create default Columns
-   const createDefaultColumns = await ColumnModel.insertMany([
+   await ColumnModel.insertMany([
       {
          title: "Todo",
          board: createBoard._id,

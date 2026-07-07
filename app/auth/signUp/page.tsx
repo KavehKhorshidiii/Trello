@@ -33,7 +33,7 @@ export default function SignUp() {
          router.push('/')
       }, 1000)
 
-   }, [state]);
+   }, [state , router]);
 
    return (
 

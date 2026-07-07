@@ -6,7 +6,7 @@ import columnModelAction from "@/components/Modals/Column/ColumnModal/columnModa
 import Spinner from "@/components/spinnerComponent/spinner"
 
 
-export default function ColumnModal({ isModalColumn, setIsModalColumn, params }: { isModalColumn: boolean, setIsModalColumn: (value: boolean) => void, params: string }) {
+export default function ColumnModal({ setIsModalColumn, params }: { isModalColumn: boolean, setIsModalColumn: (value: boolean) => void, params: string }) {
 
 
    const [state, formAction, pending] = useActionState(columnModelAction, { success: null, errors: {}, message: "" })
@@ -20,7 +20,7 @@ export default function ColumnModal({ isModalColumn, setIsModalColumn, params }:
          queryClient.invalidateQueries({ queryKey: ["columns"] })
       }
 
-   }, [state.success])
+   }, [state.success, queryClient , setIsModalColumn])
 
 
    return (

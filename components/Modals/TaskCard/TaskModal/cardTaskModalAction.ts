@@ -2,9 +2,7 @@
 
 import connectDB from "@/lib/ConnectDB/connectDB"
 import { cookies } from "next/headers"
-import { verifyJwtToken } from "@/lib/Auth/auth"
 import CardModel from "@/models/cardModel/cardModel"
-import { useQueryClient } from "@tanstack/react-query";
 
 
 type stateType = {
@@ -36,7 +34,7 @@ export default async function boardModalAction(prevState: stateType, formData: F
    const OrderNumber = lastTask[0] ? lastTask[0]?.order + 1 : 0
 
 
-   const createCard = await CardModel.create({
+   await CardModel.create({
       title,
       des,
       color,

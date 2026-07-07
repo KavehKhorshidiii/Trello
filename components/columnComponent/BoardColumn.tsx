@@ -1,7 +1,7 @@
 'use client'
 
 // Imports
-import { MoreHorizontal, Pencil, Ellipsis, Trash2, Plus, GripHorizontal } from "lucide-react"
+import { MoreHorizontal, Pencil, Trash2, Plus, GripHorizontal } from "lucide-react"
 import DeleteColModal from '@/components/Modals/Column/ColumnModal/deleteColModal/deleteColModal'
 import { Button } from "../ui/button"
 import TaskCard from "../taskCardComponent/TaskCard";
