@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import connectDB from "../../../../lib/connectDB/connectDB";
-import CardModel from "../../../../Models/cardModel/cardModel"
+import CardModel from "../../../../models/cardModel/cardModel"
 
 export async function PATCH(req){
    

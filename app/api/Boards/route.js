@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 import { verifyJwtToken } from "../../../lib/Auth/auth";
 import { cookies } from "next/headers";
 import connectDB from "@/lib/connectDB/connectDB";
-import BoardModel from "@/Models/boardModel/boardModel";
-import ColumnModel from '../../../Models/columnModel/columnModel'
-import CardModel from '../../../Models/cardModel/cardModel'
+import BoardModel from "@/models/boardModel/boardModel";
+import ColumnModel from '../../../models/columnModel/columnModel'
+import CardModel from '../../../models/cardModel/cardModel'
 
 // find boards
 export async function GET() {

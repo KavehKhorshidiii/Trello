@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
-import ColumnModel from '../../../../Models/columnModel/columnModel'
+import ColumnModel from '../../../../models/columnModel/columnModel'
 import connectDB from '../../../../lib/connectDB/connectDB'
-import CardModel from '../../../../Models/cardModel/cardModel'
+import CardModel from '../../../../models/cardModel/cardModel'
 
 // Columns
 export async function GET(req, { params }) {

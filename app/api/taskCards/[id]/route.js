@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { verifyJwtToken } from "../../../../lib/Auth/auth";
 import { cookies } from "next/headers";
 import connectDB from "@/lib/connectDB/connectDB";
-import cardModel from "../../../../Models/cardModel/cardModel"
+import cardModel from "../../../../models/cardModel/cardModel"
 
 // task card data
 export async function GET(req, { params }) {
