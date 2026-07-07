@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import connectDB from "@/lib/connectDB/connectDB";
 import cardModel from "../../../../Models/cardModel/cardModel"
 
-
+// task card data
 export async function GET(req, { params }) {
 
    const boardID = await params
@@ -21,7 +21,7 @@ export async function GET(req, { params }) {
 
       await connectDB()
 
-      const Tasks = await cardModel.find({ board: boardID?.id }).select("-__v").sort({order:1})
+      const Tasks = await cardModel.find({ board: boardID?.id }).select("-__v").sort({ order: 1 })
 
       return NextResponse.json({ success: true, data: { Tasks } })
 
@@ -30,6 +30,28 @@ export async function GET(req, { params }) {
       return NextResponse.json({ success: false, data: null })
 
    }
+
+}
+
+// delete task card 
+export async function DELETE(req, { params }) {
+
+   const { id } = await params;
+
+   try {
+      await connectDB()
+      const deleteTaskCard = await cardModel.findByIdAndDelete(id)
+      return NextResponse.json({
+         success: true,
+         message: "Card deleted successfully",
+      });
+   } catch {
+      return NextResponse.json({
+         success: true,
+         message: "",
+      });
+   }
+
 
 }
 
