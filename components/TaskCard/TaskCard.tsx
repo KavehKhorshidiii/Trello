@@ -3,6 +3,9 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
 import DeleteTaskCardModal from "../Modals/TaskModal/deleteTaskCardModal/deleteTaskCardModal";
+import EditTackCardModal from "../Modals/editTaskCardModal/editTaskCardModal";
+import { toast } from "sonner";
+import ShowTaskCard from "../Modals/ShowTaskCard/ShowTaskCard";
 
 
 
@@ -46,6 +49,8 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
 
    const [cardTaskMenu, setCardTaskMenu] = useState(false)
    const [deleteCardTaskModal, setDeleteCardTaskModal] = useState(false) // Delete CardTask Modal
+   const [OpenEditTackCardModal, SetOpenEditTackCardModal] = useState(false) // Edit CardTask Modal
+   const [showTaskCard, setShowTaskCard] = useState(false) // showTaskCard
 
 
    // DRAG AND DROP
@@ -70,20 +75,34 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
       zIndex: isDragging ? 999 : "auto",
    };
 
+   // copy task handler
+   const CopyTaskHandler = async () => {
+      await navigator.clipboard.writeText(
+         `Title: ${data.title}\nDescription: ${data.des}`
+      )
+      toast.success("Task copied!", {
+         description: "The task has been copied to your clipboard.",
+      });
+   }
 
    return (
-      <div ref={setNodeRef} style={style} onMouseLeave={() => setCardTaskMenu(false)} className={` relative flex flex-col group h-56 shadow-2xl overflow-hidden rounded-xl border hover:bg-gray-50/85 transition-colors duration-200 bg-white/30 ${isDragging ? "cursor-grabbing shadow-xl" : ""}`}>
-      
-         {deleteCardTaskModal && <DeleteTaskCardModal setDeleteCardTaskModal={setDeleteCardTaskModal} TaskCardData={{id:data._id , title:data.title}} />}
-         
+      <div ref={setNodeRef} style={style} onMouseLeave={() => setCardTaskMenu(false)} className={`relative flex flex-col group h-56 shadow-2xl overflow-hidden rounded-xl border hover:bg-gray-50/85 transition-colors duration-200 bg-white/30 ${isDragging ? "cursor-grabbing shadow-xl" : ""}`}>
 
-         <div className=" h-full flex flex-col">
+         {deleteCardTaskModal && <DeleteTaskCardModal setDeleteCardTaskModal={setDeleteCardTaskModal} TaskCardData={{ id: data._id, title: data.title }} />}
+
+         {OpenEditTackCardModal && <EditTackCardModal SetOpenEditTackCardModal={SetOpenEditTackCardModal} TaskCardId={data._id} />}
+
+         {showTaskCard && <ShowTaskCard setShowTaskCard={setShowTaskCard} TaskCardData={data}/>}
+
+
+
+         <div className={`h-full flex flex-col`}>
 
             {/* color task */}
             <div className={`h-2 absolute top-0 w-full ${colorMap[data.color as keyof typeof colorMap] ?? "bg-gray-300"}`} />
 
             {/* container */}
-            <div className=" p-3.5  h-full flex gap-1 justify-between flex-col">
+            <div className=" p-3  h-full flex gap-1 justify-between flex-col">
 
                {/* Top */}
                <div className=" flex pt-1 items-center content-center justify-between ">
@@ -112,10 +131,10 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
                      </button>
 
                      <div className={` flex items-center overflow-hidden transition-all duration-400 ${cardTaskMenu ? "max-w-40 opacity-100" : "max-w-0 opacity-0"}`} >
-                        <button className=" size-7 hover:bg-inherit rounded-full text-gray-400 hover:text-blue-600" ><Eye className="size-4" strokeWidth={2.5} /></button>
-                        <button className=" size-7 hover:bg-inherit rounded-full text-gray-400 hover:text-slate-600" ><Copy className="size-4" strokeWidth={2.5} /> </button>
-                        <button className=" size-7 hover:bg-inherit rounded-full text-gray-400 hover:text-yellow-600" ><Pen className="size-4" strokeWidth={2.5} /></button>
-                        <button onClick={()=>setDeleteCardTaskModal(true)} className=" size-7 hover:bg-inherit rounded-full text-gray-400 hover:text-red-600" ><Trash className="size-4" strokeWidth={2.5} /></button>
+                        <button onClick={()=>setShowTaskCard(true)} className=" size-7 hover:bg-inherit rounded-full text-gray-400 hover:text-blue-600" ><Eye className="size-4" strokeWidth={2.5} /></button>
+                        <button onClick={CopyTaskHandler} className=" size-7 hover:bg-inherit rounded-full text-gray-400 hover:text-slate-600" ><Copy className="size-4" strokeWidth={2.5} /> </button>
+                        <button onClick={() => SetOpenEditTackCardModal(true)} className=" size-7 hover:bg-inherit rounded-full text-gray-400 hover:text-yellow-600" ><Pen className="size-4" strokeWidth={2.5} /></button>
+                        <button onClick={() => setDeleteCardTaskModal(true)} className=" size-7 hover:bg-inherit rounded-full text-gray-400 hover:text-red-600" ><Trash className="size-4" strokeWidth={2.5} /></button>
                      </div>
                   </div>
 
@@ -123,7 +142,7 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
 
                {/* Body */}
                <div className=" flex-1 overflow-auto">
-                  <p className=" text-sm text-justify leading-5  text-gray-500"> {data.des || "No description"} </p>
+                  <p className=" px-1.5 text-sm text-justify leading-5  text-gray-500"> {data.des || "No description"} </p>
                </div>
             </div >
 
