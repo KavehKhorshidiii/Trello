@@ -1,14 +1,7 @@
+// import
 import Navbar from "@/components/Navbar/navbar";
 import { cookies } from "next/headers";
-
-// components
-import {
-   Card,
-   CardContent,
-   CardDescription,
-   CardHeader,
-   CardTitle,
-} from "@/components/ui/card";
+import {Card,CardContent,CardDescription,CardHeader,CardTitle} from "@/components/ui/card";
 
 import {
    CheckSquare,
