@@ -4,19 +4,19 @@ import { X } from "lucide-react";
 import { useActionState, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import BoardModalAction from "./boardModalAction";
-import Colors from "@/components/Colors/Colors";
+import Colors from "@/components/colorsComponent/Colors";
 import { useState } from "react";
-import Spinner from "@/components/spinner/spinner";
+import Spinner from "@/components/spinnerComponent/spinner";
 
 
-export default function BoardModal({addBoardModal , setAddBoardModal}: { addBoardModal: boolean; setAddBoardModal: (value: boolean) => void; }) {
+export default function BoardModal({ addBoardModal, setAddBoardModal }: { addBoardModal: boolean; setAddBoardModal: (value: boolean) => void; }) {
 
 
    const [state, formAction, pending] = useActionState(BoardModalAction, { success: null, errors: {}, message: "", });
    const queryClient = useQueryClient();
    const [color, setColor] = useState("");
 
-   
+
    // close modal + refresh boards
    useEffect(() => {
       if (state.success) {
@@ -63,7 +63,7 @@ export default function BoardModal({addBoardModal , setAddBoardModal}: { addBoar
                {/* Description */}
                <div className="flex flex-col gap-1">
                   <label className="text-sm text-gray-600">Description</label>
-                  <input name="des" maxLength={60}  placeholder="Short description..." className="border rounded px-3 h-9 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+                  <input name="des" maxLength={60} placeholder="Short description..." className="border rounded px-3 h-9 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
                </div>
 
                {/* Color */}
@@ -76,11 +76,11 @@ export default function BoardModal({addBoardModal , setAddBoardModal}: { addBoar
                {/* Actions */}
                <div className="flex justify-end gap-2 pt-2">
                   <button type="button" onClick={() => setAddBoardModal(false)} className="px-3 py-1.5 text-sm border rounded hover:bg-gray-50 transition">Cancel</button>
-                  <button type="submit" disabled={pending} className="px-4 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition disabled:opacity-50" >{pending ? <Spinner/> : "Create"}</button>
+                  <button type="submit" disabled={pending} className="px-4 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition disabled:opacity-50" >{pending ? <Spinner /> : "Create"}</button>
                </div>
 
             </form>
-            
+
          </div>
       </div>
    );

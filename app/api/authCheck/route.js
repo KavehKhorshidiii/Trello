@@ -1,3 +1,4 @@
+// imports
 import { NextResponse } from "next/server";
 import userModel from '../../../Models/usersmodel/usersmodel'
 import connectDB from '../../../lib/connectDB/connectDB'

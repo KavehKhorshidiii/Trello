@@ -3,8 +3,8 @@ import { X } from "lucide-react"
 import { useActionState, useEffect, useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import changeColorNavbarAction from "./editBoardModalAction"
-import Colors from "@/components/Colors/Colors"
-import Spinner from "@/components/spinner/spinner"
+import Colors from "@/components/colorsComponent/Colors"
+import Spinner from "@/components/spinnerComponent/spinner"
 
 
 export default function EditBoardModal({ setEditBoardData, boardId }: { setEditBoardData: (value: boolean) => void, boardId: string }) {

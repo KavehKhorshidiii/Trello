@@ -1,7 +1,7 @@
 'use client'
 
 // Imports
-import Spinner from '../spinner/spinner';
+import Spinner from '../spinnerComponent/spinner';
 import { useRouter, usePathname } from 'next/navigation';
 import { ArrowLeft, ArrowRightIcon, X, MoreHorizontal } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -23,7 +23,7 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
 
 
    // check user login 
-   const { isLogin, data, isLoading, signOut , error } = useIsLogin()
+   const { isLogin, data, isLoading, signOut, error } = useIsLogin()
 
 
    // Route Type
@@ -107,7 +107,7 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
                            </div>
 
                            {/* profile modal */}
-                           <Card className={`absolute top-full right-0 mt-1 w-80 overflow-hidden rounded-xl border bg-white shadow-xl transition-all duration-200 ${profileModal ? "translate-y-0 opacity-100" : "-translate-y-2 pointer-events-none opacity-0" }`}>
+                           <Card className={`absolute top-full right-0 mt-1 w-80 overflow-hidden rounded-xl border bg-white shadow-xl transition-all duration-200 ${profileModal ? "translate-y-0 opacity-100" : "-translate-y-2 pointer-events-none opacity-0"}`}>
                               {/* Header */}
                               <div className="flex items-center gap-4 p-5">
                                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-lg font-semibold text-white"> {data?.firstname?.[0] ?? "U"} </div>
@@ -171,7 +171,7 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
 
                   {/* Filter - profile */}
                   {
-                         isLoading ? (<Spinner />) : (
+                     isLoading ? (<Spinner />) : (
                         <div className=' relative flex space-x-1 text-xl sm:space-x-1'>
                            <div onClick={() => setProfileModal(!profileModal)} className={` ${profileModal ? ' bg-red-600 hover:bg-red-500' : ' bg-blue-600 hover:bg-blue-700'} select-none cursor-pointer transition-all duration-200 m-0 flex justify-center text-white items-center size-8 sm:size-12 rounded-full`}>
                               <p className={`${profileModal ? "hidden" : " block"}`}>{[data?.firstname?.[0] ?? ""]}</p>
@@ -179,7 +179,7 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
                            </div>
 
                            {/* profile modal */}
-                           <Card className={`absolute top-full right-0 mt-1 w-80 overflow-hidden rounded-xl border bg-white shadow-xl transition-all duration-200 ${profileModal ? "translate-y-0 opacity-100" : "-translate-y-2 pointer-events-none opacity-0" }`}>
+                           <Card className={`absolute top-full right-0 mt-1 w-80 overflow-hidden rounded-xl border bg-white shadow-xl transition-all duration-200 ${profileModal ? "translate-y-0 opacity-100" : "-translate-y-2 pointer-events-none opacity-0"}`}>
                               {/* Header */}
                               <div className="flex items-center gap-4 p-5">
                                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-lg font-semibold text-white"> {data?.firstname?.[0] ?? "U"} </div>

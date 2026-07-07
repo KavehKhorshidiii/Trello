@@ -18,9 +18,7 @@ type prevState = {
 }
 
 
-
 export default async function SignUpAction(prevState: prevState, formData: FormData): Promise<prevState> {
-
 
    try {
       await connectDB()
@@ -107,5 +105,6 @@ export default async function SignUpAction(prevState: prevState, formData: FormD
       }
 
    }
+
 }
 

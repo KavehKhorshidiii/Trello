@@ -4,8 +4,8 @@
 import { X } from "lucide-react"
 import { useActionState, useEffect, useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
-import Colors from "@/components/Colors/Colors"
-import Spinner from "@/components/spinner/spinner"
+import Colors from "@/components/colorsComponent/Colors"
+import Spinner from "@/components/spinnerComponent/spinner"
 import EditTaskCardModal from "./editTaskCardModalAction"
 
 export default function EditTackCardModal({ SetOpenEditTackCardModal, TaskCardId }: { SetOpenEditTackCardModal: (value: boolean) => void, TaskCardId: string }) {

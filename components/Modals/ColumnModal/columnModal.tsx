@@ -3,7 +3,7 @@ import { X } from "lucide-react"
 import { useActionState, useEffect } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import columnModelAction from "@/components/Modals/ColumnModal/columnModalAction"
-import Spinner from "@/components/spinner/spinner"
+import Spinner from "@/components/spinnerComponent/spinner"
 
 
 export default function ColumnModal({ isModalColumn, setIsModalColumn, params }: { isModalColumn: boolean, setIsModalColumn: (value: boolean) => void, params: string }) {

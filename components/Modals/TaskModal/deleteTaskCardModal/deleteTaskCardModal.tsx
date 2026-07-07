@@ -5,7 +5,7 @@
 import { TriangleAlert, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import Spinner from "@/components/spinner/spinner";
+import Spinner from "@/components/spinnerComponent/spinner";
 
 
 // types
@@ -38,7 +38,7 @@ export default function DeleteTaskCardModal({ setDeleteCardTaskModal, TaskCardDa
       },
 
       onSuccess: () => {
-         queryClient.invalidateQueries({queryKey: ["tasks"]});
+         queryClient.invalidateQueries({ queryKey: ["tasks"] });
       },
    });
 

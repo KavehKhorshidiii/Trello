@@ -1,37 +1,39 @@
 'use client'
+
+// import
 import { useActionState, useEffect } from "react"
 import SignUpAction from "./SignUpAction"
 import Link from "next/link"
-import Spinner from "@/components/spinner/spinner"
+import Spinner from "@/components/spinnerComponent/spinner"
 import { toast } from "sonner";
 import { useRouter } from "next/navigation"
 
 
 export default function SignUp() {
 
-   const initialState = { success: null,title:"" , errors: {}, message: "" }
+   const initialState = { success: null, title: "", errors: {}, message: "" }
    const [state, formAction, pending] = useActionState(SignUpAction, initialState)
    const router = useRouter()
 
-      // Toast
-      useEffect(() => {
-         if (state.success === null) return;
-   
-         if (state.success) {
-            toast.success(state.title, {
-               description: state.message,
-            });
-         } else {
-            toast.error(state.title, {
-               description: state.message,
-            });
-         }
+   // Toast
+   useEffect(() => {
+      if (state.success === null) return;
 
-         setTimeout(()=>{
-            router.push('/')
-         },1000)
+      if (state.success) {
+         toast.success(state.title, {
+            description: state.message,
+         });
+      } else {
+         toast.error(state.title, {
+            description: state.message,
+         });
+      }
 
-      }, [state]);
+      setTimeout(() => {
+         router.push('/')
+      }, 1000)
+
+   }, [state]);
 
    return (
 
@@ -50,13 +52,13 @@ export default function SignUp() {
                {/* First Name */}
                <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700">First Name</label>
-                  <input name="firstname" placeholder="John" className="w-full rounded-lg border px-4 py-2.5 text-sm transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none"/>
+                  <input name="firstname" placeholder="John" className="w-full rounded-lg border px-4 py-2.5 text-sm transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none" />
                </div>
 
                {/* Username */}
                <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700"> Username </label>
-                  <input name="username" placeholder="john_doe" className="w-full rounded-lg border px-4 py-2.5 text-sm transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none"/>
+                  <input name="username" placeholder="john_doe" className="w-full rounded-lg border px-4 py-2.5 text-sm transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none" />
                </div>
 
                {/* Password */}
@@ -68,7 +70,7 @@ export default function SignUp() {
                {/* Confirm Password */}
                <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-700"> Confirm Password </label>
-                  <input type="password" name="confirmPassword" placeholder="••••••••" className="w-full rounded-lg border px-4 py-2.5 text-sm transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none"/>
+                  <input type="password" name="confirmPassword" placeholder="••••••••" className="w-full rounded-lg border px-4 py-2.5 text-sm transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none" />
                </div>
 
                {/* Submit */}

@@ -1,7 +1,9 @@
 'use client'
+
+// imports
 import { useActionState, useEffect } from "react"
 import SignInAction from "@/app/auth/signIn/SignInAction"
-import Spinner from "@/components/spinner/spinner"
+import Spinner from "@/components/spinnerComponent/spinner"
 import Link from "next/link"
 import { toast } from "sonner";
 import { useRouter } from "next/navigation"

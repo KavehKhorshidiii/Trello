@@ -1,7 +1,7 @@
 'use client'
 
 // imports
-import Navbar from "@/components/Navbar/navbar"
+import Navbar from "@/components/navbarComponent/navbar"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { FilterIcon, List, Plus, Search } from "lucide-react"
@@ -11,19 +11,12 @@ import BoardModal from "@/components/Modals/BoardModal/boardModal"
 import { useQuery } from "@tanstack/react-query"
 import { Grid3X3 } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import BoardCard from "@/components/BoardCard/BoardCard"
+import BoardCard from "@/components/boardCardComponent/BoardCard"
 import CreateBoardCard from "@/components/CreateBoardCard/CreateBoardCard"
 import { useIsLogin } from "@/hooks/useIsLogin"
-import Spinner from "@/components/spinner/spinner"
+import Spinner from "@/components/spinnerComponent/spinner"
+import { LayoutGrid, Rocket, CircleCheck, Clock3 } from "lucide-react";
 
-
-// icons
-import {
-   LayoutGrid,
-   Rocket,
-   CircleCheck,
-   Clock3,
-} from "lucide-react";
 
 // types
 type BoardType = {
@@ -42,7 +35,7 @@ export default function Dashboard() {
 
    const [addBoardModal, setAddBoardModal] = useState(false) // add new board modal
    const [viewMode, setViewModal] = useState<"grid" | "list">("grid") // board View Model
-   const { data , error } = useIsLogin() // authCheck and userdata hook
+   const { data, error } = useIsLogin() // authCheck and userdata hook
    const [search, setSearch] = useState<string>('') // search value
 
 

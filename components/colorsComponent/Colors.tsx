@@ -1,5 +1,6 @@
 'use client'
 
+// types
 type Props = {
   setColor: React.Dispatch<React.SetStateAction<string>>
 }

@@ -5,7 +5,7 @@
 import { TriangleAlert, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import Spinner from "@/components/spinner/spinner";
+import Spinner from "@/components/spinnerComponent/spinner";
 
 
 // types
@@ -25,7 +25,7 @@ type Props = {
 
 export default function DeleteBoardModal({ setDeleteBoardModal, boardData }: Props) {
 
-   
+
    // delete board
    const queryClient = useQueryClient();
    const DeleteBoard = useMutation({
@@ -68,8 +68,8 @@ export default function DeleteBoardModal({ setDeleteBoardModal, boardData }: Pro
 
             {/* Footer */}
             <div className="flex justify-end gap-3 border-t px-5 py-4">
-               <Button disabled={DeleteBoard.isPending}  onClick={() => setDeleteBoardModal(false)} variant="outline">Cancel</Button>
-               <Button disabled={DeleteBoard.isPending} onClick={() => DeleteBoard.mutate(boardData._id)} className="bg-red-600 text-white hover:bg-red-700" variant="destructive">{DeleteBoard.isPending ? <Spinner/> : "Delete"}</Button>
+               <Button disabled={DeleteBoard.isPending} onClick={() => setDeleteBoardModal(false)} variant="outline">Cancel</Button>
+               <Button disabled={DeleteBoard.isPending} onClick={() => DeleteBoard.mutate(boardData._id)} className="bg-red-600 text-white hover:bg-red-700" variant="destructive">{DeleteBoard.isPending ? <Spinner /> : "Delete"}</Button>
             </div>
 
          </div>

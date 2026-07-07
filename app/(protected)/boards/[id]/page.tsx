@@ -7,13 +7,13 @@ import { Plus } from 'lucide-react'
 import { useState } from 'react'
 import { useParams } from 'next/navigation';
 import { useMutation, useQuery } from '@tanstack/react-query'
-import Navbar from '@/components/Navbar/navbar'
+import Navbar from '@/components/navbarComponent/navbar'
 import ColumnModal from '@/components/Modals/ColumnModal/columnModal'
 import EditBoardModal from '@/components/Modals/editBoardModal/editBoardModal';
-import BoardColumn from '@/components/BoardColumn/BoardColumn'
+import BoardColumn from '@/components/columnComponent/BoardColumn'
 import { SortableContext, horizontalListSortingStrategy, arrayMove } from "@dnd-kit/sortable"; // dnd
 import { DndContext, useSensors, PointerSensor, DragEndEvent, useSensor } from "@dnd-kit/core";  // dnd
-import Spinner from '@/components/spinner/spinner';
+import Spinner from '@/components/spinnerComponent/spinner';
 
 
 // types
@@ -47,8 +47,8 @@ type BoardType = {
    _id: string
    title: string,
    board: string,
-   order:number,
-   __v:number
+   order: number,
+   __v: number
 }
 
 
@@ -80,7 +80,7 @@ export default function Board() {
       const res = await fetch(`/api/column/${boardId}`)
       return res.json()
    }
-   const { data: columnsData , isPending:ColumnsPending } = useQuery({
+   const { data: columnsData, isPending: ColumnsPending } = useQuery({
       queryKey: ["columns"],
       queryFn: fetchColumns
    })
@@ -243,9 +243,9 @@ export default function Board() {
                         <SortableContext strategy={horizontalListSortingStrategy} items={displayColumns.map((col: CardType) => col._id)} >
                            {
                               ColumnsPending ? <div className='w-full'><Spinner /></div> :
-                              displayColumns?.map((col: BoardType) => (
-                                 <BoardColumn tasks={displayTasks.filter((task: CardFuncType) => task.column === col._id)} key={col._id} ColData={col} cardTaskModal={cardTaskModal} setCardTaskModal={setCardTaskModal} setSelectedColumnId={setSelectedColumnId} ></BoardColumn>
-                              ))
+                                 displayColumns?.map((col: BoardType) => (
+                                    <BoardColumn tasks={displayTasks.filter((task: CardFuncType) => task.column === col._id)} key={col._id} ColData={col} cardTaskModal={cardTaskModal} setCardTaskModal={setCardTaskModal} setSelectedColumnId={setSelectedColumnId} ></BoardColumn>
+                                 ))
                            }
                         </SortableContext>
                      </DndContext>

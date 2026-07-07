@@ -3,7 +3,7 @@ import { X } from "lucide-react"
 import { useActionState, useEffect } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import editColModalAction from "./editColModalAction"
-import Spinner from "@/components/spinner/spinner"
+import Spinner from "@/components/spinnerComponent/spinner"
 
 
 export default function EditColModal({ setEditColData, ColId }: { setEditColData: (value: boolean) => void, ColId: string }) {
