@@ -1,7 +1,7 @@
 'use server'
 
 // imports
-import connectDB from "@/lib/ConnectDB/connectDB"
+import connectDB from "@/lib/connectDB/connectDB"
 import UsersModel from "@/models/usersmodel/usersmodel"
 import { compare } from "bcrypt"
 import { cookies } from "next/headers"

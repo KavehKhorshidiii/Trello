@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import connectDB from '../../../../lib/ConnectDB/connectDB'
+import connectDB from '../../../../lib/connectDB/connectDB'
 import BoardModel from '../../../../models/boardModel/boardModel'
 
 

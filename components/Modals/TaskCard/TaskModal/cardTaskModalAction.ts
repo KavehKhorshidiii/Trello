@@ -1,6 +1,6 @@
 'use server'
 
-import connectDB from "@/lib/ConnectDB/connectDB"
+import connectDB from "@/lib/connectDB/connectDB"
 import { cookies } from "next/headers"
 import CardModel from "@/models/cardModel/cardModel"
 

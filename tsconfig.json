@@ -35,7 +35,7 @@
       ".next/types/**/*.ts",
       ".next/dev/types/**/*.ts",
       "**/*.mts",
-      "lib/ConnectDB/connectDB.ts",
+      "lib/connectDB/connectDB.ts",
       "app/api/board/route.js",
       "app/api/boards/[id]/route.js"
    ],
