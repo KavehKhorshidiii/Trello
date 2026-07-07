@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
-import QueryProviders from "@/QueryProviders";
+import QueryProviders from "@/providers/QueryProviders";
 import { Toaster } from "sonner";
 
 import "./globals.css";

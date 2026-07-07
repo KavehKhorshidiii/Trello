@@ -2,14 +2,14 @@
 
 
 // imports
-import CardTaskModal from '@/components/Modals/TaskModal/cardTaskModal'
+import CardTaskModal from '@/components/Modals/TaskCard/TaskModal/cardTaskModal'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
 import { useParams } from 'next/navigation';
 import { useMutation, useQuery } from '@tanstack/react-query'
 import Navbar from '@/components/navbarComponent/navbar'
-import ColumnModal from '@/components/Modals/ColumnModal/columnModal'
-import EditBoardModal from '@/components/Modals/editBoardModal/editBoardModal';
+import ColumnModal from '@/components/Modals/Column/ColumnModal/columnModal'
+import EditBoardModal from '@/components/Modals/Board/editBoardModal/editBoardModal';
 import BoardColumn from '@/components/columnComponent/BoardColumn'
 import { SortableContext, horizontalListSortingStrategy, arrayMove } from "@dnd-kit/sortable"; // dnd
 import { DndContext, useSensors, PointerSensor, DragEndEvent, useSensor } from "@dnd-kit/core";  // dnd
@@ -77,7 +77,7 @@ export default function Board() {
    // - COLUMNS -
    // Fetch Columns Data
    async function fetchColumns() {
-      const res = await fetch(`/api/column/${boardId}`)
+      const res = await fetch(`/api/columns/${boardId}`)
       return res.json()
    }
    const { data: columnsData, isPending: ColumnsPending } = useQuery({
@@ -86,7 +86,7 @@ export default function Board() {
    })
    // Update -> Columns Reorder
    const ReorderColumn = async (columns: ColType[]) => {
-      const res = await fetch('/api/column/reorder', {
+      await fetch('/api/column/reorder', {
          method: "PATCH",
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(columns)
@@ -100,7 +100,7 @@ export default function Board() {
    // - TASK CARD -
    // Fetch TaskCard
    async function fetchTask() {
-      const res = await fetch(`/api/task/${boardId}`)
+      const res = await fetch(`/api/taskCards/${boardId}`)
       return res.json()
    }
    const { data: Task } = useQuery({
@@ -109,7 +109,7 @@ export default function Board() {
    })
    // Update -> CardTask Reorder
    const ReorderTaskCard = async (tasks: CardType[]) => {
-      const res = await fetch('/api/task/reorder', {
+      await fetch('/api/task/reorder', {
          method: "PATCH",
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(tasks)

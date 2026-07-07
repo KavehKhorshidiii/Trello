@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { FilterIcon, List, Plus, Search } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { CardContent } from "@/components/ui/card"
-import BoardModal from "@/components/Modals/BoardModal/boardModal"
+import BoardModal from "@/components/Modals/Board/BoardModal/boardModal"
 import { useQuery } from "@tanstack/react-query"
 import { Grid3X3 } from "lucide-react"
 import { Input } from "@/components/ui/input"
@@ -35,7 +35,7 @@ export default function Dashboard() {
 
    const [addBoardModal, setAddBoardModal] = useState(false) // add new board modal
    const [viewMode, setViewModal] = useState<"grid" | "list">("grid") // board View Model
-   const { data, error } = useIsLogin() // authCheck and userdata hook
+   const { data } = useIsLogin() // authCheck and userdata hook
    const [search, setSearch] = useState<string>('') // search value
 
 

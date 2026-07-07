@@ -2,14 +2,14 @@
 
 // Imports
 import { MoreHorizontal, Pencil, Ellipsis, Trash2, Plus, GripHorizontal } from "lucide-react"
-import DeleteColModal from '@/components/Modals/ColumnModal/deleteColModal/deleteColModal'
+import DeleteColModal from '@/components/Modals/Column/ColumnModal/deleteColModal/deleteColModal'
 import { Button } from "../ui/button"
 import TaskCard from "../taskCardComponent/TaskCard";
 import { CSS } from "@dnd-kit/utilities"; // dnd
 import { useDroppable } from "@dnd-kit/core"; // dnd
 import { verticalListSortingStrategy, SortableContext, useSortable } from "@dnd-kit/sortable"; // dnd
 import { useState } from "react";
-import EditColModal from "../Modals/editColModal/editColModal";
+import EditColModal from "../Modals/Column/editColModal/editColModal";
 
 
 // Types
@@ -39,7 +39,7 @@ type PropsType = {
 }
 
 
-export default function BoardColumn({ ColData, cardTaskModal, tasks , setCardTaskModal, setSelectedColumnId }: PropsType) {
+export default function BoardColumn({ ColData, cardTaskModal, tasks, setCardTaskModal, setSelectedColumnId }: PropsType) {
 
 
    const [OpenColMenu, setOpenColMenu] = useState(false) // Open Column Menu

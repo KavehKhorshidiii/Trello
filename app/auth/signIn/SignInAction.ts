@@ -1,12 +1,11 @@
 'use server'
 
 // imports
-import connectDB from "@/lib/connectDB/connectDB"
-import UsersModel from "@/Models/usersmodel/usersmodel"
+import connectDB from "@/lib/ConnectDB/connectDB"
+import UsersModel from "@/models/usersmodel/usersmodel"
 import { compare } from "bcrypt"
 import { cookies } from "next/headers"
 import { generateJwtToken } from "@/lib/Auth/auth"
-import { redirect } from "next/navigation"
 
 
 // types
@@ -66,7 +65,8 @@ export default async function SignInAction(prevState: prevState, formData: FormD
 
 
       // Cookie
-      const Cookie = (await cookies()).set("token", JWTToken, {
+      const cookieStore = await cookies()
+      cookieStore.set("token", JWTToken, {
          httpOnly: true,
          path: "/",
          maxAge: 60 * 60 * 24 * 7,

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import connectDB from "../../../../lib/connectDB/connectDB";
 import CardModel from "../../../../Models/cardModel/cardModel"
 
@@ -16,7 +16,7 @@ export async function PATCH(req){
    }))
 
 
-   const result = await CardModel.bulkWrite(operations)
+   await CardModel.bulkWrite(operations)
 
    return NextResponse.json("good")
    

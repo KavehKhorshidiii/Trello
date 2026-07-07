@@ -3,8 +3,8 @@
 
 // imports
 import { hashPass, generateJwtToken } from '@/lib/Auth/auth'
-import connectDB from '@/lib/connectDB/connectDB'
-import UsersModel from '@/Models/usersmodel/usersmodel'
+import connectDB from '@/lib/ConnectDB/connectDB'
+import UsersModel from '@/models/usersmodel/usersmodel'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 

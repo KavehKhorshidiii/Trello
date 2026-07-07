@@ -2,8 +2,8 @@
 
 
 // imports
-import connectDB from "@/lib/connectDB/connectDB"
-import CardModel from "@/Models/cardModel/cardModel"
+import connectDB from "@/lib/ConnectDB/connectDB"
+import CardModel from "@/models/cardModel/cardModel"
 
 
 // types

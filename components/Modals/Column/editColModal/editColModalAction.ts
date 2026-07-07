@@ -2,8 +2,8 @@
 
 
 // imports
-import connectDB from "@/lib/connectDB/connectDB"
-import ColumnModel from "@/Models/columnModel/columnModel"
+import connectDB from "@/lib/ConnectDB/connectDB"
+import ColumnModel from "@/models/columnModel/columnModel"
 
 
 // types

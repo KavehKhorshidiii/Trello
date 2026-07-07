@@ -40,7 +40,7 @@ export async function DELETE(req, { params }) {
 
    try {
       await connectDB()
-      const deleteTaskCard = await cardModel.findByIdAndDelete(id)
+      await cardModel.findByIdAndDelete(id)
       return NextResponse.json({
          success: true,
          message: "Card deleted successfully",

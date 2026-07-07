@@ -2,11 +2,11 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
-import DeleteTaskCardModal from "../Modals/TaskModal/deleteTaskCardModal/deleteTaskCardModal";
-import EditTackCardModal from "../Modals/editTaskCardModal/editTaskCardModal";
+import DeleteTaskCardModal from "../Modals/TaskCard/TaskModal/deleteTaskCardModal/deleteTaskCardModal";
+import EditTackCardModal from "../Modals/TaskCard/editTaskCardModal/editTaskCardModal";
 import { toast } from "sonner";
-import ShowTaskCard from "../Modals/ShowTaskCard/ShowTaskCard";
-import {CalendarDays, GripVertical,Pen, Trash,Eye, Copy, ChevronLeft} from "lucide-react";
+import ShowTaskCard from "../Modals/TaskCard/ShowTaskCard/ShowTaskCard";
+import { CalendarDays, GripVertical, Pen, Trash, Eye, Copy, ChevronLeft } from "lucide-react";
 
 
 // types
@@ -80,7 +80,7 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
 
          {OpenEditTackCardModal && <EditTackCardModal SetOpenEditTackCardModal={SetOpenEditTackCardModal} TaskCardId={data._id} />}
 
-         {showTaskCard && <ShowTaskCard setShowTaskCard={setShowTaskCard} TaskCardData={data}/>}
+         {showTaskCard && <ShowTaskCard setShowTaskCard={setShowTaskCard} TaskCardData={data} />}
 
 
 
@@ -119,7 +119,7 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
                      </button>
 
                      <div className={` flex items-center overflow-hidden transition-all duration-400 ${cardTaskMenu ? "max-w-40 opacity-100" : "max-w-0 opacity-0"}`} >
-                        <button onClick={()=>setShowTaskCard(true)} className=" size-7 hover:bg-inherit rounded-full text-gray-400 hover:text-blue-600" ><Eye className="size-4" strokeWidth={2.5} /></button>
+                        <button onClick={() => setShowTaskCard(true)} className=" size-7 hover:bg-inherit rounded-full text-gray-400 hover:text-blue-600" ><Eye className="size-4" strokeWidth={2.5} /></button>
                         <button onClick={CopyTaskHandler} className=" size-7 hover:bg-inherit rounded-full text-gray-400 hover:text-slate-600" ><Copy className="size-4" strokeWidth={2.5} /> </button>
                         <button onClick={() => SetOpenEditTackCardModal(true)} className=" size-7 hover:bg-inherit rounded-full text-gray-400 hover:text-yellow-600" ><Pen className="size-4" strokeWidth={2.5} /></button>
                         <button onClick={() => setDeleteCardTaskModal(true)} className=" size-7 hover:bg-inherit rounded-full text-gray-400 hover:text-red-600" ><Trash className="size-4" strokeWidth={2.5} /></button>

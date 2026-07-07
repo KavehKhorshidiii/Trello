@@ -1,11 +1,11 @@
 'use server'
 
-import connectDB from "@/lib/connectDB/connectDB"
+import connectDB from "@/lib/ConnectDB/connectDB"
 import { cookies } from "next/headers"
 import { verifyJwtToken } from "@/lib/Auth/auth"
-import CardModel from "@/Models/cardModel/cardModel"
+import CardModel from "@/models/cardModel/cardModel"
 import { useQueryClient } from "@tanstack/react-query";
-import ColumnModel from "@/Models/columnModel/columnModel"
+import ColumnModel from "@/models/columnModel/columnModel"
 
 
 

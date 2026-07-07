@@ -24,7 +24,7 @@ export async function DELETE(req , {params}){
    try{
       await connectDB()
       await CardModel.deleteMany({column:id})
-      const deleteCol = await ColumnModel.findByIdAndDelete(id)
+      await ColumnModel.findByIdAndDelete(id)
       return NextResponse.json({ success: true })
    }catch{
       return NextResponse.json({ success: false })

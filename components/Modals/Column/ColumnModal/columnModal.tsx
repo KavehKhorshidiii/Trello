@@ -2,7 +2,7 @@
 import { X } from "lucide-react"
 import { useActionState, useEffect } from "react"
 import { useQueryClient } from "@tanstack/react-query"
-import columnModelAction from "@/components/Modals/ColumnModal/columnModalAction"
+import columnModelAction from "@/components/Modals/Column/ColumnModal/columnModalAction"
 import Spinner from "@/components/spinnerComponent/spinner"
 
 

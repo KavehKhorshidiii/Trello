@@ -2,8 +2,8 @@
 
 
 // imports
-import connectDB from "@/lib/connectDB/connectDB"
-import BoardModel from "@/Models/boardModel/boardModel"
+import connectDB from "@/lib/ConnectDB/connectDB"
+import BoardModel from "@/models/boardModel/boardModel"
 
 
 // types

@@ -6,8 +6,8 @@ import Link from "next/link";
 import { isNewBoard } from "../createBoardCardComponent/isNewBoard";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-import DeleteBoardModal from "../Modals/BoardModal/deleteBoardModal/deleteBoardModal";
-import EditBoardModal from "../Modals/editBoardModal/editBoardModal";
+import DeleteBoardModal from "../Modals/Board/BoardModal/deleteBoardModal/deleteBoardModal";
+import EditBoardModal from "../Modals/Board/editBoardModal/editBoardModal";
 import { Button } from "../ui/button";
 
 
