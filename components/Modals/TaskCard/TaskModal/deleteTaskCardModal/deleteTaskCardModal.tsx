@@ -26,7 +26,7 @@ export default function DeleteTaskCardModal({ setDeleteCardTaskModal, TaskCardDa
    const { mutate: deleteCard, isPending } = useMutation({
       mutationFn: async (id: string) => {
          console.log(id)
-         const res = await fetch(`/api/task/${id}`, {
+         const res = await fetch(`/api/taskCards/${id}`, {
             method: "DELETE",
          });
 

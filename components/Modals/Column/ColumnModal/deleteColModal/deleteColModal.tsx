@@ -30,7 +30,7 @@ export default function DeleteColModal({ setDeleteColModal, colData }: Props) {
    // Delete Column
    const DeleteCol = useMutation({
       mutationFn: async (colData: string) => {
-         const res = await fetch(`/api/column/${colData}`, {
+         const res = await fetch(`/api/columns/${colData}`, {
             method: "DELETE",
             headers: { "Content-Type": "application/json", },
          });
