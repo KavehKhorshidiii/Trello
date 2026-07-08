@@ -113,7 +113,7 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
                   </div>
 
                   {/* menu (Absolute Position) */}
-                  <div className={`rounded-full  z-70 absolute right-2 flex items-center ${cardTaskMenu ? "inset-shadow-sm  bg-white inset-shadow-gray-400 " : ""}`}>
+                  <div className={`rounded-full absolute right-2 flex items-center ${cardTaskMenu ? "inset-shadow-sm  bg-white inset-shadow-gray-400 " : ""}`}>
                      <button onClick={() => setCardTaskMenu((prev) => !prev)} className={`${cardTaskMenu && ""} size-8 rounded-ful flex justify-center items-center transition-all duration-200 sm:opacity-0 sm:group-hover:opacity-100`} >
                         <ChevronLeft className={`size-5 text-gray-800 transition-transform duration-300 ${cardTaskMenu ? " rotate-180" : ""}`} />
                      </button>
