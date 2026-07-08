@@ -54,10 +54,10 @@ export default async function Home() {
          {/* Hero Section */}
          <section className="container mx-auto px-4 py-20 text-center">
             <div className="max-w-4xl mx-auto">
-               <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+               <h1 className=" text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6">
                   Organize work and life, <span className="text-blue-600">finally.</span>
                </h1>
-               <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+               <p className=" text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
                   TrelloClone helps teams move work forward. Collaborate, manage
                   projects, and reach new productivity peaks. From high rises to the
                   home office, the way your team works is unique—accomplish it all
@@ -110,10 +110,10 @@ export default async function Home() {
          {/* Features Section */}
          <section className="container mx-auto px-4 py-20">
             <div className="text-center mb-16">
-               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+               <h2 className=" text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                   Everything you need to stay organized
                </h2>
-               <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+               <p className=" text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
                   Powerful features to help your team collaborate and get more done.
                </p>
             </div>
@@ -143,10 +143,10 @@ export default async function Home() {
          {/* CTA Section */}
          <section className="bg-blue-600 py-20">
             <div className="container mx-auto px-4 text-center">
-               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+               <h2 className="text-2xl md:text-4xl font-bold text-white mb-4">
                   Ready to get started?
                </h2>
-               <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+               <p className=" text-lg sm:text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
                   Join thousands of teams who are already using TrelloClone to
                   organize their work.
                </p>
@@ -177,13 +177,16 @@ export default async function Home() {
          {/* Footer */}
          <footer className="bg-gray-900 text-white py-12">
             <div className="container mx-auto px-4">
-               <div className="flex flex-col md:flex-row justify-between items-center">
+               <div className="flex flex-row sm:flex-col md:flex-row justify-between items-center">
+
                   <div className="flex items-center space-x-2 mb-4 md:mb-0">
                      <span className="text-xl font-bold">TrelloClone</span>
                   </div>
-                  <div className="flex items-center space-x-6 text-sm text-gray-400">
-                     <span>© {new Date().getFullYear()} TrelloClone.</span>
-                     <span>Built with Next.js & TypeScript</span>
+
+                  <div className="flex gap-3 sm:flex-row flex-col items-center space-x-6 text-xs sm:text-sm text-gray-400">
+
+                     <span className=" mr-0">© {new Date().getFullYear()} TrelloClone.</span>
+                     <span className=" mr-0">Built with Next.js & TypeScript</span>
 
                      <Link
                         href="https://github.com/KavehKhorshidiii"
@@ -194,7 +197,9 @@ export default async function Home() {
                            Developed by <span className="font-semibold text-white">Kaveh</span>
                         </span>
                      </Link>
+
                   </div>
+
                </div>
             </div>
          </footer>

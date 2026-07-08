@@ -38,7 +38,7 @@ export default function EditBoardModal({ setEditBoardData, boardId }: { setEditB
 
 
    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm ">
+      <div onClick={()=>setEditBoardData(false)} className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm ">
          <div className="flex flex-col w-5/6 sm:w-96 bg-white rounded-lg overflow-hidden shadow-lg">
 
             {/* Header */}
