@@ -160,10 +160,10 @@ export default function Dashboard() {
                         <Input onChange={(e) => setSearch(e.target.value.toLocaleLowerCase())} id="search" placeholder="Search boards..." className="pl-10" />
                      </div>
 
-                     {/* viewMode */}
+                     {/* viewMode and create board button */}
                      <div className="flex items-center gap-2">
                         <Button variant="outline" size="sm"> <FilterIcon className="h-4 w-4" />Filter </Button>
-                        <div className="flex items-center  rounded-lg border">
+                        <div className=" hidden sm:block items-center  rounded-lg border">
                            <Button variant={viewMode === "grid" ? "default" : "ghost"} size="sm" onClick={() => setViewModal("grid")} ><Grid3X3 className="h-4 w-4" /></Button>
                            <Button variant={viewMode === "list" ? "default" : "ghost"} size="sm" onClick={() => setViewModal("list")}><List className="h-4 w-4" /></Button>
                         </div>
