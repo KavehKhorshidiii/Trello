@@ -20,13 +20,13 @@ export default function ColumnModal({ setIsModalColumn, params }: { isModalColum
          queryClient.invalidateQueries({ queryKey: ["columns"] })
       }
 
-   }, [state.success, queryClient , setIsModalColumn])
+   }, [state.success, queryClient, setIsModalColumn])
 
 
    return (
       <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/40 backdrop-blur-sm">
 
-         <div className="w-full max-w-md bg-white rounded-lg shadow-xl overflow-hidden">
+         <div className="w-5/6 sm:w-96 max-w-md bg-white rounded-lg shadow-xl overflow-hidden">
 
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b">

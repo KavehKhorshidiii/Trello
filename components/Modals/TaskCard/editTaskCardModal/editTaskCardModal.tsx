@@ -39,7 +39,7 @@ export default function EditTackCardModal({ SetOpenEditTackCardModal, TaskCardId
 
    return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm ">
-         <div className="flex flex-col w-96 bg-white rounded-lg overflow-hidden shadow-lg">
+         <div className="flex w-5/6 sm:w-96 flex-col bg-white rounded-lg overflow-hidden shadow-lg">
 
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b">
