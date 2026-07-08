@@ -134,8 +134,8 @@ export default function Dashboard() {
                               <p className="mt-1 sm:mt-2 text-xs text-gray-400">{stat.subtitle}</p>
                            </div>
 
-                           <div className={`flex h-14 w-14 items-center justify-center rounded-2xl transition-all duration-300 ${stat.iconBg} ${stat.hover}`}>
-                              <stat.icon className={`h-7 w-7 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 ${stat.iconColor} ${stat.hoverIcon}`} />
+                           <div className={`flex size-12 sm:size-14 items-center justify-center rounded-2xl transition-all duration-300 ${stat.iconBg} ${stat.hover}`}>
+                              <stat.icon className={` size-5 sm:size-7 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 ${stat.iconColor} ${stat.hoverIcon}`} />
                            </div>
 
                         </div>
