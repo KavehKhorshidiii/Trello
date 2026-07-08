@@ -221,9 +221,8 @@ export default function Board() {
 
          <div className=' flex justify-center'>
             <div className=' container flex justify-between flex-col '>
-
-               {/* Stats bar & Add New Column */}
-               <div className="flex items-center gap-6 pt-7  border-gray-100">
+               {/* Stats bar & Add New Column button */}
+               <div className="flex items-center px-5 gap-6 pt-7  border-gray-100">
                   {/* Stats bar */}
                   <span className="text-sm text-gray-600"> Total Tasks: <strong className="text-gray-800">{displayTasks.length}</strong></span>
 

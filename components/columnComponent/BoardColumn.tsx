@@ -69,7 +69,7 @@ export default function BoardColumn({ ColData, cardTaskModal, tasks, setCardTask
 
 
    return (
-      <div ref={(node) => { setNodeRef(node); setDropRef(node); }} style={style} className="w-[340px] shrink-0">
+      <div ref={(node) => { setNodeRef(node); setDropRef(node); }} style={style} className=" w-full sm:w-85 shrink-0">
 
 
          {/* delete board modal */}
@@ -78,7 +78,7 @@ export default function BoardColumn({ ColData, cardTaskModal, tasks, setCardTask
          {editColData && <EditColModal setEditColData={setEditColData} ColId={ColData._id} />}
 
 
-         <div className={` flex min-h-[220px] flex-col rounded-2xl border bg-white shadow-sm transition-all duration-200${isOver ? "border-blue-500 ring-2 ring-blue-200 shadow-lg" : "border-gray-200 hover:shadow-md"}`} >
+         <div className={` flex min-h-55 flex-col rounded-2xl border bg-white shadow-sm transition-all duration-200${isOver ? "border-blue-500 ring-2 ring-blue-200 shadow-lg" : "border-gray-200 hover:shadow-md"}`} >
 
             {/* Header */}
             <div className="sticky top-0 z-10 rounded-t-2xl group border-b bg-white p-4">
