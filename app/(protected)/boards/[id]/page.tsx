@@ -12,7 +12,7 @@ import ColumnModal from '@/components/Modals/Column/ColumnModal/columnModal'
 import EditBoardModal from '@/components/Modals/Board/editBoardModal/editBoardModal';
 import BoardColumn from '@/components/columnComponent/BoardColumn'
 import { SortableContext, horizontalListSortingStrategy, arrayMove } from "@dnd-kit/sortable"; // dnd
-import { DndContext, useSensors, PointerSensor, DragEndEvent, useSensor } from "@dnd-kit/core";  // dnd
+import { DndContext, useSensors, PointerSensor, TouchSensor, DragEndEvent, useSensor } from "@dnd-kit/core";  // dnd
 import Spinner from '@/components/spinnerComponent/spinner';
 
 
@@ -193,6 +193,12 @@ export default function Board() {
    }
    // dnd sensors
    const sensors = useSensors(
+      useSensor(TouchSensor, {
+         activationConstraint: {
+            delay: 200,
+            tolerance: 5,
+         },
+      }),
       useSensor(PointerSensor, {
          activationConstraint: {
             distance: 5,
