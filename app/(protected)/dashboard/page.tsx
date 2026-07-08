@@ -117,7 +117,7 @@ export default function Dashboard() {
 
             {/* Header */}
             <header className=" mb-6 sm:mb-8">
-               <h1 className=" text-2xl sm:text-3xl font-bold text-gray-900 mb-2"> welcome back {data?.firstname}👋</h1>
+               <h1 className=" text-xl am:text-2xl sm:text-3xl font-bold text-gray-900 mb-2"> welcome back {data?.firstname}👋</h1>
                <p className=" text-gray-600">Here`s what`s happening with your board.</p>
             </header>
 
@@ -149,7 +149,7 @@ export default function Dashboard() {
                {/* Controls */}
                <div className="flex flex-col gap-4 mb-6">
                   <div>
-                     <h2 className="text-2xl font-bold text-gray-900">Your Boards</h2>
+                     <h2 className=" text-xl sm:text-2xl font-bold text-gray-900">Your Boards</h2>
                      <p className="text-gray-500">Manage your projects and collaborate with your team</p>
                   </div>
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
