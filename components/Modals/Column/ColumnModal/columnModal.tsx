@@ -24,7 +24,7 @@ export default function ColumnModal({ setIsModalColumn, params }: { isModalColum
 
 
    return (
-      <div onClick={() => setIsModalColumn(false)}  className="fixed inset-0 z-60 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+      <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/40 backdrop-blur-sm">
 
          <div className="w-5/6 sm:w-96 max-w-md bg-white rounded-lg shadow-xl overflow-hidden">
 
