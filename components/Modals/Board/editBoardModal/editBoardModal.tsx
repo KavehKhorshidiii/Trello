@@ -1,4 +1,7 @@
 'use client'
+
+
+// imports
 import { X } from "lucide-react"
 import { useActionState, useEffect, useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
@@ -10,9 +13,7 @@ import Spinner from "@/components/spinnerComponent/spinner"
 export default function EditBoardModal({ setEditBoardData, boardId }: { setEditBoardData: (value: boolean) => void, boardId: string }) {
 
    const [state, formAction, pending] = useActionState(changeColorNavbarAction, { success: null, errors: {}, message: "" }) // useActionState
-
    const [color, setColor] = useState('') // select color State
-
    const queryClient = useQueryClient() //useQueryClient
 
 
@@ -38,7 +39,7 @@ export default function EditBoardModal({ setEditBoardData, boardId }: { setEditB
 
    return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm ">
-         <div className="flex flex-col w-96 bg-white rounded-lg overflow-hidden shadow-lg">
+         <div className="flex flex-col w-5/6 sm:w-96 bg-white rounded-lg overflow-hidden shadow-lg">
 
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b">
@@ -67,4 +68,5 @@ export default function EditBoardModal({ setEditBoardData, boardId }: { setEditB
          </div>
       </div>
    )
+
 }

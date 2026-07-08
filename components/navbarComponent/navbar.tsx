@@ -157,7 +157,7 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
                      {/* edit board name */}
                      <div className=' flex items-center space-x-1 sm:space-x-2 min-w-0'>
                         {
-                           <span className='text-lg select-none font-bold text-gray-900 truncate  space-x-1 sm:space-x-2 min-w-0'>{boardTitle}</span>
+                           <span className='text-base select-none sm:text-xl font-bold text-gray-900 truncate  space-x-1 sm:space-x-2 min-w-0'>{boardTitle}</span>
                         }
                         {
                            (
