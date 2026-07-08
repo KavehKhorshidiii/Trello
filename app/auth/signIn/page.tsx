@@ -41,8 +41,8 @@ export default function SignIn() {
          <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border overflow-hidden transition-all duration-300 hover:shadow-2xl">
 
             {/* Header */}
-            <div className="px-6 py-6 border-b text-center">
-               <h1 className="text-2xl font-bold text-gray-900">Welcome Back 👋</h1>
+            <div className="p-6 border-b text-center">
+               <h1 className=" text-xl sm:text-2xl font-bold text-gray-900">Welcome Back 👋</h1>
                <p className="mt-2 text-sm text-gray-500">Sign in to continue to your workspace</p>
             </div>
 
@@ -50,13 +50,13 @@ export default function SignIn() {
             <form action={formAction} className="p-6 space-y-5">
 
                {/* Username */}
-               <div className="space-y-2">
+               <div className="space-y-2 mb-2 sm:mb-5">
                   <label className="text-sm font-medium text-gray-700">Username</label>
                   <input name="username" placeholder="Enter your username" className="w-full rounded-lg border px-4 py-2.5 text-sm transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none" />
                </div>
 
                {/* Password */}
-               <div className="space-y-2">
+               <div className="space-y-2 mb-2 sm:mb-5">
                   <label className="text-sm font-medium text-gray-700">Password</label>
 
                   <input type="password" name="password" placeholder="••••••••" className="w-full rounded-lg border px-4 py-2.5 text-sm transition-all focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none" />
@@ -72,7 +72,7 @@ export default function SignIn() {
 
             {/* Footer */}
             <div className="border-t px-6 py-5 text-center text-sm text-gray-600">Don`t have an account?
-               <Link href="/auth/signUp" className="font-medium text-blue-600 transition-all duration-500 hover:text-blue-700 hover:font-bold "> Create one</Link>
+               <Link href="/auth/signUp" className="font-medium pl-1 text-blue-600 transition-all duration-500 hover:text-blue-700 hover:font-bold "> Create one</Link>
             </div>
 
          </div>
