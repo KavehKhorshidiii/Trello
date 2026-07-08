@@ -83,7 +83,6 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
          {showTaskCard && <ShowTaskCard setShowTaskCard={setShowTaskCard} TaskCardData={data} />}
 
 
-
          <div className={`h-full flex flex-col`}>
 
             {/* color task */}
