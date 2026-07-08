@@ -126,12 +126,12 @@ export default function Dashboard() {
                {stats.map((stat) => (
                   <Card key={stat.title} className="group border-0 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                      <CardContent className="p-5">
-                        <div className="flex items-center justify-between">
+                        <div className="flex gap-2 sm:flex-row flex-col-reverse items-center justify-between">
 
-                           <div>
-                              <p className="text-sm font-medium text-gray-500">{stat.title}</p>
-                              <h2 className="mt-2 text-xl font-bold text-gray-900">{stat.value}</h2>
-                              <p className="mt-2 text-xs text-gray-400">{stat.subtitle}</p>
+                           <div className=" flex flex-col items-center">
+                              <p className="text-sm text-center font-medium text-gray-500">{stat.title}</p>
+                              <h2 className="mt-1 sm:mt-2 text-xl font-bold text-gray-900">{stat.value}</h2>
+                              <p className="mt-1 sm:mt-2 text-xs text-gray-400">{stat.subtitle}</p>
                            </div>
 
                            <div className={`flex h-14 w-14 items-center justify-center rounded-2xl transition-all duration-300 ${stat.iconBg} ${stat.hover}`}>
