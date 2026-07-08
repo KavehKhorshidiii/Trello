@@ -101,7 +101,7 @@ export default function Dashboard() {
 
 
    return (
-      <div className=" z-50 min-h-screen bg-gray-50">
+      <div className=" z-50 min-h-screen flex flex-col justify-center bg-gray-50">
 
 
          {/* Modal */}
