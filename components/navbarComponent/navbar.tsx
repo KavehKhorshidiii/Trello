@@ -1,5 +1,6 @@
 'use client'
 
+
 // Imports
 import Spinner from '../spinnerComponent/spinner';
 import { useRouter, usePathname } from 'next/navigation';
@@ -14,7 +15,6 @@ import { useIsLogin } from '@/hooks/useIsLogin';
 
 
 export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: ((value: boolean) => void), boardTitle?: string }) {
-
 
    const PathName = usePathname(); // Path Name
    const [profileModal, setProfileModal] = useState(false) // Profile Modal
@@ -107,7 +107,7 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
                            </div>
 
                            {/* profile modal */}
-                           <Card className={`absolute top-full right-0 mt-1 w-80 overflow-hidden rounded-xl border bg-white shadow-xl transition-all duration-200 ${profileModal ? "translate-y-0 opacity-100" : "-translate-y-2 pointer-events-none opacity-0"}`}>
+                           <Card className={`absolute top-full right-0 mt-1 w-60 sm:w-80 overflow-hidden rounded-xl border bg-white shadow-xl transition-all duration-200 ${profileModal ? "translate-y-0 opacity-100" : "-translate-y-2 pointer-events-none opacity-0"}`}>
                               {/* Header */}
                               <div className="flex items-center gap-4 p-5">
                                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-lg font-semibold text-white"> {data?.firstname?.[0] ?? "U"} </div>
@@ -129,6 +129,7 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
                         </div>
                      )
                   }
+
 
                </div>
             </header >
@@ -151,7 +152,7 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
                         </Link>
                      </div>
 
-                     <div className=' mx-4 h-4 sm:h-6 w-px  bg-gray-300 hidden sm:block' />
+                     <div className=' mx-4 h-4 sm:h-6 w-px  bg-gray-300 block' />
 
                      {/* edit board name */}
                      <div className=' flex items-center space-x-1 sm:space-x-2 min-w-0'>
@@ -173,13 +174,14 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
                   {
                      isLoading ? (<Spinner />) : (
                         <div className=' relative flex space-x-1 text-xl sm:space-x-1'>
+
                            <div onClick={() => setProfileModal(!profileModal)} className={` ${profileModal ? ' bg-red-600 hover:bg-red-500' : ' bg-blue-600 hover:bg-blue-700'} select-none cursor-pointer transition-all duration-200 m-0 flex justify-center text-white items-center size-8 sm:size-12 rounded-full`}>
                               <p className={`${profileModal ? "hidden" : " block"}`}>{[data?.firstname?.[0] ?? ""]}</p>
                               <div className={`${profileModal ? " opacity-100" : " opacity-0"} absolute transition-all  text-white`}><X className={`${profileModal ? "  rotate-90" : " rotate-0"}`} /></div>
                            </div>
 
                            {/* profile modal */}
-                           <Card className={`absolute top-full right-0 mt-1 w-80 overflow-hidden rounded-xl border bg-white shadow-xl transition-all duration-200 ${profileModal ? "translate-y-0 opacity-100" : "-translate-y-2 pointer-events-none opacity-0"}`}>
+                           <Card className={`absolute top-full right-0 mt-1 w-60 sm:w-80 overflow-hidden rounded-xl border bg-white shadow-xl transition-all duration-200 ${profileModal ? "translate-y-0 opacity-100" : "-translate-y-2 pointer-events-none opacity-0"}`}>
                               {/* Header */}
                               <div className="flex items-center gap-4 p-5">
                                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-lg font-semibold text-white"> {data?.firstname?.[0] ?? "U"} </div>
@@ -198,6 +200,7 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
                                  </Button>
                               </div>
                            </Card>
+
                         </div>
                      )
                   }
@@ -207,6 +210,5 @@ export default function Navbar({ editBoardData, boardTitle }: { editBoardData?: 
          )
       }
    }
-
 
 }
