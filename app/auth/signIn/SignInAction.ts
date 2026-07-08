@@ -23,7 +23,7 @@ export default async function SignInAction(prevState: prevState, formData: FormD
       await connectDB()
 
       const { username, password } = {
-         username: formData.get("username"),
+         username: formData.get("username")?.toString().toLowerCase(),
          password: formData.get("password") as string
       }
 

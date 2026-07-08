@@ -24,9 +24,10 @@ export default async function SignUpAction(prevState: prevState, formData: FormD
 
       const { firstname, username, password } = {
          firstname: formData.get("firstname"),
-         username: formData.get("username"),
+         username: formData.get("username")?.toString().toLowerCase(),
          password: formData.get("password") as string
       }
+
 
       // Required fields
       if (!firstname || !username || !password) {
