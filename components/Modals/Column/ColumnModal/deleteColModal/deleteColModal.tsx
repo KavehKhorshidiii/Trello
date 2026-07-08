@@ -46,7 +46,7 @@ export default function DeleteColModal({ setDeleteColModal, colData }: Props) {
 
    return (
       <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-         <div className="w-full max-w-md overflow-hidden rounded-xl bg-white shadow-2xl">
+         <div className=" w-5/6 sm:w-96 max-w-md overflow-hidden rounded-xl bg-white shadow-2xl">
 
             {/* Header */}
             <div className="flex items-center justify-between border-b px-5 py-4">

@@ -235,7 +235,7 @@ export default function Board() {
 
                   {/*  Add New Column */}
                   <div className="ml-auto">
-                     <button onClick={() => setIsModalColumn(true)} className="flex items-center gap-2 bg-gray-900 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                     <button onClick={() => setIsModalColumn(true)} className="flex items-center gap-2 bg-gray-900 text-white text-xs sm:text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
                         <Plus className=' size-4'></Plus>
                         Create new Column
                      </button>
