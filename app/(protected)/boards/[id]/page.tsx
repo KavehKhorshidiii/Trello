@@ -86,7 +86,7 @@ export default function Board() {
    })
    // Update -> Columns Reorder
    const ReorderColumn = async (columns: ColType[]) => {
-      await fetch('/api/column/reorder', {
+      await fetch('/api/columns/reorder', {
          method: "PATCH",
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(columns)
@@ -109,7 +109,7 @@ export default function Board() {
    })
    // Update -> CardTask Reorder
    const ReorderTaskCard = async (tasks: CardType[]) => {
-      await fetch('/api/task/reorder', {
+      await fetch('/api/taskCards/reorder', {
          method: "PATCH",
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(tasks)
@@ -191,6 +191,7 @@ export default function Board() {
       setTasks(sorted);
       updateTaskCard.mutate(sorted);
    }
+   
    // dnd sensors
    const sensors = useSensors(
       useSensor(TouchSensor, {
