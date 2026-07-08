@@ -85,12 +85,12 @@ export default function BoardColumn({ ColData, cardTaskModal, tasks, setCardTask
                <div className="flex items-center justify-between">
                   <div className="flex select-none items-center gap-3">
                      <GripHorizontal {...attributes} {...listeners} className="touch-none size-5 cursor-grab text-gray-400 hover:text-gray-600 active:cursor-grabbing" /> {/* Drag Handle */}
-                     <h2 className="font-semibold text-gray-800"> {ColData.title} </h2>
+                     <h2 className=" text-sm sm:text-base font-semibold text-gray-800"> {ColData.title} </h2>
                      <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-500"> {tasks?.length ?? 0} </span>
                   </div>
                   {/* menu modal */}
-                  <div onClick={ColMenuHandler} className={`hover:text-gray-600 transition-all duration-200 flex flex-col relative px-2 items-center `} >
-                     <Button variant="ghost" size="icon" className={"opacity-0 transition-opacity group-hover:opacity-100" + (OpenColMenu ? " bg-gray-100 rounded-sm opacity-100" : "")}> <MoreHorizontal className="size-5" /> </Button>
+                  <div onClick={ColMenuHandler} className={`hover:text-gray-600  transition-all duration-200 flex flex-col relative px-2 items-center `} >
+                     <Button variant="ghost" size="icon" className={"sm:opacity-0 rounded-full transition-opacity sm:group-hover:opacity-100" + (OpenColMenu ? " bg-gray-100 rounded-sm opacity-100" : "")}> <MoreHorizontal className="size-5" /> </Button>
                      {
                         <div className={"absolute right-0 top-full w-48 rounded-lg border bg-white shadow-lg" + (OpenColMenu ? " opacity-100 visible" : " invisible opacity-0")}>
                            <button onClick={() => setEditColData(true)} className="flex w-full items-center gap-2 px-3 py-2 hover:bg-gray-100"><Pencil className="h-4 w-4" />Edit Column</button><hr />

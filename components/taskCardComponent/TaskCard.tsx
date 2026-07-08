@@ -105,7 +105,7 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
 
                      {/* title */}
                      <div className="flex-1 min-w-0">
-                        <h3 className="truncate text-lg font-semibold text-gray-800">
+                        <h3 className="truncate text-sm sm:text-base font-semibold text-gray-800">
                            {data.title}
                         </h3>
                      </div>
@@ -113,8 +113,8 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
                   </div>
 
                   {/* menu (Absolute Position) */}
-                  <div className={`rounded-full  z-10 flex items-center ${cardTaskMenu ? "inset-shadow-sm inset-shadow-gray-400 " : ""}`}>
-                     <button onClick={() => setCardTaskMenu((prev) => !prev)} className={`${cardTaskMenu && ""} size-8 rounded-ful flex justify-center items-center transition-all duration-200 opacity-0 group-hover:opacity-100`} >
+                  <div className={`rounded-full  z-70 absolute right-2 flex items-center ${cardTaskMenu ? "inset-shadow-sm  bg-white inset-shadow-gray-400 " : ""}`}>
+                     <button onClick={() => setCardTaskMenu((prev) => !prev)} className={`${cardTaskMenu && ""} size-8 rounded-ful flex justify-center items-center transition-all duration-200 sm:opacity-0 sm:group-hover:opacity-100`} >
                         <ChevronLeft className={`size-5 text-gray-800 transition-transform duration-300 ${cardTaskMenu ? " rotate-180" : ""}`} />
                      </button>
 
@@ -130,7 +130,7 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
 
                {/* Body */}
                <div className=" flex-1 overflow-auto">
-                  <p className=" px-1.5 text-sm text-justify leading-5  text-gray-500"> {data.des || "No description"} </p>
+                  <p className=" px-1.5 text-xs sm:text-sm text-justify leading-5  text-gray-500"> {data.des || "No description"} </p>
                </div>
             </div >
 

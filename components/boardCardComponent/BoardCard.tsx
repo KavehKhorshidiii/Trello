@@ -94,7 +94,7 @@ export default function BoardCard({ board, viewMode }: Props) {
                      <div className={`h-3 w-3 rounded-full ${colorMap[board.color as keyof typeof colorMap] || "bg-gray-300"}`} />
 
                      <div onClick={MenuHandler} className={`hover:text-gray-600 transition-all duration-200 flex flex-col relative px-2 items-center`} >
-                        <Button variant="ghost" size="icon" className={`opacity-0 transition-opacity group-hover:opacity-100` + (menuOpen ? " bg-gray-100 rounded-sm opacity-100" : "")}> <Ellipsis /></Button>
+                        <Button variant="ghost" size="icon" className={`sm:opacity-0 transition-opacity sm:group-hover:opacity-100` + (menuOpen ? " bg-gray-100 rounded-sm opacity-100" : "")}> <Ellipsis /></Button>
                         {
                            isNew && (<Badge variant="secondary" className="text-xs top-full absolute"> New </Badge>)
                         }
