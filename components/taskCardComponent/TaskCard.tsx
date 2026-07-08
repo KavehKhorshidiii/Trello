@@ -100,7 +100,7 @@ export default function TaskCard({ data }: { data: CardFuncType }) {
 
                      {/* DND Icon */}
                      <div>
-                        <GripVertical {...attributes} {...listeners} className={` shrink-0 size-5 text-gray-400 transition-colors hover:text-gray-500 ${isDragging ? "cursor-grabbing" : "cursor-grab"}`} />
+                        <GripVertical {...attributes} {...listeners} className={`touch-none shrink-0 size-5 text-gray-400 transition-colors hover:text-gray-500 ${isDragging ? "cursor-grabbing" : "cursor-grab"}`} />
                      </div>
 
                      {/* title */}

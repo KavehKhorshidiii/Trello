@@ -84,7 +84,7 @@ export default function BoardColumn({ ColData, cardTaskModal, tasks, setCardTask
             <div className="sticky top-0 z-10 rounded-t-2xl group border-b bg-white p-4">
                <div className="flex items-center justify-between">
                   <div className="flex select-none items-center gap-3">
-                     <GripHorizontal {...attributes} {...listeners} className="size-5 cursor-grab text-gray-400 hover:text-gray-600 active:cursor-grabbing" /> {/* Drag Handle */}
+                     <GripHorizontal {...attributes} {...listeners} className="touch-none size-5 cursor-grab text-gray-400 hover:text-gray-600 active:cursor-grabbing" /> {/* Drag Handle */}
                      <h2 className="font-semibold text-gray-800"> {ColData.title} </h2>
                      <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-500"> {tasks?.length ?? 0} </span>
                   </div>
