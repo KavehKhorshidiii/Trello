@@ -188,11 +188,7 @@ export default async function Home() {
                      <span className=" mr-0">© {new Date().getFullYear()} TrelloClone.</span>
                      <span className=" mr-0">Built with Next.js & TypeScript</span>
 
-                     <Link
-                        href="https://github.com/KavehKhorshidiii"
-                        target="_blank"
-                        className="group flex items-center gap-2 rounded-full border border-gray-700 px-4 py-2 transition-all duration-300 hover:border-blue-600 hover:bg-gray-800 hover:text-white hover:shadow-lg hover:shadow-blue-500/20"
-                     >
+                     <Link href="https://github.com/KavehKhorshidiii" target="_blank" className="animate-pulse group flex items-center gap-2 rounded-full border border-gray-700 px-4 py-2 transition-all  duration-300 hover:border-blue-600 hover:bg-gray-800 hover:text-white hover:shadow-lg hover:shadow-blue-500/20" >
                         <span className="transition-colors duration-300">
                            Developed by <span className="font-semibold text-white">Kaveh</span>
                         </span>
