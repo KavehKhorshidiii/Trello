@@ -37,9 +37,9 @@ export default function SignUp() {
 
    return (
 
-      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-purple-50 px-4">
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-purple-50 px-5">
 
-         <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border overflow-hidden transition-all duration-300 hover:shadow-2xl">
+         <div className="w-full max-w-md bg-white h-5/6 sm:h-auto rounded-2xl shadow-xl border overflow-hidden transition-all duration-300 hover:shadow-2xl">
 
             {/* Header */}
             <div className="px-6 py-6 border-b text-center"> <h1 className="text-2xl font-bold text-gray-900"> Create Your Account 🚀</h1>

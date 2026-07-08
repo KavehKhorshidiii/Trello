@@ -36,7 +36,7 @@ export default function SignIn() {
    }, [state , router]);
 
    return (
-      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-purple-50 px-4">
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-purple-50 px-5">
 
          <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border overflow-hidden transition-all duration-300 hover:shadow-2xl">
 
