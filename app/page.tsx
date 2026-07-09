@@ -1,14 +1,7 @@
 import Navbar from "@/components/navbarComponent/navbar";
 import { cookies } from "next/headers";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-
-import {
-   CheckSquare,
-   Users,
-   Zap,
-   Shield,
-   ArrowRight,
-} from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {CheckSquare,Users,Zap,Shield,ArrowRight,} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -152,7 +145,7 @@ export default async function Home() {
 
                {!isLogin && (
                   <div>
-                     <Link href={'/auth/signIn'}>
+                     <Link href={'/auth/signUp'}>
                         <Button size="lg" variant="secondary" className="text-lg px-8">
                            Create Your Account
                            <ArrowRight className="ml-2 h-5 w-5" />
