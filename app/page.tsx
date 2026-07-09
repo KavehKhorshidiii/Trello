@@ -1,4 +1,3 @@
-// import
 import Navbar from "@/components/navbarComponent/navbar";
 import { cookies } from "next/headers";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";

@@ -1,4 +1,6 @@
 'use client'
+
+
 import { X } from "lucide-react"
 import { useActionState, useEffect } from "react"
 import { useQueryClient } from "@tanstack/react-query"
@@ -59,4 +61,5 @@ export default function EditColModal({ setEditColData, ColId }: { setEditColData
          </div>
       </div>
    )
+
 }

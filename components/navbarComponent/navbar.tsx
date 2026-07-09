@@ -1,7 +1,6 @@
 'use client'
 
 
-// Imports
 import Spinner from '../spinnerComponent/spinner';
 import { useRouter, usePathname } from 'next/navigation';
 import { ArrowLeft, ArrowRightIcon, X, MoreHorizontal } from 'lucide-react';

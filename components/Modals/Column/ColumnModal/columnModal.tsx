@@ -1,4 +1,6 @@
 'use client'
+
+
 import { X } from "lucide-react"
 import { useActionState, useEffect } from "react"
 import { useQueryClient } from "@tanstack/react-query"
@@ -7,7 +9,6 @@ import Spinner from "@/components/spinnerComponent/spinner"
 
 
 export default function ColumnModal({ setIsModalColumn, params }: { isModalColumn: boolean, setIsModalColumn: (value: boolean) => void, params: string }) {
-
 
    const [state, formAction, pending] = useActionState(columnModelAction, { success: null, errors: {}, message: "" })
 
@@ -71,6 +72,5 @@ export default function ColumnModal({ setIsModalColumn, params }: { isModalColum
       //    </div>
       // </div>
    )
-
 
 }

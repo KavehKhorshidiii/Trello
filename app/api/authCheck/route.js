@@ -1,10 +1,8 @@
-// imports
 import { NextResponse } from "next/server";
 import userModel from '../../../models/usersmodel/usersmodel'
 import connectDB from '../../../lib/connectDB/connectDB'
 import { cookies } from "next/headers";
 import { verifyJwtToken } from "../../../lib/Auth/auth";
-
 
 
 // User Exist  &  User Data 

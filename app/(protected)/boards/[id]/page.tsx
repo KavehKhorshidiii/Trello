@@ -1,7 +1,6 @@
 'use client'
 
 
-// imports
 import CardTaskModal from '@/components/Modals/TaskCard/TaskModal/cardTaskModal'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
@@ -53,7 +52,6 @@ type BoardType = {
 
 
 export default function Board() {
-
 
    const [cardTaskModal, setCardTaskModal] = useState(false) // Card Task Modal
    const [isModalColumn, setIsModalColumn] = useState(false) // Column Modal
@@ -192,6 +190,7 @@ export default function Board() {
       updateTaskCard.mutate(sorted);
    }
    
+
    // dnd sensors
    const sensors = useSensors(
       useSensor(TouchSensor, {
@@ -206,7 +205,6 @@ export default function Board() {
          },
       })
    );
-
 
 
    return (
@@ -263,6 +261,5 @@ export default function Board() {
 
       </div>
    )
-
 
 }

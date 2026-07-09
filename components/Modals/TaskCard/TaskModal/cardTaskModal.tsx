@@ -1,12 +1,12 @@
 'use client'
+
+
 import { X } from "lucide-react"
 import { useActionState, useEffect, useState } from "react"
 import cardModalAction from "./cardTaskModalAction"
 import { useQueryClient } from "@tanstack/react-query"
 import Colors from "@/components/colorsComponent/Colors"
 import Spinner from "@/components/spinnerComponent/spinner"
-
-
 
 
 export default function CardTaskModal({ columnId, boardId, setCardTaskModal }: { setCardTaskModal: (value: boolean) => void, columnId: string | undefined, boardId: string }) {
@@ -19,14 +19,11 @@ export default function CardTaskModal({ columnId, boardId, setCardTaskModal }: {
    const queryClient = useQueryClient()
 
    useEffect(() => {
-      console.log("create task")
-      console.log(state.success)
-
+   
       if (state.success) {
          queryClient.invalidateQueries({ queryKey: ["tasks"] })
          setCardTaskModal(false)
       }
-
 
    }, [state.success , queryClient , setCardTaskModal])
 
@@ -78,32 +75,5 @@ export default function CardTaskModal({ columnId, boardId, setCardTaskModal }: {
          </div>
       </div>
    )
+   
 }
-
-
-// <div className=" fixed border-4 backdrop-blur-sm w-full z-60 bg-black/30  h-screen flex justify-center bg-blur-2xl  items-center">
-//    <div className=" flex-col z-60 flex size-96 bg-white">
-//       <div onClick={() => setCardTaskModal(false)}><X></X></div>
-
-//       <form action={formAction} className=" flex-col">
-//          <input type="hidden" name="columnId" value={columnId} />
-//          <input type="hidden" name="boardId" value={boardId} />
-//          <div className=" flex flex-col">
-//             <label htmlFor="">Title</label>
-//             <input name="title" className=" border-2" type="text" />
-//          </div>
-//          <div className=" flex flex-col">
-//             <label htmlFor="">Description</label>
-//             <input name="des" className=" border-2" type="text" />
-//          </div>
-//          <div className=" flex justify-start gap-3 items-center">
-//             color
-//             <div className=" flex gap-1">
-//                <input name="color" defaultValue="#000000" className=" size-10" type="color" />
-//             </div>
-//          </div>
-//          <button type="submit" className=" border-2 rounded-sm px-3 py-1">add</button>
-//       </form>
-
-//    </div>
-// </div>

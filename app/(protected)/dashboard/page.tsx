@@ -1,6 +1,5 @@
 'use client'
 
-// imports
 import Navbar from "@/components/navbarComponent/navbar"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"

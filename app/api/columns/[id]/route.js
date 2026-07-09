@@ -3,6 +3,7 @@ import ColumnModel from '../../../../models/columnModel/columnModel'
 import connectDB from '../../../../lib/connectDB/connectDB'
 import CardModel from '../../../../models/cardModel/cardModel'
 
+
 // Columns
 export async function GET(req, { params }) {
 
@@ -15,6 +16,7 @@ export async function GET(req, { params }) {
    return NextResponse.json(columns)
 
 }
+
 
 // Delete Columns
 export async function DELETE(req , {params}){

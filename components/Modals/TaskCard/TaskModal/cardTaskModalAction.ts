@@ -5,6 +5,7 @@ import { cookies } from "next/headers"
 import CardModel from "@/models/cardModel/cardModel"
 
 
+// types
 type stateType = {
    success: boolean | null,
    errors: object,

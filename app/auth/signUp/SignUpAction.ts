@@ -1,7 +1,6 @@
 'use server'
 
 
-// imports
 import { hashPass, generateJwtToken } from '@/lib/Auth/auth'
 import connectDB from '@/lib/connectDB/connectDB'
 import UsersModel from '@/models/usersmodel/usersmodel'

@@ -12,5 +12,6 @@ export async function GET(req, { params }) {
    const boardData = await BoardModel.find({ _id: theParams.id })
 
    return NextResponse.json({ boardData })
+
 }
 

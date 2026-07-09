@@ -1,39 +1,161 @@
-https://trello-umber-psi.vercel.app/
+<h1 align="center">Trello Clone</h1>
+<p align="center">
+A modern Trello-inspired task management application for organizing boards, columns, and tasks with drag-and-drop functionality.
+</p>
 
+<br/>
+<br/>
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Live Demo
+[Open the Live Website](https://YOUR-VERCEL-LINK.vercel.app)
 
-## Getting Started
+<br/>
 
-First, run the development server:
+## Description
+
+Trello Clone is a full-stack task management application inspired by Trello. Users can create boards, organize columns, manage tasks, and reorder everything using drag-and-drop. Authentication is handled with JWT, and all data is stored in MongoDB.
+
+<br/>
+
+## Features
+
+- User Authentication (Sign Up / Sign In)
+- JWT Authentication with HTTP-only Cookies
+- Create, Edit and Delete Boards
+- Create, Edit and Delete Columns
+- Create, Edit and Delete Tasks
+- Drag & Drop Columns
+- Drag & Drop Tasks
+- Move Tasks Between Columns
+- Responsive Design
+- Loading Spinner
+- Toast Notifications
+- Task Color Labels
+- Copy Task Content
+- View Task Details
+- Persistent Data with MongoDB
+
+<br/>
+
+## Screenshots
+
+###### Desktop
+
+![Screenshot](./public/screenshot/desktop-1.png)
+
+<br/>
+
+![Screenshot](./public/screenshot/desktop-2.png)
+
+<br/>
+
+###### Mobile
+
+<table>
+<tr>
+<td><img src="./public/screenshot/mobile-1.png" width="280"/></td>
+<td><img src="./public/screenshot/mobile-2.png" width="280"/></td>
+</tr>
+</table>
+
+<br/>
+
+## Tech Stack
+
+- Next.js 16
+- React
+- TypeScript
+- Tailwind CSS
+- MongoDB
+- Mongoose
+- React Query (TanStack Query)
+- dnd-kit
+- JWT Authentication
+- Lucide React
+
+<br/>
+
+## Installation & Usage
+
+###### Requirements
+
+- Node.js
+- npm
+
+###### Installation Steps
+
+1. Clone the project
+
+```bash
+git clone https://github.com/KavehKhorshidiii/Trello.git
+```
+
+2. Move into the project directory
+
+```bash
+cd Trello
+```
+
+3. Install dependencies
+
+```bash
+npm install
+```
+
+4. Create a `.env` file
+
+```env
+MONGODB_URI=your_mongodb_connection_string
+SECRET_JWT=your_secret_key
+```
+
+###### Usage Steps
+
+Start the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Build for production
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+<br/>
 
-## Learn More
+## Project Goals
 
-To learn more about Next.js, take a look at the following resources:
+- Practice building a full-stack application using Next.js
+- Learn MongoDB and Mongoose for database management
+- Implement secure JWT Authentication
+- Practice Server Actions and API Routes
+- Improve state management with React Query
+- Build a responsive drag-and-drop interface using dnd-kit
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<br/>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## TODO (Next Steps)
 
-## Deploy on Vercel
+- [ ] PWA support
+- [ ] Activity history
+- [ ] Due dates for tasks
+- [ ] File attachments
+- [ ] User profile page
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<br/>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+**Proprietary code – do not use without permission.**
+
+<br/>
+
+## Author
+
+**Kaveh Khorshidi**
+
+[![GitHub](https://img.shields.io/badge/GitHub-kavehkhorshidiii-181717?logo=github)](https://github.com/KavehKhorshidiii)
+
+[![Email](https://img.shields.io/badge/Email-kavehkhorshidiii%40gmail.com-181717?logo=gmail&logoColor=white)](mailto:kavehkhorshidiii@gmail.com)

@@ -1,7 +1,6 @@
 "use client";
 
 
-// imports
 import Link from "next/link";
 import { isNewBoard } from "../createBoardCardComponent/isNewBoard";
 import { Badge } from "@/components/ui/badge";
@@ -9,24 +8,8 @@ import { useState } from "react";
 import DeleteBoardModal from "../Modals/Board/BoardModal/deleteBoardModal/deleteBoardModal";
 import EditBoardModal from "../Modals/Board/editBoardModal/editBoardModal";
 import { Button } from "../ui/button";
-
-
-
-
-// icons
-import {
-   Card,
-   CardHeader,
-   CardTitle,
-   CardDescription,
-} from "@/components/ui/card";
-
-// icons
-import {
-   Ellipsis,
-   Pencil,
-   Trash2,
-} from "lucide-react";
+import {Card,CardHeader,CardTitle,CardDescription,} from "@/components/ui/card";
+import {Ellipsis,Pencil,Trash2,} from "lucide-react";
 
 
 // types

@@ -1,7 +1,6 @@
 'use server'
 
 
-// imports
 import connectDB from "@/lib/connectDB/connectDB"
 import ColumnModel from "@/models/columnModel/columnModel"
 
