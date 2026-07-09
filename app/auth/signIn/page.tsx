@@ -29,9 +29,7 @@ export default function SignIn() {
          });
       }
 
-      setTimeout(() => {
-         router.push("/");
-      }, 1000)
+      router.push("/");
 
    }, [state , router]);
 

@@ -29,9 +29,7 @@ export default function SignUp() {
          });
       }
 
-      setTimeout(() => {
-         router.push('/')
-      }, 1000)
+      router.push('/')
 
    }, [state , router]);
 
