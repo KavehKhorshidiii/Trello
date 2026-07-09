@@ -29,6 +29,7 @@ Trello Clone is a full-stack task management application inspired by Trello. Use
 - Move Tasks Between Columns
 - Responsive Design
 - Loading Spinner
+- board search
 - Toast Notifications
 - Task Color Labels
 - Copy Task Content
@@ -151,8 +152,7 @@ npm run build
 
 ## TODO (Next Steps)
 
-- [ ] Activity history
-- [ ] Due dates for tasks
+- [ ] Add board filtering
 - [ ] User profile page
 
 <br/>
