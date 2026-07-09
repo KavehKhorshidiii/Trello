@@ -20,8 +20,8 @@ export default function EditBoardModal({ setEditBoardData, boardId }: { setEditB
    // update board name
    useEffect(() => {
       if (state.success) {
-         setEditBoardData(false)
          queryClient.invalidateQueries({ queryKey: ["boards"] })
+         setEditBoardData(false)
       }
    }, [state.success , queryClient , setEditBoardData])
 

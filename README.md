@@ -41,11 +41,23 @@ Trello Clone is a full-stack task management application inspired by Trello. Use
 
 ###### Desktop
 
-![Screenshot](./public/screenshot/desktop-1.png)
+![Screenshot](./public/screenshot/Desktop-1.png)
 
 <br/>
 
-![Screenshot](./public/screenshot/desktop-2.png)
+![Screenshot](./public/screenshot/Desktop-2.png)
+
+<br/>
+
+![Screenshot](./public/screenshot/Desktop-3.png)
+
+<br/>
+
+![Screenshot](./public/screenshot/Desktop-4.png)
+
+<br/>
+
+![Screenshot](./public/screenshot/Desktop-5.png)
 
 <br/>
 
@@ -53,8 +65,9 @@ Trello Clone is a full-stack task management application inspired by Trello. Use
 
 <table>
 <tr>
-<td><img src="./public/screenshot/mobile-1.png" width="280"/></td>
-<td><img src="./public/screenshot/mobile-2.png" width="280"/></td>
+<td><img src="./public/screenshot/Mobile-1.png" width="280"/></td>
+<td><img src="./public/screenshot/Mobile-2.png" width="280"/></td>
+<td><img src="./public/screenshot/Mobile-3.png" width="280"/></td>
 </tr>
 </table>
 
@@ -138,10 +151,8 @@ npm run build
 
 ## TODO (Next Steps)
 
-- [ ] PWA support
 - [ ] Activity history
 - [ ] Due dates for tasks
-- [ ] File attachments
 - [ ] User profile page
 
 <br/>

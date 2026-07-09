@@ -20,8 +20,8 @@ export default function BoardModal({ addBoardModal, setAddBoardModal }: { addBoa
    // close modal + refresh boards
    useEffect(() => {
       if (state.success) {
-         setAddBoardModal(false);
          queryClient.invalidateQueries({ queryKey: ["boards"] });
+         setAddBoardModal(false);
       }
    }, [state.success , queryClient , setAddBoardModal]);
 

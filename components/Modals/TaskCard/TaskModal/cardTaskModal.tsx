@@ -19,7 +19,8 @@ export default function CardTaskModal({ columnId, boardId, setCardTaskModal }: {
    const queryClient = useQueryClient()
 
    useEffect(() => {
-   
+
+      
       if (state.success) {
          queryClient.invalidateQueries({ queryKey: ["tasks"] })
          setCardTaskModal(false)

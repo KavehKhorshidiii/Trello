@@ -17,8 +17,8 @@ export default function ColumnModal({ setIsModalColumn, params }: { isModalColum
    useEffect(() => {
 
       if (state.success) {
-         setIsModalColumn(false)
          queryClient.invalidateQueries({ queryKey: ["columns"] })
+         setIsModalColumn(false)
       }
 
    }, [state.success, queryClient, setIsModalColumn])

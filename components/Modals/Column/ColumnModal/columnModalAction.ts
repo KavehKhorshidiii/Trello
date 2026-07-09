@@ -5,7 +5,7 @@ import { cookies } from "next/headers"
 import ColumnModel from "@/models/columnModel/columnModel"
 
 
-
+// types
 type stateType = {
    success: boolean | null,
    errors: object,

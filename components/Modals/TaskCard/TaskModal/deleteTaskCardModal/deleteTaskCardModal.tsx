@@ -1,7 +1,6 @@
 "use client";
 
 
-// imports
 import { TriangleAlert, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -25,7 +24,6 @@ export default function DeleteTaskCardModal({ setDeleteCardTaskModal, TaskCardDa
 
    const { mutate: deleteCard, isPending } = useMutation({
       mutationFn: async (id: string) => {
-         console.log(id)
          const res = await fetch(`/api/taskCards/${id}`, {
             method: "DELETE",
          });
