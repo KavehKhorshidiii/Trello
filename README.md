@@ -7,7 +7,7 @@ A modern Trello-inspired task management application for organizing boards, colu
 <br/>
 
 ## Live Demo
-[Open the Live Website](https://YOUR-VERCEL-LINK.vercel.app)
+[Open the Live Website](https://trello-umber-psi.vercel.app/)
 
 <br/>
 
