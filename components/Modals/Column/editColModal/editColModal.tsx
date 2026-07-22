@@ -17,6 +17,9 @@ export default function EditColModal({ setEditColData, ColId }: { setEditColData
 
    // update board name
    useEffect(() => {
+      
+      console.log("edit col is success")
+
       if (state.success) {
          setEditColData(false)
          queryClient.invalidateQueries({ queryKey: ["columns"] })
