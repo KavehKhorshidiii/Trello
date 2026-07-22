@@ -253,7 +253,7 @@ export default function Board() {
                <main className=" flex overflow-x-auto w-full ">
                   <div className="flex flex-col w-full sm:flex-row gap-4 px-5 py-7">
                      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-                        <SortableContext strategy={horizontalListSortingStrategy} items={displayColumns.map((col: CardType) => col._id)} >
+                        <SortableContext strategy={horizontalListSortingStrategy} items={displayColumns.map((col) => col._id)} >
                            {
                               ColumnsPending ? <div className='w-full'><Spinner /></div> :
                                  displayColumns?.map((col: BoardType) => (
