@@ -19,22 +19,14 @@ import Spinner from '@/components/spinnerComponent/spinner';
 type CardType = {
    board: string,
    color: string,
+   column: string,  
    createdAt: string,
    title: string,
    des: string,
    updatedAt: string,
    _id: string
 }
-type CardFuncType = {
-   board: string,
-   column: string,
-   color: string,
-   createdAt: string,
-   title: string,
-   des: string,
-   updatedAt: string,
-   _id: string
-}
+
 type ColType = {
    _id: string
    title: string,
@@ -133,7 +125,15 @@ export default function Board() {
 
    // Task
    const [tasks, setTasks] = useState<CardType[]>([]); // TaskCard State
-   const displayTasks = tasks.length > 0 ? tasks : (Task?.data?.Tasks ?? []); // Display Tasks
+   const [prevTaskData, setPrevTaskData] = useState(Task);
+
+   if (Task !== prevTaskData) {
+      setPrevTaskData(Task);
+      setTasks(Task?.data?.Tasks ?? []);
+   }
+
+   const displayTasks = tasks;
+
 
 
    // - DRAG AND DROP -
@@ -156,7 +156,7 @@ export default function Board() {
       }
 
       // CARD TASK
-      const currentTasks: CardFuncType[] = tasks.length > 0 ? tasks : (Task?.data?.Tasks || []);
+      const currentTasks: CardType[] = tasks.length > 0 ? tasks : (Task?.data?.Tasks || []);
       const activeTask = currentTasks.find(t => t._id === active.id);
       const overTask = currentTasks.find(t => t._id === over.id);
       if (!activeTask) return;
@@ -165,7 +165,7 @@ export default function Board() {
       // MOVE BETWEEN COLUMNS
       if (activeType === "task") {
          const fromColumn = activeTask.column;
-         const toColumn = overData?.type === "column" ? over.id : overTask?.column;
+         const toColumn = overData?.type === "column" ? (over.id as string) : overTask?.column;
          if (toColumn && fromColumn !== toColumn) {
             const movedTasks = currentTasks.map(task => {
                if (task._id === active.id) {
@@ -257,7 +257,7 @@ export default function Board() {
                            {
                               ColumnsPending ? <div className='w-full'><Spinner /></div> :
                                  displayColumns?.map((col: BoardType) => (
-                                    <BoardColumn tasks={displayTasks.filter((task: CardFuncType) => task.column === col._id)} key={col._id} ColData={col} cardTaskModal={cardTaskModal} setCardTaskModal={setCardTaskModal} setSelectedColumnId={setSelectedColumnId} ></BoardColumn>
+                                    <BoardColumn tasks={displayTasks.filter((task: CardType) => task.column === col._id)} key={col._id} ColData={col} cardTaskModal={cardTaskModal} setCardTaskModal={setCardTaskModal} setSelectedColumnId={setSelectedColumnId} ></BoardColumn>
                                  ))
                            }
                         </SortableContext>
