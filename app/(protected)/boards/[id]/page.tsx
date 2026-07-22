@@ -120,8 +120,17 @@ export default function Board() {
 
    // - COPY DATA -
    // Columns
-   const [columns, setColumns] = useState<ColType[]>([]); // Columns State 
-   const displayColumns = columns.length > 0 ? columns : (columnsData ?? []); // Display Columns
+   const [columns, setColumns] = useState<ColType[]>([]);
+   const [prevColumnsData, setPrevColumnsData] = useState(columnsData);
+
+   if (columnsData !== prevColumnsData) {
+      setPrevColumnsData(columnsData);
+      setColumns(columnsData ?? []);
+   }
+
+   const displayColumns = columns;
+
+
    // Task
    const [tasks, setTasks] = useState<CardType[]>([]); // TaskCard State
    const displayTasks = tasks.length > 0 ? tasks : (Task?.data?.Tasks ?? []); // Display Tasks
@@ -189,7 +198,7 @@ export default function Board() {
       setTasks(sorted);
       updateTaskCard.mutate(sorted);
    }
-   
+
 
    // dnd sensors
    const sensors = useSensors(
