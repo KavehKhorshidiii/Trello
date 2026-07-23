@@ -5,7 +5,7 @@ import CardTaskModal from '@/components/Modals/TaskCard/TaskModal/cardTaskModal'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
 import { useParams } from 'next/navigation';
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import Navbar from '@/components/navbarComponent/navbar'
 import ColumnModal from '@/components/Modals/Column/ColumnModal/columnModal'
 import EditBoardModal from '@/components/Modals/Board/editBoardModal/editBoardModal';
@@ -19,7 +19,7 @@ import Spinner from '@/components/spinnerComponent/spinner';
 type CardType = {
    board: string,
    color: string,
-   column: string,  
+   column: string,
    createdAt: string,
    title: string,
    des: string,
@@ -34,12 +34,11 @@ type ColType = {
    order: number,
    __v: number
 }
-type BoardType = {
-   _id: string
-   title: string,
-   board: string,
-   order: number,
-   __v: number
+
+type TaskResponse = {
+   data?: {
+      Tasks?: CardType[]
+   }
 }
 
 
@@ -51,6 +50,8 @@ export default function Board() {
    const params = useParams(); const boardId = params.id as string ?? "" // Board ID
    const [selectColumnId, setSelectedColumnId] = useState<string>("") // Column ID
 
+   const queryClient = useQueryClient()
+
 
    // - BOARDS -
    // Fetch Board Data
@@ -59,8 +60,9 @@ export default function Board() {
       return res.json()
    }
    const { data: boardData } = useQuery({
-      queryKey: ["boards"],
-      queryFn: fetchBoardData
+      queryKey: ["board", boardId],
+      queryFn: fetchBoardData,
+      enabled: !!boardId,
    })
 
 
@@ -70,9 +72,10 @@ export default function Board() {
       const res = await fetch(`/api/columns/${boardId}`)
       return res.json()
    }
-   const { data: columnsData, isPending: ColumnsPending } = useQuery({
-      queryKey: ["columns"],
-      queryFn: fetchColumns
+   const { data: columnsData, isPending: ColumnsPending } = useQuery<ColType[]>({
+      queryKey: ["columns", boardId],
+      queryFn: fetchColumns,
+      enabled: !!boardId,
    })
    // Update -> Columns Reorder
    const ReorderColumn = async (columns: ColType[]) => {
@@ -93,9 +96,10 @@ export default function Board() {
       const res = await fetch(`/api/taskCards/${boardId}`)
       return res.json()
    }
-   const { data: Task } = useQuery({
-      queryKey: ["tasks"],
-      queryFn: fetchTask
+   const { data: Task} = useQuery<TaskResponse>({
+      queryKey: ["tasks", boardId],
+      queryFn: fetchTask,
+      enabled: !!boardId,
    })
    // Update -> CardTask Reorder
    const ReorderTaskCard = async (tasks: CardType[]) => {
@@ -110,30 +114,9 @@ export default function Board() {
    });
 
 
-   // - COPY DATA -
-   // Columns
-   const [columns, setColumns] = useState<ColType[]>([]);
-   const [prevColumnsData, setPrevColumnsData] = useState(columnsData);
-
-   if (columnsData !== prevColumnsData) {
-      setPrevColumnsData(columnsData);
-      setColumns(columnsData ?? []);
-   }
-
-   const displayColumns = columns;
-
-
-   // Task
-   const [tasks, setTasks] = useState<CardType[]>([]); 
-   const [prevTaskData, setPrevTaskData] = useState(Task);
-
-   if (Task !== prevTaskData) {
-      setPrevTaskData(Task);
-      setTasks(Task?.data?.Tasks ?? []);
-   }
-
-   const displayTasks = tasks;
-
+   // - DISPLAY DATA -
+   const displayColumns: ColType[] = columnsData ?? [];
+   const displayTasks: CardType[] = Task?.data?.Tasks ?? [];
 
 
    // - DRAG AND DROP -
@@ -146,17 +129,20 @@ export default function Board() {
 
       // REORDER COLUMN
       if (activeType === "column") {
-         const currentColumns: ColType[] = columns.length > 0 ? columns : (columnsData ?? []);
-         const oldIndex: number = currentColumns.findIndex((col => col._id === active.id));
-         const newIndex: number = currentColumns.findIndex((col => col._id === over.id));
+         const currentColumns: ColType[] = columnsData ?? [];
+         const oldIndex: number = currentColumns.findIndex((col) => col._id === active.id);
+         const newIndex: number = currentColumns.findIndex((col) => col._id === over.id);
          const newColumns = arrayMove(currentColumns, oldIndex, newIndex);
          const sortColumn = newColumns.map((col, index) => ({ ...col, order: index }))
-         setColumns(sortColumn);
+
+
+         queryClient.setQueryData(["columns", boardId], sortColumn);
          updateColumns.mutate(sortColumn);
+         return;
       }
 
       // CARD TASK
-      const currentTasks: CardType[] = tasks.length > 0 ? tasks : (Task?.data?.Tasks || []);
+      const currentTasks: CardType[] = Task?.data?.Tasks ?? [];
       const activeTask = currentTasks.find(t => t._id === active.id);
       const overTask = currentTasks.find(t => t._id === over.id);
       if (!activeTask) return;
@@ -177,7 +163,7 @@ export default function Board() {
                return task;
             });
 
-            setTasks(movedTasks);
+            queryClient.setQueryData(["tasks", boardId], { data: { Tasks: movedTasks } });
             updateTaskCard.mutate(movedTasks);
             return;
          }
@@ -195,7 +181,7 @@ export default function Board() {
          order: index,
       }));
 
-      setTasks(sorted);
+      queryClient.setQueryData(["tasks", boardId], { data: { Tasks: sorted } });
       updateTaskCard.mutate(sorted);
    }
 
@@ -256,8 +242,8 @@ export default function Board() {
                         <SortableContext strategy={horizontalListSortingStrategy} items={displayColumns.map((col) => col._id)} >
                            {
                               ColumnsPending ? <div className='w-full'><Spinner /></div> :
-                                 displayColumns?.map((col: BoardType) => (
-                                    <BoardColumn tasks={displayTasks.filter((task: CardType) => task.column === col._id)} key={col._id} ColData={col} cardTaskModal={cardTaskModal} setCardTaskModal={setCardTaskModal} setSelectedColumnId={setSelectedColumnId} ></BoardColumn>
+                                 displayColumns.map((col) => (
+                                    <BoardColumn tasks={displayTasks.filter((task) => task.column === col._id)} key={col._id} ColData={col} cardTaskModal={cardTaskModal} setCardTaskModal={setCardTaskModal} setSelectedColumnId={setSelectedColumnId} ></BoardColumn>
                                  ))
                            }
                         </SortableContext>

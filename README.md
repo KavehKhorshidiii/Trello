@@ -11,6 +11,11 @@ A modern Trello-inspired task management application for organizing boards, colu
 
 <br/>
 
+## Watch Demo
+
+
+<br/>
+
 ## Description
 
 Trello Clone is a full-stack task management application inspired by Trello. Users can create boards, organize columns, manage tasks, and reorder everything using drag-and-drop. Authentication is handled with JWT, and all data is stored in MongoDB.
