@@ -20,6 +20,11 @@ export default async function columnModelAction(prevState: stateType, formData: 
       boardId: formData.get("boardId")
    }
 
+
+   if(typeof title === 'string' && title.length == 0){
+      return { success: false, errors: {}, message: "Please enter a valid title." }
+   }
+
    const cookiesStore = await cookies()
    const tokenValue = cookiesStore.get("token")?.value
    if (!tokenValue) { return { success: false, errors: {}, message: "Token does not exist." } }

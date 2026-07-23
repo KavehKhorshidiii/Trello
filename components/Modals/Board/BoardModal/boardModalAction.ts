@@ -25,6 +25,10 @@ export default async function boardModalAction(prevState: stateType, formData: F
       color: formData.get("color")
    }
 
+   if(typeof title === 'string' && title.length == 0){
+      return { success: false, errors: {}, message: "Please enter a valid title." }
+   }
+
 
    const cookiesStore = await cookies()
    const tokenValue = cookiesStore.get("token")?.value

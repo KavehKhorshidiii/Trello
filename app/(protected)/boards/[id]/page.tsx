@@ -124,7 +124,7 @@ export default function Board() {
 
 
    // Task
-   const [tasks, setTasks] = useState<CardType[]>([]); // TaskCard State
+   const [tasks, setTasks] = useState<CardType[]>([]); 
    const [prevTaskData, setPrevTaskData] = useState(Task);
 
    if (Task !== prevTaskData) {

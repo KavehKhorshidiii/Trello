@@ -24,6 +24,11 @@ export default async function boardModalAction(prevState: stateType, formData: F
    }
 
 
+   if(typeof title === 'string' && title.length == 0){
+      return { success: false, errors: {}, message: "Please enter a title." }
+   }
+
+
    const cookiesStore = await cookies()
    const tokenValue = cookiesStore.get("token")?.value
    if (!tokenValue) { return { success: false, errors: {}, message: "Token does not exist." } }

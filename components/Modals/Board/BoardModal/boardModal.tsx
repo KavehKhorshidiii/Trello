@@ -7,6 +7,8 @@ import BoardModalAction from "./boardModalAction";
 import Colors from "@/components/colorsComponent/Colors";
 import { useState } from "react";
 import Spinner from "@/components/spinnerComponent/spinner";
+import { toast } from "sonner";
+
 
 
 export default function BoardModal({ addBoardModal, setAddBoardModal }: { addBoardModal: boolean; setAddBoardModal: (value: boolean) => void; }) {
@@ -23,7 +25,7 @@ export default function BoardModal({ addBoardModal, setAddBoardModal }: { addBoa
          queryClient.invalidateQueries({ queryKey: ["boards"] });
          setAddBoardModal(false);
       }
-   }, [state.success , queryClient , setAddBoardModal]);
+   }, [state.success, queryClient, setAddBoardModal]);
 
 
    // close on ESC
