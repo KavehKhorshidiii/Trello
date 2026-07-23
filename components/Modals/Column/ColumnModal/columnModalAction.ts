@@ -22,7 +22,7 @@ export default async function columnModelAction(prevState: stateType, formData: 
 
 
    if(typeof title === 'string' && title.length == 0){
-      return { success: false, errors: {}, message: "Please enter a valid title." }
+      return { success: false, errors: {}, message: "Please enter a title." }
    }
 
    const cookiesStore = await cookies()
