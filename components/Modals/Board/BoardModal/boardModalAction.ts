@@ -26,7 +26,7 @@ export default async function boardModalAction(prevState: stateType, formData: F
    }
 
    if(typeof title === 'string' && title.length == 0){
-      return { success: false, errors: {}, message: "Please enter a valid title." }
+      return { success: false, errors: {}, message: "Please enter a title." }
    }
 
 
